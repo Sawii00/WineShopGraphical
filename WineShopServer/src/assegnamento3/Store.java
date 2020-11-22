@@ -57,7 +57,7 @@ public class Store {
 	/**
 	 * Currently logged-in client.
 	 * */
-	private Client currClient = null;
+	private Customer currClient = null;
 	
 	/**
 	 * Currently logged-in seller.
@@ -70,10 +70,10 @@ public class Store {
 	*/
 	public Store()
 	{
-		userList.add(new Client("Luca", "Neri", "l.neri@gmail.com", "1234"));
-		userList.add(new Client("Mario", "Rossi", "m.rossi@gmail.com", "1212"));
-		userList.add(new Client("Giuseppe", "Bianchi", "g.bianchi@gmail.com", "3434"));
-		
+		userList.add(new Customer("Luca", "Neri", "l.neri@gmail.com", "1234"));
+		userList.add(new Customer("Mario", "Rossi", "m.rossi@gmail.com", "1212"));
+		userList.add(new Customer("Giuseppe", "Bianchi", "g.bianchi@gmail.com", "3434"));
+		userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
 		userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
 		
 		wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot", 10));
@@ -126,7 +126,7 @@ public class Store {
 		
 		for(LoggableUser u: userList)
 		{
-			if(u.toString() == usr.toString())
+			if(u.getEmail().equals(usr.getEmail()))
 				return true;
 		}
 		return false;
@@ -181,12 +181,12 @@ public class Store {
 	*
 	* @return the client if found, null otherwise.
 	*/
-	private Client getClientByID(int clientId)
+	private Customer getClientByID(int clientId)
 	{
 		for(LoggableUser w: userList)
 		{
-			if(w instanceof Client && ((Client)w).getID() == clientId)
-				return (Client)w;
+			if(w instanceof Customer && ((Customer)w).getID() == clientId)
+				return (Customer)w;
 		}
 		return null;
 	}
@@ -197,13 +197,15 @@ public class Store {
 	* @param usr the client or seller to be registered.
 	*/
 	
-	synchronized public void register(LoggableUser usr)
+	synchronized public boolean register(LoggableUser usr)
 	{
 		if(!alreadyRegistered(usr))
 		{
 			usr.setID(userList.size());
 			userList.add(usr);
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -261,7 +263,7 @@ public class Store {
 					Entry<Integer, Integer> e = notifRequest.get(i);
 					if((Integer)e.getValue() <= extraN)
 					{
-						Client c = getClientByID((Integer)e.getKey());
+						Customer c = getClientByID((Integer)e.getKey());
 						System.out.println("Notifying user " + c.getID()+" that the wine is available\n");
 						c.newMessage("Wine: "+wineId+" is available.");
 					}
@@ -277,24 +279,16 @@ public class Store {
 	* @param password the user's password.
 	* @return true if email and password are correct, false otherwise.
 	*/
-	public boolean login(String email, String password)
+	public LoggableUser login(String email, String password)
 	{
-		logout();
 		for(LoggableUser usr: userList)
 		{
-			if(usr.getEmail() == email && usr.getPassword() == password)
+			if(usr.getEmail().equals(email) && usr.getPassword().equals(password))
 			{
-				if(usr instanceof Client)
-					currClient = (Client)usr;
-				else
-					currSeller = (Seller)usr;
-				System.out.println(usr.toString() +" has logged in\n");
-				((Observer)usr).displayMessages();
-				((Observer)usr).deleteMessages();
-				return true;
+				return (LoggableUser)usr;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	

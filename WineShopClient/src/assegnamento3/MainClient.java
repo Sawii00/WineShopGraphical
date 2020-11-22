@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class MainClient extends Application {
 
-    static NetworkClient client = new NetworkClient("127.0.0.1", 4909);
+    static NetworkClient client = new NetworkClient("127.0.0.1", 4926);
 	
 	@Override
     public void start(Stage primaryStage) throws Exception{

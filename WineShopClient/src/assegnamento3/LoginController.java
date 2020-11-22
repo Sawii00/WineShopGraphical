@@ -7,9 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -22,7 +21,7 @@ public class LoginController {
     @FXML 
     private TextField emailTextField;
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordTextField;
 
     public void initialize() {
     	
@@ -32,17 +31,33 @@ public class LoginController {
     {
     	System.out.println("Login Pressed");
     	
-    	Stage mainStage;
-    	Parent root;
-    	
-    	mainStage = (Stage)signInButton.getScene().getWindow();
-    	try {
-			root = FXMLLoader.load(getClass().getResource("admin.fxml"));
-			mainStage.setScene(new Scene(root, 600, 400));
-			mainStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+    	Request r = new Request("login");
+		r.addParameter(emailTextField.getText());
+		r.addParameter(passwordTextField.getText());
+		
+		Response res = MainClient.client.sendRequest(r);
+		
+		if(res.getReturnCode() == StatusCode.SUCCESS)
+		{
+			Stage mainStage;
+	    	Parent root;
+	    	
+	    	mainStage = (Stage)signInButton.getScene().getWindow();
+	    	
+	    	try {
+	    		root = FXMLLoader.load(getClass().getResource(res.getArguments().get(0)+".fxml"));
+				mainStage.setScene(new Scene(root, 800, 400));
+				mainStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		else
+		{
+			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
+		}
+    	
+    	
     	
     }
     

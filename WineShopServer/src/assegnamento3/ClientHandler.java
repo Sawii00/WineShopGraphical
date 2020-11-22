@@ -11,12 +11,10 @@ public class ClientHandler implements Runnable
 	private ObjectOutputStream os = null;
 	private ObjectInputStream is = null;
 	private boolean isRunning = true;
-	private Store mainStore = null;
 	
-	public ClientHandler(Socket s, Store store) 
+	public ClientHandler(Socket s) 
 	{
 		this.mainSocket = s;
-		this.mainStore = store;
 		try 
 		{
 			this.os = new ObjectOutputStream(mainSocket.getOutputStream());
@@ -42,6 +40,69 @@ public class ClientHandler implements Runnable
 		}
 	}
 	
+	private Response handleRequest(Request request)
+	{
+		String method = request.getMethod();
+		Response response;
+		switch (method)
+		{
+			case "close": 
+			{
+				stop();
+				return new Response(StatusCode.SUCCESS);
+
+			}
+			case "login":
+			{
+				String email = request.getParameters().get(0);
+				String password = request.getParameters().get(1);
+				
+				LoggableUser obs = NetworkServer.mainStore.login(email, password);
+				if(obs != null)
+				{
+					response = new Response(StatusCode.SUCCESS);
+					response.addArgument(obs.getUserType());
+					if(obs instanceof Observer)
+					{
+						String mex = ((Observer)obs).getMessages();
+						response.addArgument(mex);
+					}
+				}
+				else
+				{
+					response = new Response(StatusCode.INVALID_ARGUMENTS);
+				}
+				return response;
+			}
+			case "register":
+			{
+				String name = request.getParameters().get(0);
+				String surname = request.getParameters().get(1);
+				String email = request.getParameters().get(2);
+				String password = request.getParameters().get(3);
+				
+				Customer c = new Customer(name, surname, email, password);
+				boolean succesfullyRegistered = NetworkServer.mainStore.register(c);
+				
+				if(succesfullyRegistered)
+				{
+					response = new Response(StatusCode.SUCCESS);
+				}
+				else
+				{
+					response = new Response(StatusCode.INVALID_ARGUMENTS);					
+				}
+				
+				return response;
+			}
+			
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + method);
+		}
+		
+		
+	}
+	
 	
 	public void run()
 	{
@@ -55,11 +116,13 @@ public class ClientHandler implements Runnable
 				if (i instanceof Request)
 				{
 					r = (Request)i;
-					System.out.println(r.toString());
-					if (r.getMethod().equals("close"))
-					{
-						stop();
-					}
+					Response res = handleRequest(r);
+					os.writeObject(res);
+					os.flush();
+				}
+				else
+				{
+					System.err.println("Server could not read the request");
 				}
 			} catch (ClassNotFoundException | IOException e) 
 			{

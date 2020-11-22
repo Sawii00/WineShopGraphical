@@ -24,5 +24,10 @@ public interface Observer {
 	 */
 	public void newMessage(String m);
 	
+	/**
+	 * Returns the string representation of all the messages.
+	 * @return messages as String
+	 * */
 	
+	public String getMessages();
 }

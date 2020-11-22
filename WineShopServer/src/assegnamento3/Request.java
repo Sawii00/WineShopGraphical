@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Request implements Serializable{
+public class Request implements Serializable
+{
 	
 	private static final long serialVersionUID = -3573650597397447309L;
 	
@@ -40,6 +41,7 @@ public class Request implements Serializable{
 		}
 		return res;
 	}
+	
 	
 	
 	

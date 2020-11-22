@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.AdminController">
    <children>
-      <TableView id="admin_table" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="562.0">
+      <TableView id="adminPersonTable" fx:id="adminPersonTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="562.0">
         <columns>
           <TableColumn prefWidth="140.0" text="Name" />
           <TableColumn prefWidth="140.0" text="Surname" />
@@ -16,8 +16,18 @@
             <TableColumn prefWidth="140.0" text="Password" />
         </columns>
       </TableView>
-      <ChoiceBox id="admin_choicebox" layoutX="19.0" layoutY="23.0" prefWidth="150.0" />
-      <Button id="admin_add_button" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" text="Add" />
-      <Button id="admin_edit_button" disable="true" layoutX="429.0" layoutY="23.0" mnemonicParsing="false" text="Edit" />
+      <ChoiceBox id="adminChoiceBox" fx:id="adminChoiceBox" layoutX="34.0" layoutY="23.0" prefHeight="25.0" prefWidth="206.0" />
+      <Button id="admin_add_button" fx:id="addButton" layoutX="494.0" layoutY="23.0" mnemonicParsing="false" text="Add" />
+      <Button id="admin_edit_button" fx:id="editButton" disable="true" layoutX="691.0" layoutY="23.0" mnemonicParsing="false" text="Edit" />
+      <TableView id="adminWineTable" fx:id="adminWineTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0">
+         <columns>
+            <TableColumn prefWidth="148.0" text="Name" />
+            <TableColumn prefWidth="128.0" text="Producer" />
+            <TableColumn prefWidth="48.0" text="Year" />
+            <TableColumn prefWidth="248.0" text="Technical Notes" />
+            <TableColumn prefWidth="124.0" text="Grape Type" />
+            <TableColumn prefWidth="66.0" text="Amount" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

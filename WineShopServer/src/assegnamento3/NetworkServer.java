@@ -14,7 +14,7 @@ public class NetworkServer {
 
 	private ServerSocket mainSocket;
 	private boolean isRunning = true;
-	private static Store mainStore = new Store();
+	public static Store mainStore = new Store();
 
 	
 	public NetworkServer(int port)
@@ -39,7 +39,7 @@ public class NetworkServer {
 			{
 				Socket s = mainSocket.accept();
 				
-				Runnable r = new ClientHandler(s, mainStore);
+				Runnable r = new ClientHandler(s);
 				new Thread(r).start();
 				//s.close();
 			} catch (IOException e)

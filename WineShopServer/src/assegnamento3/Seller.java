@@ -65,5 +65,25 @@ public class Seller extends LoggableUser implements Observer{
 		messages.add(m);
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 * */
+	@Override
+	public String getMessages()
+	{
+		String res = "";
+		for(String s: messages)
+		{
+			res += s+'\n';
+			
+		}
+		return res;
+		
+	}
+
+	@Override
+	public String getUserType() {
+		return "seller";
+	}
+
 }

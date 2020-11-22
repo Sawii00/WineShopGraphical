@@ -15,16 +15,16 @@ public class Response implements Serializable{
 
 	StatusCode returnCode;
 	
-	ArrayList<String> results = new ArrayList<String>();
+	ArrayList<String> arguments = new ArrayList<String>();
 	
 	public Response(StatusCode code)
 	{
 		returnCode = code;
 	}
 	
-	public void addResult(String r)
+	public void addArgument(String r)
 	{
-		results.add(r);
+		arguments.add(r);
 	}
 	
 	public StatusCode getReturnCode()
@@ -32,21 +32,10 @@ public class Response implements Serializable{
 		return returnCode;
 	}
 	
-	public ArrayList<String> getResults()
+	public ArrayList<String> getArguments()
 	{
-		return results;
+		return arguments;
 	}
 	
-	public String toString()
-	{
-		String res = returnCode.toString() +": ";
-		
-		for(var i : results)
-		{
-			res += i;
-			
-		}
-		return res;
-	}
 	
 }

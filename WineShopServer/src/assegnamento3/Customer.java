@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Implements the {@code Observer} Interface to allow for notifications receipt <p>
  * Extends the {@code LoggableUser} to implement login functionality. 
  */
-public class Client extends LoggableUser implements Observer{
+public class Customer extends LoggableUser implements Observer{
 
 	protected ArrayList<String> messages=new ArrayList<String>();
 
@@ -27,7 +27,7 @@ public class Client extends LoggableUser implements Observer{
 	 * @param email of the client.
 	 * @param password of the client.
 	 */
-	public Client(String name, String surname, String email, String password) {
+	public Customer(String name, String surname, String email, String password) {
 		super(name, surname, email, password);
 	}
 	
@@ -42,7 +42,7 @@ public class Client extends LoggableUser implements Observer{
 	 * @param email of the client.
 	 * @param password of the client.
 	 */
-	public Client(int id, String name, String surname, String email, String password) {
+	public Customer(int id, String name, String surname, String email, String password) {
 		super(id, name, surname, email, password);
 	}
 	
@@ -81,7 +81,27 @@ public class Client extends LoggableUser implements Observer{
 		messages.add(m);
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 * */
+	@Override
+	public String getMessages()
+	{
+		String res = "";
+		for(String s: messages)
+		{
+			res += s+'\n';
+			
+		}
+		return res;
+		
+	}
+
+	@Override
+	public String getUserType() {
+		return "customer";
+	}
+
 
 	
 	
