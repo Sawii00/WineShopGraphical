@@ -3,12 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="23.0" layoutY="14.0" prefHeight="45.0" prefWidth="137.0" text="Registration">
+      <Label id="title" layoutX="23.0" layoutY="14.0" prefHeight="45.0" prefWidth="137.0" text="Registration">
          <font>
             <Font size="24.0" />
          </font>
@@ -36,7 +37,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField id="regPasswordTextField" layoutX="23.0" layoutY="231.0" prefHeight="24.0" prefWidth="277.0" />
-      <Button id="regConfirmButton" layoutX="348.0" layoutY="270.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="Confirm" />
+      <PasswordField id="regPasswordTextField" layoutX="23.0" layoutY="231.0" prefHeight="24.0" prefWidth="277.0" />
+      <Button id="regConfirmButton" defaultButton="true" layoutX="348.0" layoutY="270.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="101.0" text="Confirm" />
    </children>
 </AnchorPane>

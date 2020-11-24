@@ -1,6 +1,12 @@
 package assegnamento3;
 
+import java.io.Serializable;
 import java.util.Random;
+
+enum WineType
+{
+	RED, WHITE, ROSE
+};
 
 /**
  * The {@code Wine} class defines the different kinds of wines.<p>
@@ -10,8 +16,14 @@ import java.util.Random;
  * Each wine is identified by a unique {@code id}.
  */
 
-public class Wine {
+public class Wine implements Serializable
+{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4609912367894803090L;
+
 	private int id;
 	
 	private String name;
@@ -20,7 +32,16 @@ public class Wine {
 	private String technicalNotes;
 	private String grapeType;
 	private int number;
+	private WineType wineType;
 	
+	public WineType getWineType() {
+		return wineType;
+	}
+
+	public void setWineType(WineType wineType) {
+		this.wineType = wineType;
+	}
+
 	/**
 	 * Class constructor. <p>
 	 * The id, if not specified, is generated random.
@@ -32,7 +53,7 @@ public class Wine {
 	 * @param number the number of bottles of wine.
 	 */
 	
-	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number) {
+	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number, WineType wt) {
 		Random r = new Random();
 		this.id = r.nextInt();
 		this.name = name;
@@ -41,6 +62,7 @@ public class Wine {
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
 		this.number = number;
+		this.wineType = wt;
 	}
 
 	/**
@@ -53,7 +75,7 @@ public class Wine {
 	 * @param grapeType the grape from which are produced the wines.
 	 * @param number the number of bottles of wine.
 	 */
-	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number) {
+	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number, WineType wt) {
 		this.id = id;
 		this.name = name;
 		this.producer = producer;
@@ -61,6 +83,7 @@ public class Wine {
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
 		this.number = number;
+		this.wineType = wt;
 	}
 
 	/**
@@ -196,6 +219,11 @@ public class Wine {
 	public String toString()
 	{
 		return "ID: "+this.id + ": "+this.name + ", "+this.producer+"("+this.year+") "+this.grapeType+ " AMOUNT: "+this.number + "\nTechnical Notes: " + this.technicalNotes;
+	}
+	
+	public String serializedString()
+	{
+		return this.name+"<>"+this.producer+"<>"+this.year+"<>"+this.technicalNotes+"<>"+this.grapeType+"<>"+this.number+"<>"+this.wineType.toString();
 	}
 	
 }

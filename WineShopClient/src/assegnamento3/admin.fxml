@@ -8,18 +8,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.AdminController">
    <children>
-      <TableView id="adminPersonTable" fx:id="adminPersonTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="562.0">
+      <TableView id="adminPersonTable" fx:id="adminPersonTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0">
         <columns>
-          <TableColumn prefWidth="140.0" text="Name" />
-          <TableColumn prefWidth="140.0" text="Surname" />
-            <TableColumn prefWidth="140.0" text="Email" />
-            <TableColumn prefWidth="140.0" text="Password" />
+          <TableColumn prefWidth="190.0" text="Name" />
+          <TableColumn prefWidth="190.0" text="Surname" />
+            <TableColumn prefWidth="190.0" text="Email" />
+            <TableColumn prefWidth="192.0" text="Password" />
         </columns>
       </TableView>
       <ChoiceBox id="adminChoiceBox" fx:id="adminChoiceBox" layoutX="34.0" layoutY="23.0" prefHeight="25.0" prefWidth="206.0" />
-      <Button id="admin_add_button" fx:id="addButton" layoutX="494.0" layoutY="23.0" mnemonicParsing="false" text="Add" />
-      <Button id="admin_edit_button" fx:id="editButton" disable="true" layoutX="691.0" layoutY="23.0" mnemonicParsing="false" text="Edit" />
-      <TableView id="adminWineTable" fx:id="adminWineTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0">
+      <Button id="admin_add_button" fx:id="addButton" disable="true" layoutX="494.0" layoutY="23.0" mnemonicParsing="false" onAction="#addSeller" text="Add" />
+      <Button id="admin_edit_button" fx:id="editButton" disable="true" layoutX="691.0" layoutY="23.0" mnemonicParsing="false" onAction="#editSeller" text="Edit" />
+      <TableView id="adminWineTable" fx:id="adminWineTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0" visible="false">
          <columns>
             <TableColumn prefWidth="148.0" text="Name" />
             <TableColumn prefWidth="128.0" text="Producer" />
@@ -27,6 +27,13 @@
             <TableColumn prefWidth="248.0" text="Technical Notes" />
             <TableColumn prefWidth="124.0" text="Grape Type" />
             <TableColumn prefWidth="66.0" text="Amount" />
+         </columns>
+      </TableView>
+      <TableView id="adminPersonTable" fx:id="adminOrderTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0">
+         <columns>
+            <TableColumn prefWidth="254.0" text="Customer Email" />
+            <TableColumn prefWidth="254.0" text="Wine" />
+            <TableColumn prefWidth="254.0" text="Amount" />
          </columns>
       </TableView>
    </children>

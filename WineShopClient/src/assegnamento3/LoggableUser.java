@@ -1,5 +1,6 @@
 package assegnamento3;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -9,8 +10,14 @@ import java.util.Random;
  * It extends {@code Person} to add name and surname.
  */
 
-public abstract class LoggableUser extends Person
+public class LoggableUser extends Person implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4878874717365268921L;
+
+
 	/**
 	 * Class constructor.
 	 * @param id id of the user.
@@ -117,7 +124,16 @@ public abstract class LoggableUser extends Person
 		return this.id + ", "+super.toString()+", "+this.email;
 	}
 	
-	public abstract String getUserType();
+	public String getUserType()
+	{
+		return "user";
+	}
+	
+	
+	public String serializedString()
+	{
+		return this.name+"<>"+this.surname+"<>"+this.email+"<>"+this.password;
+	}
 	
 }
 	

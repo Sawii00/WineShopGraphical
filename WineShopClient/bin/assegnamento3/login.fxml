@@ -53,7 +53,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button id="signInButton" fx:id="signInButton" mnemonicParsing="false" onAction="#login" text="Sign in" />
+            <Button id="signInButton" fx:id="signInButton" defaultButton="true" mnemonicParsing="false" onAction="#login" text="Sign in" />
          </children>
       </HBox>
    </children>

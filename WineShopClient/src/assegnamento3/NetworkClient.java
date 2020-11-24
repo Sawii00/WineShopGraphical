@@ -22,7 +22,7 @@ public class NetworkClient {
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			new BasicAlertBox("Error", "Could not connect to Server on port: "+port, 300, 100);
 		}
 	}
 	

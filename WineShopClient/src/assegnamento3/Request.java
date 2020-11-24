@@ -17,6 +17,14 @@ public class Request implements Serializable
 		method = m;
 	}
 	
+	public void addAllParameters(String[] arr)
+	{
+		for(String s: arr)
+		{
+			parameters.add(s);
+		}
+	}
+	
 	public void addParameter(String s)
 	{
 		parameters.add(s);
@@ -31,17 +39,6 @@ public class Request implements Serializable
 	{
 		return parameters;
 	}
-	
-	public String toString() 
-	{
-		String res = method + ": ";
-		for(var i: parameters)
-		{
-			res += i + ", ";
-		}
-		return res;
-	}
-	
 	
 	
 	

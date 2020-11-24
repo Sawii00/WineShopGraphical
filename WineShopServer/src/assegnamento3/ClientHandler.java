@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler implements Runnable
 {
@@ -54,6 +55,8 @@ public class ClientHandler implements Runnable
 			}
 			case "login":
 			{
+				if(request.getParameters().size() != 2)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
 				String email = request.getParameters().get(0);
 				String password = request.getParameters().get(1);
 				
@@ -76,6 +79,8 @@ public class ClientHandler implements Runnable
 			}
 			case "register":
 			{
+				if(request.getParameters().size() != 4)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
 				String name = request.getParameters().get(0);
 				String surname = request.getParameters().get(1);
 				String email = request.getParameters().get(2);
@@ -95,7 +100,112 @@ public class ClientHandler implements Runnable
 				
 				return response;
 			}
-			
+			case "getCustomersList":
+			{
+				response = new Response(StatusCode.SUCCESS);
+				for(LoggableUser w: NetworkServer.mainStore.getUserList())
+				{
+					if(w instanceof Customer)
+						response.addArgument(w.serializedString());
+				}
+				return response;
+			}
+			case "getSellersList":
+			{
+				response = new Response(StatusCode.SUCCESS);
+				for(LoggableUser w: NetworkServer.mainStore.getUserList())
+				{
+					if(w instanceof Seller)
+						response.addArgument(w.serializedString());
+				}
+				return response;
+			}
+			case "getWinesList":
+			{
+				response = new Response(StatusCode.SUCCESS);
+				for(Wine w: NetworkServer.mainStore.getWineList())
+				{
+					response.addArgument(w.serializedString());
+				}
+				return response;
+			}
+			case "getOrderList":
+			{
+				response = new Response(StatusCode.SUCCESS);
+				for(Order o: NetworkServer.mainStore.getOrderList())
+				{
+					Customer c = NetworkServer.mainStore.getClientByID(o.getClient());
+					response.addArgument(c.getEmail() + "<>"+o.getWine().getName()+"<>"+o.getWine().getNumber());
+				}
+				return response;
+			}
+			case "registerSeller":
+			{
+				if(request.getParameters().size() != 4)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				String name = request.getParameters().get(0);
+				String surname = request.getParameters().get(1);
+				String email = request.getParameters().get(2);
+				String password = request.getParameters().get(3);
+				
+				Seller s = new Seller(name, surname, email, password);
+				boolean succesfullyRegistered = NetworkServer.mainStore.register(s);
+				
+				if(succesfullyRegistered)
+				{
+					response = new Response(StatusCode.SUCCESS);
+				}
+				else
+				{
+					response = new Response(StatusCode.INVALID_ARGUMENTS);					
+				}
+				
+				return response;
+			}
+			case "editSeller":
+			{
+				if(request.getParameters().size() != 5)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				
+				String oldEmail = request.getParameters().get(0);
+				String name = request.getParameters().get(1);
+				String surname = request.getParameters().get(2);
+				String newEmail = request.getParameters().get(3);
+				String password = request.getParameters().get(4);
+				
+				boolean ok = NetworkServer.mainStore.editUser(oldEmail, new LoggableUser(name, surname, newEmail, password));
+				Response res;
+				if(ok)
+					res = new Response(StatusCode.SUCCESS);
+				else
+					res = new Response(StatusCode.INVALID_ARGUMENTS);
+				return res;
+			}
+			case "searchWineName":
+			{
+				if(request.getParameters().size() != 1)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				
+				ArrayList<Wine> result = NetworkServer.mainStore.search(request.getParameters().get(0), SearchType.NAME);
+				response = new Response(StatusCode.SUCCESS);
+				for(Wine w: result)
+				{
+					response.addArgument(w.serializedString());
+				}
+				return response;
+			}
+			case "searchWineYear":
+			{
+				if(request.getParameters().size() != 1)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				ArrayList<Wine> result = NetworkServer.mainStore.search(request.getParameters().get(0), SearchType.YEAR);
+				response = new Response(StatusCode.SUCCESS);
+				for(Wine w: result)
+				{
+					response.addArgument(w.serializedString());
+				}
+				return response;
+			}
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + method);
 		}

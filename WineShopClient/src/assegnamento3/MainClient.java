@@ -8,17 +8,18 @@ import javafx.stage.Stage;
 
 public class MainClient extends Application {
 
-    static NetworkClient client = new NetworkClient("127.0.0.1", 4926);
+    static NetworkClient client;
 	
 	@Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+    public void start(Stage primaryStage) throws Exception
+	{
+		client = new NetworkClient("127.0.0.1", 4922);
+        Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
         primaryStage.setTitle("WineShop");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
         
-       
         
         
         

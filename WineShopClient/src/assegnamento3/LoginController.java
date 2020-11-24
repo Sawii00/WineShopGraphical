@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -22,8 +23,10 @@ public class LoginController {
     private TextField emailTextField;
     @FXML
     private PasswordField passwordTextField;
+    
 
-    public void initialize() {
+    public void initialize()
+    {
     	
     }
 
@@ -64,7 +67,18 @@ public class LoginController {
     public void register()
     {
     	System.out.println("Register Pressed");
-    	new RegistrationBox("Registration", 480, 320);
+    	RegistrationBox rb = new RegistrationBox("Registration", 480, 320);
+    	if(rb.isValid())
+    	{
+	    	String[] vals = rb.getValues();
+	    	Request r = new Request("register");
+	    	r.addAllParameters(vals);
+	    	
+	    	Response res = MainClient.client.sendRequest(r);
+			
+	    	if(res.getReturnCode() == StatusCode.INVALID_ARGUMENTS)
+	    		new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
+    	}
     	
     }
     

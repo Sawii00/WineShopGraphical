@@ -76,13 +76,34 @@ public class Store {
 		userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
 		userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
 		
-		wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot", 10));
-		wineList.add(new Wine(100001, "Lambrusco Reggiano", "Cantina Bruni", 2019, "Asciutto, frizzante e di corpo sapido", "Bacca Nera", 5));
-		wineList.add(new Wine(100002, "Carso Malvasia", "Cantina Gialli", 2016, "Asciutto, sapido e fresco", "Malvasia Istriana", 100));
-		wineList.add(new Wine(100003, "Franciacorta Spumante", "Cantina Gialli", 2010, "Fine ed armonico", "Pinot Bianco", 1));
-		wineList.add(new Wine(100004, "Negramaro del Salento", "Cantina Pini", 2020, "Fruttato con sentori di tabacco", "Bacca nera", 14));
+		
+		wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot", 10, WineType.RED));
+		wineList.add(new Wine(100001, "Lambrusco Reggiano", "Cantina Bruni", 2019, "Asciutto, frizzante e di corpo sapido", "Bacca Nera", 5, WineType.RED));
+		wineList.add(new Wine(100002, "Carso Malvasia", "Cantina Gialli", 2016, "Asciutto, sapido e fresco", "Malvasia Istriana", 100, WineType.WHITE));
+		wineList.add(new Wine(100003, "Franciacorta Spumante", "Cantina Gialli", 2010, "Fine ed armonico", "Pinot Bianco", 1, WineType.WHITE));
+		wineList.add(new Wine(100004, "Negramaro del Salento", "Cantina Pini", 2020, "Fruttato con sentori di tabacco", "Bacca nera", 14, WineType.WHITE));
+		wineList.add(new Wine(100005, "La Bioca", "Cantina di via Alba", 2000, "Scorrevole e di buon equilibrio","Bacca nera",2,WineType.RED));
+		wineList.add(new Wine(100006, "Calafuria","Cantina Tromaresca", 1999, "Intenso e delicato, note fragranti di frutta bianca", "Negramaro",23,WineType.ROSE));
+		wineList.add(new Wine(100007, "Charme rosé","Cantina Firriato", 2010, "Gusto è avvolgente, intenso, di sorprendente equilibrio", "Blend di vitigni autoctoni,",19,WineType.ROSE));
+
+		
+		orderList.add(new Order(userList.get(0).getID(), wineList.get(2)));
 	}
 	
+	ArrayList<Wine> getWineList()
+	{
+		return wineList;
+	}
+	
+	ArrayList<Order> getOrderList()
+	{
+		return orderList;
+	}
+	
+	ArrayList<LoggableUser> getUserList()
+	{
+		return userList;
+	}
 
 	/**
 	* Logs out the currently logged-in user by setting to {@code null} {@code currClient} and {@code currSeller}.
@@ -174,6 +195,24 @@ public class Store {
 		return null;
 	}
 	
+	public boolean editUser(String email, LoggableUser newUser)
+	{
+		if(alreadyRegistered(newUser) && !email.equals(newUser.getEmail()))
+			return false;
+		for(LoggableUser usr: userList)
+		{
+			if(usr.getEmail().equals(email))
+			{
+				usr.setEmail(newUser.getEmail());
+				usr.setName(newUser.getName());
+				usr.setSurname(newUser.getSurname());
+				usr.setPassword(newUser.getPassword());
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	* It retrieves the Client that matches the specified id. <p>
 	*
@@ -181,7 +220,7 @@ public class Store {
 	*
 	* @return the client if found, null otherwise.
 	*/
-	private Customer getClientByID(int clientId)
+	public Customer getClientByID(int clientId)
 	{
 		for(LoggableUser w: userList)
 		{
@@ -342,14 +381,14 @@ public class Store {
 	* @param searchType type of search
 	* @return list of wines that match the query
 	*/
-	private ArrayList<Wine> search(String searchText, SearchType searchType)
+	public ArrayList<Wine> search(String searchText, SearchType searchType)
 	{
 		ArrayList<Wine> res = new ArrayList<Wine>();
 		
 		if(searchType == SearchType.NAME)
 		{
 			for(Wine w: wineList)
-				if(w.getName() == searchText)
+				if(w.getName().toLowerCase().contains(searchText.toLowerCase()))
 					res.add(w);
 			
 		}
@@ -397,7 +436,7 @@ public class Store {
 			{
 				System.out.println("User: " + currClient.toString() + " is buying "+amount+ " bottles of "+ w.getName() + "\n");
 				w.setNumber(w.getNumber() - amount);
-				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount)));
+				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
 				return true;
 			}
 			else if (w.getNumber()==amount)
@@ -411,7 +450,7 @@ public class Store {
 				}
 				
 				w.setNumber(w.getNumber() - amount);
-				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount)));
+				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount,w.getWineType())));
 				return true;			
 			}
 			else

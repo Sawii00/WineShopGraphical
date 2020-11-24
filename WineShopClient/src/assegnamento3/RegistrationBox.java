@@ -6,17 +6,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class RegistrationBox
 {
-
+	private String values[] = new String[4];
+	private boolean validData = false;
+	
 	public RegistrationBox(String title, int width, int height) {
 		display(title, width, height);
 	}
 
+	public String[] getValues()
+	{
+		return values;
+	}
+	
 	private void display(String title, int width, int height)
 	
 	{
@@ -30,27 +39,31 @@ public class RegistrationBox
 			TextField name = (TextField)root.lookup("#regNameTextField");
 			TextField surname = (TextField)root.lookup("#regSurnameTextField");
 			TextField email = (TextField)root.lookup("#regEmailTextField");
-			TextField password = (TextField)root.lookup("#regPasswordTextField");
+			PasswordField password = (PasswordField)root.lookup("#regPasswordTextField");
+			Label title_label = (Label)root.lookup("#title");
+			title_label.setText(title);
+			
+			
+			
 			
 			btn.setOnAction(e -> {
-				
-				Request r = new Request("register");
-				r.addParameter(name.getText());
-				r.addParameter(surname.getText());
-				r.addParameter(email.getText());
-				r.addParameter(password.getText());
-				Response res = MainClient.client.sendRequest(r);
-				
-				if(res.getReturnCode() == StatusCode.SUCCESS)
+				values[0] = name.getText();
+				values[1] = surname.getText();
+				values[2] = email.getText();
+				values[3] = password.getText();
+				for(String s: values)
 				{
-					window.close();
-				}
-				else
-				{
-					new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
+					if(s.equals(""))
+					{
+						new BasicAlertBox("Error", "Fill-in all the information", 300, 100);
+						return;
+					}
 				}
 				
+				validData = true;
+				window.close();
 			});
+			
 			window.setTitle(title);
 	        window.initModality(Modality.APPLICATION_MODAL);
 	        window.setScene(new Scene(root, width, height));
@@ -67,8 +80,8 @@ public class RegistrationBox
 		
 	}
 
-	void onClose(ITodo todo) {
-		todo.todo();
+	public boolean isValid()
+	{
+		return validData;
 	}
-
 }
