@@ -6,6 +6,7 @@ package assegnamento3;
  */
 public class Order {
 	
+	private int orderID;
 	private int clientID;
 	private Wine wine;
 	
@@ -14,11 +15,18 @@ public class Order {
 	 * @param c the client who buy the wine
 	 * @param w the wine that is bought.
 	 */
-	public Order(int c, Wine w)
+	public Order(int id, int c, Wine w)
 	{
+		orderID = id;
 		clientID = c;
 		wine = w;
 	}
+	
+	public int getOrderID()
+	{
+		return orderID;		
+	}
+
 	
 	/**
 	 * Getter for the client.

@@ -9,37 +9,18 @@ public class Parser
 		return new LoggableUser(vals[0], vals[1], vals[2], vals[3]);
 	}
 	
-	public static WineType parseWineType(String type)
-	{
-		switch (type)
-		{
-		case "RED":
-		{
-			return WineType.RED;
-		}
-		case "WHITE":
-		{
-			return WineType.WHITE;
-		}
-		case "ROSE":
-		{
-			return WineType.ROSE;
-		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + type);
-		}
-	}
+	
 	
 	public static Wine parseWine(String wine)
 	{
 		String vals[] = wine.split("<>");
-		return new Wine(vals[0], vals[1], Integer.parseInt(vals[2]), vals[3], vals[4], Integer.parseInt(vals[5]), parseWineType(vals[6]));
+		return new Wine(Integer.parseInt(vals[0]),vals[1], vals[2], Integer.parseInt(vals[3]), vals[4], vals[5], Integer.parseInt(vals[6]), vals[7]);
 	}
 	
 	public static Order parseOrder(String orders)
 	{
 		String vals[] = orders.split("<>");
-		return new Order(vals[0], vals[1], Integer.parseInt(vals[2]));
+		return new Order(Integer.parseInt(vals[0]), vals[1], vals[2], Integer.parseInt(vals[3]));
 	}
 	
 	

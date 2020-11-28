@@ -41,7 +41,34 @@ public class Wine implements Serializable
 	public void setWineType(WineType wineType) {
 		this.wineType = wineType;
 	}
+	
+	public void setWineType(String wineType) {
+		this.wineType = parseWineType(wineType);
+	}
 
+	private static WineType parseWineType(String type)
+	{
+		type=type.toLowerCase().replace("é","e");
+		switch (type)
+		{
+		case "red":
+		{
+			return WineType.RED;
+		}
+		case "white":
+		{
+			return WineType.WHITE;
+		}
+		case "rose":
+		{
+			return WineType.ROSE;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + type);
+		}
+	}
+	
+	
 	/**
 	 * Class constructor. <p>
 	 * The id, if not specified, is generated random.
@@ -63,6 +90,29 @@ public class Wine implements Serializable
 		this.grapeType = grapeType;
 		this.number = number;
 		this.wineType = wt;
+	}
+	
+	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number, String wt) {
+		Random r = new Random();
+		this.id = r.nextInt();
+		this.name = name;
+		this.producer = producer;
+		this.year = year;
+		this.technicalNotes = technicalNotes;
+		this.grapeType = grapeType;
+		this.number = number;
+		this.wineType = parseWineType(wt);
+	}
+	
+	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number, String wt) {
+		this.id = id;
+		this.name = name;
+		this.producer = producer;
+		this.year = year;
+		this.technicalNotes = technicalNotes;
+		this.grapeType = grapeType;
+		this.number = number;
+		this.wineType = parseWineType(wt);
 	}
 
 	/**
@@ -223,7 +273,7 @@ public class Wine implements Serializable
 	
 	public String serializedString()
 	{
-		return this.name+"<>"+this.producer+"<>"+this.year+"<>"+this.technicalNotes+"<>"+this.grapeType+"<>"+this.number+"<>"+this.wineType.toString();
+		return this.id+"<>"+this.name+"<>"+this.producer+"<>"+this.year+"<>"+this.technicalNotes+"<>"+this.grapeType+"<>"+this.number+"<>"+this.wineType.toString();
 	}
 	
 }

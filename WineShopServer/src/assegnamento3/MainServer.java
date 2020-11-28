@@ -4,7 +4,7 @@ public class MainServer {
 
 	public static void main(String[] args) {
 		//NetworkServer n = new NetworkServer(Integer.parseInt(args[0]));
-		NetworkServer n = new NetworkServer(4922);
+		NetworkServer n = new NetworkServer(4920);
 		n.run();
 	}
 

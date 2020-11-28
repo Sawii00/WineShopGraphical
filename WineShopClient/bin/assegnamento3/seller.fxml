@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.SellerController">
    <children>
-      <Label text="seller" />
+      <ChoiceBox id="adminChoiceBox" fx:id="sellerChoiceBox" layoutX="34.0" layoutY="23.0" prefHeight="25.0" prefWidth="206.0" />
+      <Button id="admin_add_button" fx:id="addButton" disable="true" layoutX="621.0" layoutY="23.0" mnemonicParsing="false" onAction="#add" text="Add" />
+      <Button id="admin_edit_button" fx:id="editButton" disable="true" layoutX="745.0" layoutY="23.0" mnemonicParsing="false" onAction="#edit" text="Edit" />
+      <TableView id="sellerWineTable" fx:id="sellerWineTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0" visible="false">
+         <columns>
+            <TableColumn prefWidth="148.0" text="Name" />
+            <TableColumn prefWidth="128.0" text="Producer" />
+            <TableColumn prefWidth="48.0" text="Year" />
+            <TableColumn prefWidth="248.0" text="Technical Notes" />
+            <TableColumn prefWidth="124.0" text="Grape Type" />
+            <TableColumn prefWidth="66.0" text="Amount" />
+         </columns>
+      </TableView>
+      <TableView id="sellerPersonTable" fx:id="sellerOrderTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0" visible="false">
+         <columns>
+            <TableColumn prefWidth="254.0" text="Customer Email" />
+            <TableColumn prefWidth="254.0" text="Wine" />
+            <TableColumn prefWidth="254.0" text="Amount" />
+         </columns>
+      </TableView>
+      <Button id="admin_add_button" fx:id="removeButton" disable="true" layoutX="672.0" layoutY="23.0" mnemonicParsing="false" onAction="#remove" text="Remove" />
+      <Button id="admin_add_button" fx:id="refreshButton" layoutX="269.0" layoutY="23.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
    </children>
-</VBox>
+</AnchorPane>

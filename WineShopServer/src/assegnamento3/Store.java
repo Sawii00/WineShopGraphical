@@ -87,7 +87,7 @@ public class Store {
 		wineList.add(new Wine(100007, "Charme rosé","Cantina Firriato", 2010, "Gusto è avvolgente, intenso, di sorprendente equilibrio", "Blend di vitigni autoctoni,",19,WineType.ROSE));
 
 		
-		orderList.add(new Order(userList.get(0).getID(), wineList.get(2)));
+		orderList.add(new Order(0,userList.get(0).getID(), wineList.get(2)));
 	}
 	
 	ArrayList<Wine> getWineList()
@@ -258,17 +258,10 @@ public class Store {
 	 */
 	synchronized public void addWine(Wine w)
 	{
-		if(currSeller == null)
-		{
-			System.out.println("No Seller is logged in.");
-			return;
-		}
-		
 		if(!contains(wineList, w))
 		{
 			w.setID(100000+wineList.size());
 			wineList.add(w);
-			
 		}
 		else
 		{
@@ -436,7 +429,7 @@ public class Store {
 			{
 				System.out.println("User: " + currClient.toString() + " is buying "+amount+ " bottles of "+ w.getName() + "\n");
 				w.setNumber(w.getNumber() - amount);
-				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
+				orderList.add(new Order(orderList.size(), currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
 				return true;
 			}
 			else if (w.getNumber()==amount)
@@ -450,7 +443,7 @@ public class Store {
 				}
 				
 				w.setNumber(w.getNumber() - amount);
-				orderList.add(new Order(currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount,w.getWineType())));
+				orderList.add(new Order(orderList.size(), currClient.getID(), new Wine(w.getName(), w.getProducer(), w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount,w.getWineType())));
 				return true;			
 			}
 			else
@@ -485,4 +478,53 @@ public class Store {
 		System.out.println("\nUser "+currClient.getName() + " " + currClient.getSurname() + "(" + currClient.getID() + ") has requested to be notified.\n");
 		notifRequest.put(wineId, new AbstractMap.SimpleEntry<Integer, Integer>(currClient.getID(),amount));
 	}
+	
+	
+	
+	synchronized public void removeSeller(String email)
+	{
+		for (LoggableUser usr: userList)
+		{
+			if (usr.getEmail().equals(email))
+			{
+				userList.remove(usr);
+				return;
+			}
+		}
+	}
+	
+	synchronized public void removeWine(int id)
+	{
+		for (Wine w: wineList)
+		{
+			if (w.getID()==id)
+			{
+				wineList.remove(w);
+				return;
+			}
+		}
+	}
+	
+	synchronized public boolean editWine(int id, Wine newWine)
+	{
+		for (Wine w: wineList) 
+		{
+			if (id==w.getID())
+			{
+				//return false;
+			//else
+			//{
+				w.setName(newWine.getName());
+				w.setProducer(newWine.getProducer());
+				w.setYear(newWine.getYear());
+				w.setTechnicalNotes(newWine.getTechnicalNotes());
+				w.setGrapeType(newWine.getGrapeType());
+				w.setNumber(newWine.getNumber());
+				w.setWineType(newWine.getWineType());
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

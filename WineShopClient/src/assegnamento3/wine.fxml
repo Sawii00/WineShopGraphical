@@ -5,19 +5,52 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane style="-fx-focus-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane onMouseEntered="#showInfo" onMouseExited="#hideInfo" style="-fx-focus-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.SingleWineController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="178.0" style="-fx-border-style: solid; -fx-border-width: 3; -fx-border-color: #A52A2A; -fx-focus-color: transparent;">
          <children>
-            <ImageView id="wineImage" fitHeight="172.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@red.jpg" />
-               </image>
-            </ImageView>
-            <AnchorPane prefHeight="62.0" prefWidth="202.0">
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="5.0" layoutY="14.0" text="Producer:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="5.0" layoutY="46.0" text="Technical Notes:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="5.0" layoutY="123.0" text="Grape Type:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="5.0" layoutY="150.0" text="Amount:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label id="producerLabel" layoutX="62.0" layoutY="14.0" prefHeight="17.0" prefWidth="109.0" />
+                        <Label id="notesLabel" alignment="TOP_LEFT" layoutX="5.0" layoutY="63.0" prefHeight="57.0" prefWidth="165.0" wrapText="true" />
+                        <Label id="grapeTypeLabel" layoutX="75.0" layoutY="123.0" prefHeight="17.0" prefWidth="93.0" />
+                        <Label id="amountLabel" layoutX="59.0" layoutY="150.0" prefHeight="17.0" prefWidth="109.0" />
+                     </children>
+                  </AnchorPane>
+                  <ImageView id="wineImage" fx:id="imageView" fitHeight="172.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@red.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <AnchorPane fx:id="anchorPane" prefHeight="62.0" prefWidth="172.0">
                <children>
                   <Label layoutX="5.0" layoutY="11.0" prefHeight="21.0" prefWidth="52.0" text="Name:">
                      <font>

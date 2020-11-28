@@ -38,6 +38,12 @@ public class AdminController {
 	Button editButton;
 	
 	@FXML
+	Button removeButton;
+
+	@FXML
+	Button refreshButton;
+	
+	@FXML
 	TableView<LoggableUser> adminPersonTable;
 	
 	@FXML
@@ -47,6 +53,102 @@ public class AdminController {
 	TableView<Order> adminOrderTable;
 	
 
+	public void removeSeller()
+	{
+		LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();
+		Request r = new Request("removeSeller");
+		r.addParameter(usr.getEmail());
+		Response res = MainClient.client.sendRequest(r);
+		adminPersonTable.getItems().remove(usr);
+		adminPersonTable.refresh();
+		adminPersonTable.getSelectionModel().clearSelection();
+	}
+	
+	public void refresh()
+	{
+		String selectedTable = adminChoiceBox.getSelectionModel().getSelectedItem();
+		adminPersonTable.getSelectionModel().clearSelection();
+		if (selectedTable.equals("Customers"))
+		{
+			sellerTableOn = false;
+			adminPersonTable.setVisible(true);
+			adminWineTable.setVisible(false);
+			adminOrderTable.setVisible(false);
+			addButton.setDisable(true);
+			editButton.setDisable(true);
+			removeButton.setDisable(true);
+			Request r = new Request("getCustomersList");
+			Response res = MainClient.client.sendRequest(r);
+			customers.clear();
+			for(String usr: res.getArguments())
+			{
+				customers.add(Parser.parseUser(usr));
+			}
+			adminPersonTable.getItems().clear();
+			adminPersonTable.getItems().addAll(customers);
+			
+		}
+		else if (selectedTable.equals("Sellers")) 
+		{
+			adminPersonTable.getSelectionModel().clearSelection();
+			sellerTableOn = true;
+			adminPersonTable.setVisible(true);
+			adminWineTable.setVisible(false);
+			adminOrderTable.setVisible(false);
+			addButton.setDisable(false);
+			editButton.setDisable(true);
+			removeButton.setDisable(true);
+			Request r = new Request("getSellersList");
+			Response res = MainClient.client.sendRequest(r);
+			sellers.clear();
+			for(String usr: res.getArguments())
+			{
+				sellers.add(Parser.parseUser(usr));
+			}				
+			adminPersonTable.getItems().clear();
+			adminPersonTable.getItems().addAll(sellers);
+		}
+		else if (selectedTable.equals("Orders"))
+		{
+			sellerTableOn = false;
+			adminPersonTable.setVisible(false);
+			adminWineTable.setVisible(false);
+			adminOrderTable.setVisible(true);
+			addButton.setDisable(true);
+			editButton.setDisable(true);
+			removeButton.setDisable(true);
+			Request r = new Request("getOrderList");
+			Response res = MainClient.client.sendRequest(r);
+			orders.clear();
+			for(String ord: res.getArguments())
+			{
+				orders.add(Parser.parseOrder(ord));
+			}				
+			adminOrderTable.getItems().clear();
+			adminOrderTable.getItems().addAll(orders);
+		}
+		else 
+		{
+			sellerTableOn = false;
+			adminPersonTable.setVisible(false);
+			adminWineTable.setVisible(true);
+			adminOrderTable.setVisible(false);
+			addButton.setDisable(true);
+			editButton.setDisable(true);
+			removeButton.setDisable(true);
+			Request r = new Request("getWinesList");
+			Response res = MainClient.client.sendRequest(r);
+			wines.clear();
+			for(String wine: res.getArguments())
+			{
+				wines.add(Parser.parseWine(wine));
+			}
+			adminWineTable.getItems().clear();
+			adminWineTable.getItems().addAll(wines);
+		}
+	}	
+		
+	
 	
 	public void addSeller()
 	{
@@ -68,12 +170,13 @@ public class AdminController {
 	
 	public void editSeller()
 	{
-		RegistrationBox box = new RegistrationBox("Edit Seller", 480, 320);
+		LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();
+		String vals[] = {usr.getName(), usr.getSurname(), usr.getEmail(), usr.getPassword()};
+		RegistrationBox box = new RegistrationBox("Edit Seller", 480, 320, vals);
 		if(box.isValid())
 		{
-			String[] vals = box.getValues();
+			vals = box.getValues();
 			Request r = new Request("editSeller");
-			LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();
 			r.addParameter(usr.getEmail());
 			r.addAllParameters(vals);
 			Response res = MainClient.client.sendRequest(r);
@@ -88,6 +191,8 @@ public class AdminController {
 				adminPersonTable.getItems().get(adminPersonTable.getItems().indexOf(usr)).setPassword(vals[3]);
 				adminPersonTable.refresh();
 			}
+			adminPersonTable.getSelectionModel().clearSelection();
+
 		}
 		
 	}
@@ -126,8 +231,16 @@ public class AdminController {
 			@Override
 			public void onChanged(Change<? extends LoggableUser> arg0) 
 			{
-				if(sellerTableOn)
+				if(sellerTableOn && arg0.getList().size() != 0)
+				{
 					editButton.setDisable(false);
+					removeButton.setDisable(false);
+				}
+				else
+				{
+					editButton.setDisable(true);
+					removeButton.setDisable(true);
+				}
 			}
     		
     	});
@@ -136,87 +249,14 @@ public class AdminController {
     	{
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-				if(adminChoiceBox.getItems().get((int) arg2).equals("Sellers"))
-					adminPersonTable.getSelectionModel().clearSelection();
-				
-				if (adminChoiceBox.getItems().get((int) arg2).equals("Customers"))
-				{
-					sellerTableOn = false;
-					adminPersonTable.setVisible(true);
-					adminWineTable.setVisible(false);
-					adminOrderTable.setVisible(false);
-					addButton.setDisable(true);
-					editButton.setDisable(true);
-					Request r = new Request("getCustomersList");
-					Response res = MainClient.client.sendRequest(r);
-					customers.clear();
-					for(String usr: res.getArguments())
-					{
-						customers.add(Parser.parseUser(usr));
-					}
-					adminPersonTable.getItems().clear();
-					adminPersonTable.getItems().addAll(customers);
-					
-				}
-				else if (adminChoiceBox.getItems().get((int) arg2).equals("Sellers")) 
-				{
-					sellerTableOn = true;
-					adminPersonTable.setVisible(true);
-					adminWineTable.setVisible(false);
-					adminOrderTable.setVisible(false);
-					addButton.setDisable(false);
-					editButton.setDisable(true);
-					Request r = new Request("getSellersList");
-					Response res = MainClient.client.sendRequest(r);
-					sellers.clear();
-					for(String usr: res.getArguments())
-					{
-						sellers.add(Parser.parseUser(usr));
-					}				
-					adminPersonTable.getItems().clear();
-					adminPersonTable.getItems().addAll(sellers);
-				}
-				else if (adminChoiceBox.getItems().get((int) arg2).equals("Orders"))
-				{
-					sellerTableOn = false;
-					adminPersonTable.setVisible(false);
-					adminWineTable.setVisible(false);
-					adminOrderTable.setVisible(true);
-					addButton.setDisable(true);
-					editButton.setDisable(true);
-					Request r = new Request("getOrderList");
-					Response res = MainClient.client.sendRequest(r);
-					orders.clear();
-					for(String ord: res.getArguments())
-					{
-						orders.add(Parser.parseOrder(ord));
-					}				
-					adminOrderTable.getItems().clear();
-					adminOrderTable.getItems().addAll(orders);
-				}
-				else 
-				{
-					sellerTableOn = false;
-					adminPersonTable.setVisible(false);
-					adminWineTable.setVisible(true);
-					adminOrderTable.setVisible(false);
-					addButton.setDisable(true);
-					editButton.setDisable(true);
-					Request r = new Request("getWinesList");
-					Response res = MainClient.client.sendRequest(r);
-					wines.clear();
-					for(String wine: res.getArguments())
-					{
-						wines.add(Parser.parseWine(wine));
-					}
-					adminWineTable.getItems().clear();
-					adminWineTable.getItems().addAll(wines);
-				}
-			}	
+				adminChoiceBox.getSelectionModel().select((int)arg2);
+				refresh();
+			}
     	});
     	
-    	adminChoiceBox.getSelectionModel().select(1);  	
-    	adminChoiceBox.getSelectionModel().select(0);  	
+		adminChoiceBox.getSelectionModel().select(1);
+		adminChoiceBox.getSelectionModel().select(0);
+
     	
     }
 }

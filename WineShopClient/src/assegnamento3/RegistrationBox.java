@@ -14,10 +14,19 @@ import javafx.stage.Stage;
 
 public class RegistrationBox
 {
-	private String values[] = new String[4];
+	private String values[] = {"","","",""};
 	private boolean validData = false;
 	
-	public RegistrationBox(String title, int width, int height) {
+	public RegistrationBox(String title, int width, int height)
+	{
+		display(title, width, height);
+	}
+	
+	public RegistrationBox(String title, int width, int height, String[] defaultValues) 
+	{
+		if(defaultValues.length != 4)
+			throw new IllegalArgumentException("Invalid Arguments to Regitration Box");
+		values = defaultValues;
 		display(title, width, height);
 	}
 
@@ -42,7 +51,10 @@ public class RegistrationBox
 			PasswordField password = (PasswordField)root.lookup("#regPasswordTextField");
 			Label title_label = (Label)root.lookup("#title");
 			title_label.setText(title);
-			
+			name.setText(values[0]);
+			surname.setText(values[1]);
+			email.setText(values[2]);
+			password.setText(values[3]);
 			
 			
 			

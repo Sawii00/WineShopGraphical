@@ -28,6 +28,7 @@ public class NetworkClient {
 	
 	public Response sendRequest (Request r) 
 	{
+		System.out.println("Sending Request");
 		try
 		{
 			if (os != null && is != null)

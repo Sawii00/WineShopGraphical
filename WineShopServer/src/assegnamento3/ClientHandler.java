@@ -135,7 +135,7 @@ public class ClientHandler implements Runnable
 				for(Order o: NetworkServer.mainStore.getOrderList())
 				{
 					Customer c = NetworkServer.mainStore.getClientByID(o.getClient());
-					response.addArgument(c.getEmail() + "<>"+o.getWine().getName()+"<>"+o.getWine().getNumber());
+					response.addArgument(o.getOrderID()+"<>"+c.getEmail() + "<>"+o.getWine().getName()+"<>"+o.getWine().getNumber());
 				}
 				return response;
 			}
@@ -206,10 +206,71 @@ public class ClientHandler implements Runnable
 				}
 				return response;
 			}
+			case "removeSeller":
+			{
+				if(request.getParameters().size() != 1)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				NetworkServer.mainStore.removeSeller(request.getParameters().get(0));
+				return new Response(StatusCode.SUCCESS);
+			}
+			case "addWine":
+			{
+				if(request.getParameters().size() != 7)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				String name = request.getParameters().get(0);
+				String producer = request.getParameters().get(1);
+				String year = request.getParameters().get(2);
+				String notes = request.getParameters().get(3);
+				String grape = request.getParameters().get(4);
+				String number = request.getParameters().get(5);
+				String type = request.getParameters().get(6);
+				
+				Wine w = new Wine(name, producer, Integer.parseInt(year), notes, grape, Integer.parseInt(number), type);
+				NetworkServer.mainStore.addWine(w);
+				response = new Response(StatusCode.SUCCESS);
+				return response;
+			}
+			case "removeWine":
+			{
+				if(request.getParameters().size() != 1)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				NetworkServer.mainStore.removeWine(Integer.parseInt(request.getParameters().get(0)));
+				return new Response(StatusCode.SUCCESS);
+			}
+			case "editWine":
+			{
+				if(request.getParameters().size() != 8)
+					return new Response(StatusCode.INVALID_ARGUMENTS);
+				
+				String id = request.getParameters().get(0);
+				String name = request.getParameters().get(1);
+				String producer = request.getParameters().get(2);
+				String year = request.getParameters().get(3);
+				String notes = request.getParameters().get(4);
+				String grape = request.getParameters().get(5);
+				String number = request.getParameters().get(6);
+				String type = request.getParameters().get(7);
+				
+				boolean ok = NetworkServer.mainStore.editWine(Integer.parseInt(id), new Wine(name, producer, Integer.parseInt(year), notes, grape, Integer.parseInt(number), type));
+				Response res;
+				if(ok)
+					res = new Response(StatusCode.SUCCESS);
+				else
+					res = new Response(StatusCode.INVALID_ARGUMENTS);
+				return res;
+			}
+			case "editOrder":
+			{
+				
+				return new Response(StatusCode.SUCCESS);
+			}
+			case "removeOrder":
+			{
+				return new Response(StatusCode.SUCCESS);
+			}
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + method);
 		}
-		
 		
 	}
 	
