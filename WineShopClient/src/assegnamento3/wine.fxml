@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane onMouseEntered="#showInfo" onMouseExited="#hideInfo" style="-fx-focus-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.SingleWineController">
+<Pane onMouseEntered="#showInfo" onMouseExited="#hideInfo" onMouseReleased="#select" style="-fx-focus-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assegnamento3.SingleWineController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="178.0" style="-fx-border-style: solid; -fx-border-width: 3; -fx-border-color: #A52A2A; -fx-focus-color: transparent;">
          <children>
@@ -64,6 +64,7 @@
                      </font>
                   </Label>
                   <Label id="yearLabel" layoutX="47.0" layoutY="32.0" prefHeight="21.0" prefWidth="122.0" text="Label" />
+                  <Label id="wineId" layoutX="92.0" layoutY="13.0" prefHeight="17.0" prefWidth="77.0" text="Label" visible="false" />
                </children>
             </AnchorPane>
          </children>

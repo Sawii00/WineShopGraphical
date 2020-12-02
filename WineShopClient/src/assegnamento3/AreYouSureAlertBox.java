@@ -9,13 +9,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AreYouSureAlertBox {
+public class AreYouSureAlertBox
+{
 
-	public AreYouSureAlertBox(String title, String message, int width, int height, ITodo todo) {
+	public AreYouSureAlertBox(String title, String message, int width, int height, ITodo todo)
+	{
 		display(title, message, width, height, todo);
 	}
 
-	private void display(String title, String message, int width, int height, ITodo todo) {
+	private void display(String title, String message, int width, int height, ITodo todo)
+	{
 		Stage window = new Stage();
 
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -29,16 +32,16 @@ public class AreYouSureAlertBox {
 		Label label = new Label();
 		label.setText(message);
 
-		
-		
 		Button yes = new Button("Yes");
 		yes.setDefaultButton(true);
-		yes.setOnAction(e -> {
+		yes.setOnAction(e ->
+		{
 			onClose(todo);
 			window.close();
 		});
 		Button no = new Button("No");
-		no.setOnAction(e -> {
+		no.setOnAction(e ->
+		{
 			window.close();
 		});
 
@@ -55,7 +58,8 @@ public class AreYouSureAlertBox {
 		window.showAndWait();
 	}
 
-	void onClose(ITodo todo) {
+	void onClose(ITodo todo)
+	{
 		todo.todo();
 	}
 

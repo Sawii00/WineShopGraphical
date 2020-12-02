@@ -10,45 +10,44 @@ import java.net.Socket;
  * list of threads to be join
  * */
 
-public class NetworkServer {
+public class NetworkServer
+{
 
 	private ServerSocket mainSocket;
 	private boolean isRunning = true;
 	public static Store mainStore = new Store();
 
-	
 	public NetworkServer(int port)
 	{
 		try
 		{
 			mainSocket = new ServerSocket(port);
-			System.out.println("Started on port: "+port);
-		}
-		catch (IOException e)
+			System.out.println("Started on port: " + port);
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
-	public void run() 
+
+	public void run()
 	{
 		isRunning = true;
-		while (isRunning) 
+		while (isRunning)
 		{
-			try 
+			try
 			{
 				Socket s = mainSocket.accept();
-				
+
 				Runnable r = new ClientHandler(s);
 				new Thread(r).start();
-				//s.close();
+				// s.close();
 			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void stop()
 	{
 		isRunning = false;

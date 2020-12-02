@@ -15,6 +15,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.collections.ListChangeListener.Change;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,19 +37,22 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-enum SearchType
+enum SearchType1
 {
 	NAME, YEAR
 };
 
-public class HomeController
+public class CustomerController
 {
 
 	@FXML
 	Button searchButton;
 
 	@FXML
-	Button loginRegisterButton;
+	Button logoutButton;
+
+	@FXML
+	Button mexButton;
 
 	@FXML
 	TextField searchTextField;
@@ -70,7 +74,7 @@ public class HomeController
 
 	Pane singleWine;
 
-	ArrayList<Wine> viewedWines = new ArrayList<>();
+	static ArrayList<Wine> viewedWines = new ArrayList<>();
 	ArrayList<Wine> wines = new ArrayList<>();
 
 	Image redImage = new Image(getClass().getResource("red.jpg").toExternalForm());
@@ -79,6 +83,20 @@ public class HomeController
 
 	Image images[] = { redImage, whiteImage, roseImage };
 
+	static int customerId;
+
+	public void setCustomerID(int id)
+	{
+		customerId = id;
+	}
+
+	
+	public void displayMessages()
+	{
+		MessageBox msg = new MessageBox(this.customerId);
+		
+	}
+	
 	public void search()
 	{
 		if (searchTextField.getText().equals(""))
@@ -107,6 +125,11 @@ public class HomeController
 				singleWine = FXMLLoader.load(getClass().getResource("wine.fxml"));
 				((ImageView) ((StackPane) ((VBox) singleWine.getChildren().get(0)).getChildren().get(0)).getChildren()
 						.get(1)).setImage(images[w.getWineType().ordinal()]);
+				
+				singleWine.addEventHandler(RefreshEvent.REFRESH, (e)->{
+					populateFullList();
+					refresh();
+				});
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -117,32 +140,35 @@ public class HomeController
 			Label techNotes = (Label) singleWine.lookup("#notesLabel");
 			Label grapeType = (Label) singleWine.lookup("#grapeTypeLabel");
 			Label amount = (Label) singleWine.lookup("#amountLabel");
+			Label wineId = (Label) singleWine.lookup("#wineId");
 			name.setText(w.getName());
 			year.setText("" + w.getYear());
 			producer.setText(w.getProducer());
 			techNotes.setText(w.getTechnicalNotes());
 			grapeType.setText(w.getGrapeType());
 			amount.setText("" + w.getNumber());
+			wineId.setText("" + w.getID());
 			flowPane.getChildren().add(singleWine);
 
 		}
 	}
 
-	public void loginRegister()
+	public void logout()
 	{
-		Stage mainStage = (Stage) loginRegisterButton.getScene().getWindow();
+		Stage mainStage;
 		Parent root;
+
+		mainStage = (Stage) logoutButton.getScene().getWindow();
 
 		try
 		{
-			root = FXMLLoader.load(getClass().getResource("login.fxml"));
+			root = FXMLLoader.load(getClass().getResource("home.fxml"));
 			mainStage.setScene(new Scene(root));
 			mainStage.show();
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	private void searchWine(String text, SearchType type)

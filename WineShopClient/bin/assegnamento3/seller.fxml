@@ -13,22 +13,24 @@
       <Button id="admin_edit_button" fx:id="editButton" disable="true" layoutX="745.0" layoutY="23.0" mnemonicParsing="false" onAction="#edit" text="Edit" />
       <TableView id="sellerWineTable" fx:id="sellerWineTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0" visible="false">
          <columns>
-            <TableColumn prefWidth="148.0" text="Name" />
-            <TableColumn prefWidth="128.0" text="Producer" />
-            <TableColumn prefWidth="48.0" text="Year" />
-            <TableColumn prefWidth="248.0" text="Technical Notes" />
-            <TableColumn prefWidth="124.0" text="Grape Type" />
-            <TableColumn prefWidth="66.0" text="Amount" />
+            <TableColumn prefWidth="148.0" resizable="false" text="Name" />
+            <TableColumn prefWidth="128.0" resizable="false" text="Producer" />
+            <TableColumn prefWidth="48.0" resizable="false" text="Year" />
+            <TableColumn prefWidth="248.0" resizable="false" text="Technical Notes" />
+            <TableColumn prefWidth="124.0" resizable="false" text="Grape Type" />
+            <TableColumn prefWidth="66.0" resizable="false" text="Amount" />
          </columns>
       </TableView>
       <TableView id="sellerPersonTable" fx:id="sellerOrderTable" editable="true" layoutX="19.0" layoutY="106.0" prefHeight="271.0" prefWidth="763.0" visible="false">
          <columns>
-            <TableColumn prefWidth="254.0" text="Customer Email" />
-            <TableColumn prefWidth="254.0" text="Wine" />
-            <TableColumn prefWidth="254.0" text="Amount" />
+            <TableColumn prefWidth="254.0" resizable="false" text="Customer Email" />
+            <TableColumn prefWidth="254.0" resizable="false" text="Wine" />
+            <TableColumn prefWidth="254.0" resizable="false" text="Amount" />
          </columns>
       </TableView>
       <Button id="admin_add_button" fx:id="removeButton" disable="true" layoutX="672.0" layoutY="23.0" mnemonicParsing="false" onAction="#remove" text="Remove" />
       <Button id="admin_add_button" fx:id="refreshButton" layoutX="269.0" layoutY="23.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+      <Button fx:id="logoutButton" layoutX="436.0" layoutY="23.0" mnemonicParsing="false" onAction="#logout" text="Logout" />
+      <Button fx:id="mexButton" layoutX="349.0" layoutY="23.0" mnemonicParsing="false" onAction="#displayMessages" text="Mex" />
    </children>
 </AnchorPane>

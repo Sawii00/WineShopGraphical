@@ -1,5 +1,7 @@
 package assegnamento3;
+
 @FunctionalInterface
-public interface ITodo {
+public interface ITodo
+{
 	void todo();
 }

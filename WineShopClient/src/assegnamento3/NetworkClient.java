@@ -5,12 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class NetworkClient {
+public class NetworkClient
+{
 
 	private Socket mainSocket;
 	private ObjectOutputStream os = null;
 	private ObjectInputStream is = null;
-	
+
 	public NetworkClient(String host, int port)
 	{
 		try
@@ -19,14 +20,13 @@ public class NetworkClient {
 			System.out.println(mainSocket);
 			os = new ObjectOutputStream(mainSocket.getOutputStream());
 			is = new ObjectInputStream(mainSocket.getInputStream());
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
-			new BasicAlertBox("Error", "Could not connect to Server on port: "+port, 300, 100);
+			new BasicAlertBox("Error", "Could not connect to Server on port: " + port, 300, 100);
 		}
 	}
-	
-	public Response sendRequest (Request r) 
+
+	public Response sendRequest(Request r)
 	{
 		System.out.println("Sending Request");
 		try
@@ -42,12 +42,12 @@ public class NetworkClient {
 					return res;
 				}
 			}
-		} catch (IOException | ClassNotFoundException e) 
+		} catch (IOException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return new Response(StatusCode.ERROR);
-		
+
 	}
 }
