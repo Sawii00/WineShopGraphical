@@ -20,7 +20,7 @@ public class MainClient extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		client = new NetworkClient("127.0.0.1", 4919);
+		client = new NetworkClient("127.0.0.1", 4905);
 		Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
 		primaryStage.setTitle("WineShop");
 		primaryStage.setScene(new Scene(root));

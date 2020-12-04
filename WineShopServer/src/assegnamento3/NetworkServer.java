@@ -23,6 +23,7 @@ public class NetworkServer
 		{
 			mainSocket = new ServerSocket(port);
 			System.out.println("Started on port: " + port);
+			//mainStore.loadData() --> read sql database
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -46,6 +47,10 @@ public class NetworkServer
 				e.printStackTrace();
 			}
 		}
+		
+		//save all lists
+		//periodic timer saves the lists
+		
 	}
 
 	public void stop()

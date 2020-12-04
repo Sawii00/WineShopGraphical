@@ -36,8 +36,6 @@ public class SingleWineController
 	public void showInfo()
 	{
 
-		// TODO: setDisable
-
 		TranslateTransition translation = new TranslateTransition(new Duration(350), imageView);
 		translation.setToY(-180);
 		translation.play();
@@ -62,20 +60,26 @@ public class SingleWineController
 	public void select()
 	{
 		Label boughtW = (Label) anchorPane.lookup("#wineId");
-		int wineId = Integer.parseInt(boughtW.getText());
-		Wine w = new Wine(0, "", "", 0, "", "", 0, WineType.RED);
-		for (Wine w1 : CustomerController.viewedWines)
-		{
-			if (w1.getID() == wineId)
+		try {
+			int wineId = Integer.parseInt(boughtW.getText());
+			Wine w = new Wine(0, "", "", 0, "", "", 0, WineType.RED);
+			for (Wine w1 : CustomerController.viewedWines)
 			{
-				w = w1;
-				break;
+				if (w1.getID() == wineId)
+				{
+					w = w1;
+					break;
+				}
 			}
+			
+			BuyBox buyPopup = new BuyBox(w, CustomerController.customerId);
+			Pane father = (Pane)anchorPane.getParent();
+			father.fireEvent(new RefreshEvent(RefreshEvent.REFRESH));
+		} catch (NumberFormatException e) {
+			//id is not available --> its the home page
+			return;
 		}
 		
-		BuyBox buyPopup = new BuyBox(w, CustomerController.customerId);
-		Pane father = (Pane)anchorPane.getParent();
-		father.fireEvent(new RefreshEvent(RefreshEvent.REFRESH));
 		
 	}
 

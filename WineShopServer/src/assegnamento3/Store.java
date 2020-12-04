@@ -360,32 +360,29 @@ public class Store
 	 * @param wineId id of the wine to be restocked.
 	 * @param extraN number of bottles to be added.
 	 */
-	synchronized public void restockWine(int wineId, int extraN)
+	synchronized public boolean restockWine(int wineId, int extraN)
 	{
-		if (currSeller == null)
-		{
-			System.out.println("No Seller is logged in.");
-			return;
-		}
+	
 		Wine w = getWineByID(wineId);
 		if (w != null)
 		{
 			w.setNumber(w.getNumber() + extraN);
-			System.out.println("Restocking wine: " + w.getID() + " with " + extraN + " bottles\n");
 			for (Integer i : notifRequest.keySet())
 			{
 				if (i == wineId)
 				{
 					Entry<Integer, Integer> e = notifRequest.get(i);
-					if ((Integer) e.getValue() <= extraN)
+					if ((Integer) e.getValue() <= w.getNumber())
 					{
 						Customer c = getClientByID((Integer) e.getKey());
-						System.out.println("Notifying user " + c.getID() + " that the wine is available\n");
-						c.newMessage("Wine: " + wineId + " is available.");
+						c.newMessage("Wine: " + w.getName() + " is available.");
 					}
 				}
 			}
+			return true;
 		}
+		else
+			return false;
 	}
 
 	/**
@@ -523,7 +520,7 @@ public class Store
 				for (LoggableUser s : userList)
 				{
 					if (s instanceof Seller)
-						((Seller) s).newMessage("Wine: " + w.getID() + " needs to be restocked.");
+						((Seller) s).newMessage("Wine: " + w.getName() + " needs to be restocked.");
 				}
 
 				w.setNumber(w.getNumber() - amount);
@@ -554,7 +551,22 @@ public class Store
 	 */
 	synchronized public void requestWine(int wineId, int customerId, int amount)
 	{
-		notifRequest.put(wineId, new AbstractMap.SimpleEntry<Integer, Integer>(customerId, amount));
+		Customer c = getClientByID(customerId);
+		Wine w = getWineByID(wineId);
+		if(w.getNumber() >= amount)
+		{
+			//wine already available
+			((Observer)c).newMessage("Wine "+w.getName()+" is available.");
+		}
+		else
+		{
+			notifRequest.put(wineId, new AbstractMap.SimpleEntry<Integer, Integer>(customerId, amount));
+			for (LoggableUser s : userList)
+			{
+				if (s instanceof Seller)
+					((Seller) s).newMessage("Customer: "+c.getName()+" "+c.getSurname()+" requested "+amount+" bottles of " + w.getName()+".");
+			}
+		}
 	}
 
 	synchronized public void removeSeller(String email)
@@ -582,7 +594,8 @@ public class Store
 		w.setYear(newWine.getYear());
 		w.setTechnicalNotes(newWine.getTechnicalNotes());
 		w.setGrapeType(newWine.getGrapeType());
-		w.setNumber(newWine.getNumber());
+		if (newWine.getNumber()>=0)
+			w.setNumber(newWine.getNumber());
 		w.setWineType(newWine.getWineType());
 		return true;
 	}

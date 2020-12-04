@@ -234,7 +234,7 @@ public class ClientHandler implements Runnable
 		}
 		case "editWine":
 		{
-			if (request.getParameters().size() != 8)
+			if (request.getParameters().size() != 7)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
 
 			String id = request.getParameters().get(0);
@@ -243,17 +243,29 @@ public class ClientHandler implements Runnable
 			String year = request.getParameters().get(3);
 			String notes = request.getParameters().get(4);
 			String grape = request.getParameters().get(5);
-			String number = request.getParameters().get(6);
-			String type = request.getParameters().get(7);
+			String type = request.getParameters().get(6);
 
 			boolean ok = NetworkServer.mainStore.editWine(Integer.parseInt(id),
-					new Wine(name, producer, Integer.parseInt(year), notes, grape, Integer.parseInt(number), type));
-			Response res;
+					new Wine(name, producer, Integer.parseInt(year), notes, grape, -1, type));
 			if (ok)
-				res = new Response(StatusCode.SUCCESS);
+				return new Response(StatusCode.SUCCESS);
 			else
-				res = new Response(StatusCode.INVALID_ARGUMENTS);
-			return res;
+				return new Response(StatusCode.INVALID_ARGUMENTS);
+		}
+		case "restockWine":
+		{
+			if(request.getParameters().size() != 2)
+				return new Response(StatusCode.INVALID_ARGUMENTS);
+			
+			int wineId = Integer.parseInt(request.getParameters().get(0));
+			int amount = Integer.parseInt(request.getParameters().get(1));
+			
+			boolean ok = NetworkServer.mainStore.restockWine(wineId, amount);
+			if(ok)
+				return new Response(StatusCode.SUCCESS);
+			else
+				return new Response(StatusCode.INVALID_ARGUMENTS);
+						
 		}
 		case "editOrder":
 		{

@@ -103,7 +103,6 @@ public class HomeController
 		{
 			try
 			{
-				// TODO: duplicate instead of reloading each time
 				singleWine = FXMLLoader.load(getClass().getResource("wine.fxml"));
 				((ImageView) ((StackPane) ((VBox) singleWine.getChildren().get(0)).getChildren().get(0)).getChildren()
 						.get(1)).setImage(images[w.getWineType().ordinal()]);
@@ -117,12 +116,14 @@ public class HomeController
 			Label techNotes = (Label) singleWine.lookup("#notesLabel");
 			Label grapeType = (Label) singleWine.lookup("#grapeTypeLabel");
 			Label amount = (Label) singleWine.lookup("#amountLabel");
+			Label wineId = (Label) singleWine.lookup("#wineId");
 			name.setText(w.getName());
 			year.setText("" + w.getYear());
 			producer.setText(w.getProducer());
 			techNotes.setText(w.getTechnicalNotes());
 			grapeType.setText(w.getGrapeType());
 			amount.setText("" + w.getNumber());
+			wineId.setText("");
 			flowPane.getChildren().add(singleWine);
 
 		}
@@ -135,7 +136,7 @@ public class HomeController
 
 		try
 		{
-			root = FXMLLoader.load(getClass().getResource("login.fxml"));
+			root = FXMLLoader.load(getClass().getResource("log_reg.fxml"));
 			mainStage.setScene(new Scene(root));
 			mainStage.show();
 		} catch (IOException e)
