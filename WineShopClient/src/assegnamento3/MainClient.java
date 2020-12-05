@@ -37,7 +37,7 @@ public class MainClient extends Application
 		primaryStage.setOnCloseRequest(e ->
 		{
 			e.consume();
-			new AreYouSureAlertBox("Confirmation", "Are you sure you want to close the client?", () ->
+			new ConfirmationBox("Confirmation", "Are you sure you want to close the client?", () ->
 			{
 				Request r = new Request("close");
 				client.sendRequest(r);

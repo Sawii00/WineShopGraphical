@@ -49,7 +49,7 @@ public class PortBox
 				try
 				{
 					port = Integer.parseInt(portTextField.getText());
-					if (port <= 1000 || port >= 65535)
+					if (port < 1000 || port >= 65535)
 					{
 						new BasicAlertBox("Error", "Invalid port (1000 - 65535)", 200, 150);
 						return;

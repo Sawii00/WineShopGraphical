@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AreYouSureAlertBox
+public class ConfirmationBox
 {
 
-	public AreYouSureAlertBox(String title, String message, Action todo)
+	public ConfirmationBox(String title, String message, Action todo)
 	{
 		display(title, message, todo);
 	}
@@ -27,7 +27,7 @@ public class AreYouSureAlertBox
 		Parent root;
 		try
 		{
-			root = FXMLLoader.load(getClass().getResource("decision_box.fxml"));
+			root = FXMLLoader.load(getClass().getResource("confirmation_box.fxml"));
 			window.initModality(Modality.APPLICATION_MODAL);
 			window.setTitle(title);
 			window.setResizable(false);
@@ -38,7 +38,6 @@ public class AreYouSureAlertBox
 			Button yes = (Button) root.lookup("#yesButton");
 			Button no = (Button) root.lookup("#noButton");
 			
-			yes.setDefaultButton(true);
 			yes.setOnAction(e ->
 			{
 				todo.act();
