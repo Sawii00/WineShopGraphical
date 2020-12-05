@@ -26,7 +26,7 @@ public class Response implements Serializable
 	{
 		parameters.add(r);
 	}
-	
+
 	public void addAllParameters(String[] mex)
 	{
 		for (String s : mex)

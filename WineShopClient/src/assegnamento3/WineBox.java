@@ -19,7 +19,7 @@ public class WineBox
 	private String values[] = { "", "", "", "", "", "", "" };
 	private boolean validData = false;
 	private boolean isEditing = false;
-	
+
 	public WineBox(String title)
 	{
 		display(title);
@@ -55,19 +55,18 @@ public class WineBox
 			TextArea notes = (TextArea) root.lookup("#notesTextArea");
 			TextField grape = (TextField) root.lookup("#grapeTextField");
 			TextField number = (TextField) root.lookup("#numberTextField");
-			Label numberLabel = (Label)root.lookup("#numberLabel");
-			Label typeLabel = (Label)root.lookup("#typeLabel");
+			Label numberLabel = (Label) root.lookup("#numberLabel");
+			Label typeLabel = (Label) root.lookup("#typeLabel");
 			ChoiceBox<String> type = (ChoiceBox) root.lookup("#typeChoiceBox");
-			
-			
-			if(isEditing)
+
+			if (isEditing)
 			{
 				number.setVisible(false);
 				type.setLayoutY(248);
 				numberLabel.setVisible(false);
 				typeLabel.setLayoutY(248);
 			}
-			
+
 			Label title_label = (Label) root.lookup("#title");
 			title_label.setText(title);
 			name.setText(values[0]);
@@ -91,28 +90,28 @@ public class WineBox
 				values[4] = grape.getText();
 				values[5] = number.getText();
 				values[6] = type.getValue();
-				
 
-				if(!isEditing)
+				if (!isEditing)
 				{
 					try
 					{
 						int y = Integer.parseInt(year.getText());
 						int n = Integer.parseInt(number.getText());
-	
+
 					} catch (NumberFormatException e1)
 					{
 						new BasicAlertBox("Error", "Invalid data", 300, 100);
 						return;
 					}
-					
-					if(values[5].equals(""))
+
+					if (values[5].equals(""))
 						new BasicAlertBox("Error", "Fill-in all the information", 300, 100);
 				}
-				
+
 				for (int i = 0; i < 7; ++i)
 				{
-					if(i == 5)continue;
+					if (i == 5)
+						continue;
 					if (values[i].equals(""))
 					{
 						new BasicAlertBox("Error", "Fill-in all the information", 300, 100);

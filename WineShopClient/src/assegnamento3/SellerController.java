@@ -33,10 +33,10 @@ public class SellerController
 
 	@FXML
 	Button editButton;
-	
+
 	@FXML
 	Button mexButton;
-	
+
 	@FXML
 	Button logoutButton;
 
@@ -51,17 +51,17 @@ public class SellerController
 
 	@FXML
 	TableView<Order> sellerOrderTable;
-	
+
 	@FXML
 	Button restockButton;
 
 	private int sellerId;
-	
+
 	public void setSellerID(int id)
 	{
 		this.sellerId = id;
 	}
-	
+
 	public void logout()
 	{
 		Stage mainStage;
@@ -79,12 +79,12 @@ public class SellerController
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void displayMessages()
 	{
 		MessageBox msg = new MessageBox(this.sellerId);
 	}
-	
+
 	public void add()
 	{
 		WineBox box = new WineBox("Add Wine");
@@ -101,21 +101,20 @@ public class SellerController
 				refresh();
 		}
 	}
-	
-	public void restock() 
+
+	public void restock()
 	{
 		RestockBox box = new RestockBox();
 		int val = box.getAmount();
 		Wine w = sellerWineTable.getSelectionModel().getSelectedItem();
 		Request r = new Request("restockWine");
-		r.addParameter(""+w.getID());
-		r.addParameter(""+val);
+		r.addParameter("" + w.getID());
+		r.addParameter("" + val);
 		Response res = MainClient.client.sendRequest(r);
-		if(res.getReturnCode() != StatusCode.SUCCESS)
+		if (res.getReturnCode() != StatusCode.SUCCESS)
 		{
 			new BasicAlertBox("Error", "Invalid parameter", 200, 100);
-		}
-		else
+		} else
 		{
 			sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setNumber(w.getNumber() + val);
 			sellerWineTable.refresh();
@@ -127,16 +126,17 @@ public class SellerController
 		if (sellerWineTable.isVisible())
 		{
 			Wine w = sellerWineTable.getSelectionModel().getSelectedItem();
-			String vals[] = { w.getName(), w.getProducer(), "" + w.getYear(), w.getTechnicalNotes(), w.getGrapeType() ,"", w.getWineType().toString() };
+			String vals[] = { w.getName(), w.getProducer(), "" + w.getYear(), w.getTechnicalNotes(), w.getGrapeType(),
+					"", w.getWineType().toString() };
 			WineBox box = new WineBox("Edit Wine", vals);
 			if (box.isValid())
 			{
 				vals = box.getValues();
 				Request r = new Request("editWine");
 				r.addParameter("" + w.getID());
-				for (int i = 0; i<7; i++)
+				for (int i = 0; i < 7; i++)
 				{
-					if (i!=5)
+					if (i != 5)
 						r.addParameter(vals[i]);
 				}
 				Response res = MainClient.client.sendRequest(r);
@@ -147,7 +147,8 @@ public class SellerController
 					// TODO
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setName(vals[0]);
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setProducer(vals[1]);
-					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setYear(Integer.parseInt(vals[2]));
+					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w))
+							.setYear(Integer.parseInt(vals[2]));
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setTechnicalNotes(vals[3]);
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setGrapeType(vals[4]);
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setWineType(vals[6]);
@@ -158,7 +159,7 @@ public class SellerController
 			}
 		} else
 		{
-			
+
 			Order o = sellerOrderTable.getSelectionModel().getSelectedItem();
 			String val = "";
 			for (Wine w : wines)

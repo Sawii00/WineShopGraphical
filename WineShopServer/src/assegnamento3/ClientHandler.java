@@ -254,18 +254,18 @@ public class ClientHandler implements Runnable
 		}
 		case "restockWine":
 		{
-			if(request.getParameters().size() != 2)
+			if (request.getParameters().size() != 2)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-			
+
 			int wineId = Integer.parseInt(request.getParameters().get(0));
 			int amount = Integer.parseInt(request.getParameters().get(1));
-			
+
 			boolean ok = NetworkServer.mainStore.restockWine(wineId, amount);
-			if(ok)
+			if (ok)
 				return new Response(StatusCode.SUCCESS);
 			else
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-						
+
 		}
 		case "editOrder":
 		{
@@ -311,23 +311,23 @@ public class ClientHandler implements Runnable
 		}
 		case "getMessages":
 		{
-			if(request.getParameters().size() != 1)
+			if (request.getParameters().size() != 1)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
 			String[] mex = NetworkServer.mainStore.getMessages(Integer.parseInt(request.getParameters().get(0)));
 			response = new Response(StatusCode.SUCCESS);
-			if(mex != null)
-				for(int i = 0; i < mex.length; ++i)
+			if (mex != null)
+				for (int i = 0; i < mex.length; ++i)
 				{
-					response.addParameter(i+"<>"+mex[i]);
-					
+					response.addParameter(i + "<>" + mex[i]);
+
 				}
 			return response;
 		}
 		case "deleteMessage":
 		{
-			if(request.getParameters().size() != 2)
+			if (request.getParameters().size() != 2)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-			
+
 			int userId = Integer.parseInt(request.getParameters().get(0));
 			int mexId = Integer.parseInt(request.getParameters().get(1));
 			NetworkServer.mainStore.deleteMessage(userId, mexId);
@@ -335,9 +335,9 @@ public class ClientHandler implements Runnable
 		}
 		case "deleteAllMessages":
 		{
-			if(request.getParameters().size() != 1)
+			if (request.getParameters().size() != 1)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-			
+
 			int userId = Integer.parseInt(request.getParameters().get(0));
 			NetworkServer.mainStore.deleteMessage(userId, -1);
 			return new Response(StatusCode.SUCCESS);
@@ -369,7 +369,8 @@ public class ClientHandler implements Runnable
 				}
 			} catch (ClassNotFoundException | IOException e)
 			{
-				e.printStackTrace();
+				System.out.println("Client has disconnected... terminating connection");
+				stop();
 			}
 		}
 	}
@@ -379,8 +380,6 @@ public class ClientHandler implements Runnable
 		isRunning = false;
 		try
 		{
-			Response r = new Response(StatusCode.SUCCESS);
-			sendResponse(r);
 			mainSocket.close();
 		} catch (IOException e)
 		{

@@ -97,11 +97,11 @@ public class Seller extends LoggableUser implements Observer
 	{
 		return "seller";
 	}
-	
+
 	@Override
 	public void deleteMessage(int id)
 	{
-		if(id < messages.size())
+		if (id < messages.size())
 			messages.remove(id);
 	}
 

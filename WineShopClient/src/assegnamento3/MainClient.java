@@ -11,16 +11,23 @@ public class MainClient extends Application
 
 	static NetworkClient client;
 
-	/*
-	 * handle restock wine
-	 * dont allow multiple logins with same credentials
-	 * */
-	
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		client = new NetworkClient("127.0.0.1", 4905);
+
+		PortBox pb = new PortBox("Server Port");
+
+		if (pb.getPort() < 0)
+		{
+			primaryStage.close();
+			return;
+		}
+		client = new NetworkClient("127.0.0.1", pb.getPort());
+		if (!client.isConnected())
+		{
+			primaryStage.close();
+			return;
+		}
 		Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
 		primaryStage.setTitle("WineShop");
 		primaryStage.setScene(new Scene(root));

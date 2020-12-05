@@ -29,65 +29,61 @@ public class MessageBox
 	private TableView<Message> table;
 	private int customerID;
 
-	
-	
 	ObservableList<Message> messages = FXCollections.<Message>observableArrayList();
 
-	
 	public MessageBox(int id)
 	{
 		this.customerID = id;
 		display();
 	}
-	
+
 	private void removeMex()
 	{
 		Request r = new Request("deleteMessage");
 		int mexID = table.getSelectionModel().getSelectedIndex();
-		r.addParameter(""+this.customerID);
-		r.addParameter(""+mexID);
+		r.addParameter("" + this.customerID);
+		r.addParameter("" + mexID);
 		Response res = MainClient.client.sendRequest(r);
-		if(res.getReturnCode() != StatusCode.SUCCESS)
+		if (res.getReturnCode() != StatusCode.SUCCESS)
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 		refreshMessages();
 	}
-	
+
 	private void removeAll()
 	{
-		
+
 		Request r = new Request("deleteAllMessages");
-		r.addParameter(""+this.customerID);
+		r.addParameter("" + this.customerID);
 		Response res = MainClient.client.sendRequest(r);
-		if(res.getReturnCode() != StatusCode.SUCCESS)
+		if (res.getReturnCode() != StatusCode.SUCCESS)
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 		refreshMessages();
 
 	}
-	
+
 	private void refreshMessages()
 	{
 		Request r = new Request("getMessages");
-		r.addParameter(""+this.customerID);
+		r.addParameter("" + this.customerID);
 		Response res = MainClient.client.sendRequest(r);
-		if(res.getReturnCode() != StatusCode.SUCCESS)
+		if (res.getReturnCode() != StatusCode.SUCCESS)
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 		else
 		{
 			messages.clear();
 			table.getItems().clear();
-			if(res.getParameters().size() != 0)
+			if (res.getParameters().size() != 0)
 			{
-				for(int i = 0; i < res.getParameters().size(); ++i)
+				for (int i = 0; i < res.getParameters().size(); ++i)
 				{
 					String[] mex = res.getParameters().get(i).split("<>");
 					messages.add(new Message(Integer.parseInt(mex[0]), mex[1]));
 				}
 				table.getItems().addAll(messages);
 			}
-				
+
 		}
 	}
-	
 
 	public void display()
 	{
@@ -99,7 +95,7 @@ public class MessageBox
 			root = FXMLLoader.load(getClass().getResource("mex_popup.fxml"));
 			removeMex = (Button) root.lookup("#removeMexButton");
 			removeAll = (Button) root.lookup("#removeAllButton");
-			table = (TableView)root.lookup("#mexTable");
+			table = (TableView) root.lookup("#mexTable");
 
 			removeMex.setOnAction(e ->
 			{
@@ -110,12 +106,12 @@ public class MessageBox
 			{
 				removeAll();
 			});
-			
+
 			table.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("message"));
 
 			TableViewSelectionModel<Message> selectionTable = table.getSelectionModel();
 			selectionTable.setSelectionMode(SelectionMode.SINGLE);
-			
+
 			table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Message>()
 			{
 
@@ -128,8 +124,7 @@ public class MessageBox
 			});
 
 			refreshMessages();
-			
-			
+
 			window.setTitle("Messages");
 			window.initModality(Modality.APPLICATION_MODAL);
 			window.setScene(new Scene(root));
@@ -140,8 +135,7 @@ public class MessageBox
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 }

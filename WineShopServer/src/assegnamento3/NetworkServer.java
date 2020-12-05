@@ -10,24 +10,20 @@ import java.net.Socket;
  * list of threads to be join
  * */
 
-public class NetworkServer
+public class NetworkServer implements Runnable
 {
 
 	private ServerSocket mainSocket;
 	private boolean isRunning = true;
 	public static Store mainStore = new Store();
 
-	public NetworkServer(int port)
+	public NetworkServer(int port) throws IOException
 	{
-		try
-		{
-			mainSocket = new ServerSocket(port);
-			System.out.println("Started on port: " + port);
-			//mainStore.loadData() --> read sql database
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+
+		mainSocket = new ServerSocket(port);
+		System.out.println("Started on port: " + port);
+		// mainStore.loadData() --> read sql database
+
 	}
 
 	public void run()
@@ -44,17 +40,25 @@ public class NetworkServer
 				// s.close();
 			} catch (IOException e)
 			{
-				e.printStackTrace();
+				System.out.println("Closing server");
+				isRunning = false;
 			}
 		}
-		
-		//save all lists
-		//periodic timer saves the lists
-		
+
+		// save all lists
+		// periodic timer saves the lists
+
 	}
 
 	public void stop()
 	{
 		isRunning = false;
+		try
+		{
+			mainSocket.close();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

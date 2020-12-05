@@ -11,6 +11,7 @@ public class NetworkClient
 	private Socket mainSocket;
 	private ObjectOutputStream os = null;
 	private ObjectInputStream is = null;
+	private boolean isConnected = false;
 
 	public NetworkClient(String host, int port)
 	{
@@ -20,10 +21,17 @@ public class NetworkClient
 			System.out.println(mainSocket);
 			os = new ObjectOutputStream(mainSocket.getOutputStream());
 			is = new ObjectInputStream(mainSocket.getInputStream());
+			this.isConnected = true;
 		} catch (IOException e)
 		{
-			new BasicAlertBox("Error", "Could not connect to Server on port: " + port, 300, 100);
+			this.isConnected = false;
+			new BasicAlertBox("Error", "Could not connect to Server on port: " + port, 300, 150);
 		}
+	}
+
+	public boolean isConnected()
+	{
+		return isConnected;
 	}
 
 	public Response sendRequest(Request r)

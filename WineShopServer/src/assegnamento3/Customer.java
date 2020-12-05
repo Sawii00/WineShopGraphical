@@ -99,7 +99,7 @@ public class Customer extends LoggableUser implements Observer
 	@Override
 	public String getMessages()
 	{
-		
+
 		String res = "";
 		for (String s : messages)
 		{
@@ -119,7 +119,7 @@ public class Customer extends LoggableUser implements Observer
 	@Override
 	public void deleteMessage(int id)
 	{
-		if(id < messages.size())
+		if (id < messages.size())
 			messages.remove(id);
 	}
 

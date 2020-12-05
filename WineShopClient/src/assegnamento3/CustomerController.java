@@ -90,13 +90,12 @@ public class CustomerController
 		customerId = id;
 	}
 
-	
 	public void displayMessages()
 	{
 		MessageBox msg = new MessageBox(this.customerId);
-		
+
 	}
-	
+
 	public void search()
 	{
 		if (searchTextField.getText().equals(""))
@@ -125,8 +124,9 @@ public class CustomerController
 				singleWine = FXMLLoader.load(getClass().getResource("wine.fxml"));
 				((ImageView) ((StackPane) ((VBox) singleWine.getChildren().get(0)).getChildren().get(0)).getChildren()
 						.get(1)).setImage(images[w.getWineType().ordinal()]);
-				
-				singleWine.addEventHandler(RefreshEvent.REFRESH, (e)->{
+
+				singleWine.addEventHandler(RefreshEvent.REFRESH, (e) ->
+				{
 					populateFullList();
 					refresh();
 				});

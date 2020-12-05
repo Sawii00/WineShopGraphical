@@ -19,13 +19,12 @@ public class BuyBox
 	Wine wine;
 	int customerId;
 
-
 	Button buyButton;
 
 	Button notifyButton;
-	
+
 	Button hereButton;
-	
+
 	Label label1;
 
 	TextField notificationTextField;
@@ -33,7 +32,7 @@ public class BuyBox
 	ChoiceBox amountChoiceBox;
 
 	private Stage window;
-	
+
 	private void populateChoiceBox()
 	{
 		if (wine.getNumber() > 0)
@@ -64,7 +63,7 @@ public class BuyBox
 		label1.setVisible(false);
 		hereButton.setVisible(false);
 	}
-	
+
 	private void display()
 	{
 		window = new Stage();
@@ -73,30 +72,29 @@ public class BuyBox
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("buy_popup.fxml"));
-			
-			
-			buyButton = (Button)root.lookup("#buyButton");
-			notifyButton = (Button)root.lookup("#notifyButton");
-			hereButton = (Button)root.lookup("#hereButton");
-			notificationTextField = (TextField)root.lookup("#notificationTextField");
-			amountChoiceBox = (ChoiceBox)root.lookup("#amountChoiceBox");
-			label1=(Label)root.lookup("#label1");
-			
-			notifyButton.setOnAction(e->
+
+			buyButton = (Button) root.lookup("#buyButton");
+			notifyButton = (Button) root.lookup("#notifyButton");
+			hereButton = (Button) root.lookup("#hereButton");
+			notificationTextField = (TextField) root.lookup("#notificationTextField");
+			amountChoiceBox = (ChoiceBox) root.lookup("#amountChoiceBox");
+			label1 = (Label) root.lookup("#label1");
+
+			notifyButton.setOnAction(e ->
 			{
 				notification();
 			});
 
-			hereButton.setOnAction(e->
+			hereButton.setOnAction(e ->
 			{
 				showNotifyBox();
 			});
 
-			buyButton.setOnAction(e->
+			buyButton.setOnAction(e ->
 			{
 				buy();
 			});
-			
+
 			populateChoiceBox();
 
 			window.initModality(Modality.APPLICATION_MODAL);
@@ -108,19 +106,18 @@ public class BuyBox
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public BuyBox(Wine w, int customerId)
 	{
 		this.customerId = customerId;
 		this.wine = w;
-		
+
 		display();
 
-	
 	}
-	
+
 	public void buy()
 	{
 		int val = (int) amountChoiceBox.getValue();
@@ -132,10 +129,9 @@ public class BuyBox
 		if (res.getReturnCode() != StatusCode.SUCCESS)
 		{
 			BasicAlertBox box = new BasicAlertBox("Error", "The order could not be processed", 200, 100);
-		}
-		else
+		} else
 		{
-			BasicAlertBox box = new BasicAlertBox("Success", "Succesfully bought " + val+ " bottles", 200, 150);
+			BasicAlertBox box = new BasicAlertBox("Success", "Succesfully bought " + val + " bottles", 200, 150);
 		}
 		window.close();
 	}
@@ -153,10 +149,10 @@ public class BuyBox
 			if (res.getReturnCode() != StatusCode.SUCCESS)
 			{
 				BasicAlertBox box = new BasicAlertBox("Error", "The order could not be processed", 200, 100);
-			}
-			else
+			} else
 			{
-				BasicAlertBox box = new BasicAlertBox("Success", "You will notified when the bottles will be available", 350, 150);
+				BasicAlertBox box = new BasicAlertBox("Success", "You will notified when the bottles will be available",
+						350, 150);
 				window.close();
 			}
 		} catch (NumberFormatException e)
@@ -165,5 +161,4 @@ public class BuyBox
 		}
 	}
 
-	
 }

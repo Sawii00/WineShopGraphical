@@ -43,7 +43,7 @@ public class AdminController
 
 	@FXML
 	Button logoutButton;
-	
+
 	@FXML
 	Button removeButton;
 
@@ -59,7 +59,6 @@ public class AdminController
 	@FXML
 	TableView<Order> adminOrderTable;
 
-	
 	public void logout()
 	{
 		Stage mainStage;
@@ -77,7 +76,7 @@ public class AdminController
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void removeSeller()
 	{
 		LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();

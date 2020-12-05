@@ -24,7 +24,6 @@ import javafx.util.Duration;
 public class SingleWineController
 {
 
-
 	@FXML
 	ImageView imageView;
 
@@ -60,7 +59,8 @@ public class SingleWineController
 	public void select()
 	{
 		Label boughtW = (Label) anchorPane.lookup("#wineId");
-		try {
+		try
+		{
 			int wineId = Integer.parseInt(boughtW.getText());
 			Wine w = new Wine(0, "", "", 0, "", "", 0, WineType.RED);
 			for (Wine w1 : CustomerController.viewedWines)
@@ -71,16 +71,16 @@ public class SingleWineController
 					break;
 				}
 			}
-			
+
 			BuyBox buyPopup = new BuyBox(w, CustomerController.customerId);
-			Pane father = (Pane)anchorPane.getParent();
+			Pane father = (Pane) anchorPane.getParent();
 			father.fireEvent(new RefreshEvent(RefreshEvent.REFRESH));
-		} catch (NumberFormatException e) {
-			//id is not available --> its the home page
+		} catch (NumberFormatException e)
+		{
+			// id is not available --> its the home page
 			return;
 		}
-		
-		
+
 	}
 
 	public void initialize()

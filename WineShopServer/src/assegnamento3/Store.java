@@ -93,9 +93,9 @@ public class Store
 		userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
 		userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
 
-		((Observer)userList.get(0)).newMessage("Prova Prova");
-		((Observer)userList.get(4)).newMessage("Prova Prova Seller");
-		
+		((Observer) userList.get(0)).newMessage("Prova Prova");
+		((Observer) userList.get(4)).newMessage("Prova Prova Seller");
+
 		wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot",
 				10, WineType.RED));
 		wineList.add(new Wine(100001, "Lambrusco Reggiano", "Cantina Bruni", 2019,
@@ -144,25 +144,24 @@ public class Store
 	public String[] getMessages(int id)
 	{
 		LoggableUser u = getLoggableUserByID(id);
-		Observer o = (Observer)u;
+		Observer o = (Observer) u;
 		String mex[] = o.getMessages().split("\n");
-		if(mex.length == 1 && mex[0] == "")
+		if (mex.length == 1 && mex[0] == "")
 			return null;
-		else 
+		else
 			return mex;
 	}
-	
+
 	public void deleteMessage(int userId, int mexId)
 	{
 		LoggableUser u = getLoggableUserByID(userId);
-		Observer o = (Observer)u;
-		if(mexId < 0)
+		Observer o = (Observer) u;
+		if (mexId < 0)
 			o.deleteMessages();
 		else
 			o.deleteMessage(mexId);
 	}
-	
-	
+
 	/**
 	 * Generic method that returns whether an object is included in a list based on
 	 * the string representation.
@@ -306,8 +305,7 @@ public class Store
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * It allows the registration of a new {@code LoggableUser} to the Store.
 	 * <p>
@@ -362,7 +360,7 @@ public class Store
 	 */
 	synchronized public boolean restockWine(int wineId, int extraN)
 	{
-	
+
 		Wine w = getWineByID(wineId);
 		if (w != null)
 		{
@@ -380,8 +378,7 @@ public class Store
 				}
 			}
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 
@@ -553,18 +550,18 @@ public class Store
 	{
 		Customer c = getClientByID(customerId);
 		Wine w = getWineByID(wineId);
-		if(w.getNumber() >= amount)
+		if (w.getNumber() >= amount)
 		{
-			//wine already available
-			((Observer)c).newMessage("Wine "+w.getName()+" is available.");
-		}
-		else
+			// wine already available
+			((Observer) c).newMessage("Wine " + w.getName() + " is available.");
+		} else
 		{
 			notifRequest.put(wineId, new AbstractMap.SimpleEntry<Integer, Integer>(customerId, amount));
 			for (LoggableUser s : userList)
 			{
 				if (s instanceof Seller)
-					((Seller) s).newMessage("Customer: "+c.getName()+" "+c.getSurname()+" requested "+amount+" bottles of " + w.getName()+".");
+					((Seller) s).newMessage("Customer: " + c.getName() + " " + c.getSurname() + " requested " + amount
+							+ " bottles of " + w.getName() + ".");
 			}
 		}
 	}
@@ -594,7 +591,7 @@ public class Store
 		w.setYear(newWine.getYear());
 		w.setTechnicalNotes(newWine.getTechnicalNotes());
 		w.setGrapeType(newWine.getGrapeType());
-		if (newWine.getNumber()>=0)
+		if (newWine.getNumber() >= 0)
 			w.setNumber(newWine.getNumber());
 		w.setWineType(newWine.getWineType());
 		return true;

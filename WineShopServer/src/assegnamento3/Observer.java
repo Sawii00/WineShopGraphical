@@ -34,7 +34,7 @@ public interface Observer
 	 */
 
 	public String getMessages();
-	
+
 	public void deleteMessage(int id);
-	
+
 }

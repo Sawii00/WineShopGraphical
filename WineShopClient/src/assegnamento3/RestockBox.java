@@ -16,24 +16,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class RestockBox 
+public class RestockBox
 {
 
 	private int val = 0;
 	Button confirmButton;
 	TextField amountTextField;
-	
-	
+
 	public RestockBox()
 	{
 		display();
 	}
-	
+
 	public int getAmount()
 	{
 		return val;
 	}
-	
+
 	public void display()
 	{
 		Stage window = new Stage();
@@ -47,17 +46,17 @@ public class RestockBox
 
 			confirmButton.setOnAction(e ->
 			{
-				try {
+				try
+				{
 					val = Integer.parseInt(amountTextField.getText());
-				} catch (NumberFormatException e2) {
+				} catch (NumberFormatException e2)
+				{
 					new BasicAlertBox("Error", "Invalid parameters", 200, 100);
 				}
-				
+
 				window.close();
 			});
-			
-			
-			
+
 			window.setTitle("Restock");
 			window.initModality(Modality.APPLICATION_MODAL);
 			window.setScene(new Scene(root));
@@ -68,6 +67,5 @@ public class RestockBox
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }
