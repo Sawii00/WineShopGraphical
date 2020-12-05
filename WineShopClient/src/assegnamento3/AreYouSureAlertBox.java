@@ -1,7 +1,11 @@
 package assegnamento3;
 
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,55 +16,52 @@ import javafx.stage.Stage;
 public class AreYouSureAlertBox
 {
 
-	public AreYouSureAlertBox(String title, String message, int width, int height, ITodo todo)
+	public AreYouSureAlertBox(String title, String message, Action todo)
 	{
-		display(title, message, width, height, todo);
+		display(title, message, todo);
 	}
 
-	private void display(String title, String message, int width, int height, ITodo todo)
+	private void display(String title, String message, Action todo)
 	{
 		Stage window = new Stage();
-
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle(title);
-		window.setMinWidth(width);
-		window.setMaxWidth(width);
-		window.setMinHeight(height);
-		window.setMaxHeight(height);
-		window.setResizable(false);
-
-		Label label = new Label();
-		label.setText(message);
-
-		Button yes = new Button("Yes");
-		yes.setDefaultButton(true);
-		yes.setOnAction(e ->
+		Parent root;
+		try
 		{
-			onClose(todo);
-			window.close();
-		});
-		Button no = new Button("No");
-		no.setOnAction(e ->
+			root = FXMLLoader.load(getClass().getResource("decision_box.fxml"));
+			window.initModality(Modality.APPLICATION_MODAL);
+			window.setTitle(title);
+			window.setResizable(false);
+
+			Label messageLabel = (Label) root.lookup("#messageLabel");
+			messageLabel.setText(message);
+
+			Button yes = (Button) root.lookup("#yesButton");
+			Button no = (Button) root.lookup("#noButton");
+			
+			yes.setDefaultButton(true);
+			yes.setOnAction(e ->
+			{
+				todo.act();
+				window.close();
+			});
+			
+			no.setOnAction(e ->
+			{
+				window.close();
+			});
+
+			
+			Scene scene = new Scene(root);
+			window.setScene(scene);
+
+			window.showAndWait();
+		} catch (IOException e1)
 		{
-			window.close();
-		});
-
-		VBox layout = new VBox();
-		layout.getChildren().addAll(label, yes, no);
-		layout.setAlignment(Pos.CENTER);
-
-		VBox.setMargin(yes, new Insets(20, 0, 0, 0));
-		VBox.setMargin(no, new Insets(20, 0, 0, 0));
-
-		Scene scene = new Scene(layout);
-		window.setScene(scene);
-
-		window.showAndWait();
+			e1.printStackTrace();
+		}
+		
 	}
 
-	void onClose(ITodo todo)
-	{
-		todo.todo();
-	}
+	
 
 }

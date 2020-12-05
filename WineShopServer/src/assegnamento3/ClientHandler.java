@@ -373,10 +373,7 @@ public class ClientHandler implements Runnable
 				stop();
 			}
 		}
-	}
-
-	public void stop()
-	{
+		
 		isRunning = false;
 		try
 		{
@@ -385,5 +382,10 @@ public class ClientHandler implements Runnable
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void stop()
+	{
+		isRunning = false;
 	}
 }

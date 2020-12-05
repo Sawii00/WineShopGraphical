@@ -36,11 +36,11 @@ public class NetworkClient
 
 	public Response sendRequest(Request r)
 	{
-		System.out.println("Sending Request");
 		try
 		{
 			if (os != null && is != null)
 			{
+				System.out.println("Sending Request");
 				os.writeObject(r);
 				os.flush();
 				Object o = is.readObject();
@@ -52,7 +52,7 @@ public class NetworkClient
 			}
 		} catch (IOException | ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			System.out.println("No longer connected to server");
 		}
 
 		return new Response(StatusCode.ERROR);

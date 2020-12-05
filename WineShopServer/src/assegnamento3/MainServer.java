@@ -37,6 +37,8 @@ public class MainServer extends Application
 			server.stop();
 			startButton.setDisable(false);
 			stopButton.setDisable(true);
+			portTextField.setEditable(true);
+
 		});
 
 		startButton.setOnAction(e ->
@@ -50,6 +52,7 @@ public class MainServer extends Application
 				mainServerThread.start();
 				startButton.setDisable(true);
 				stopButton.setDisable(false);
+				portTextField.setEditable(false);
 
 			} catch (NumberFormatException | IOException e2)
 			{
@@ -63,13 +66,9 @@ public class MainServer extends Application
 		primaryStage.setOnCloseRequest(e ->
 		{
 			e.consume();
-			new AreYouSureAlertBox("Confirmation", "Are you sure you want to close the server?", 300, 200, () ->
-			{
-
-				if (server != null)
-					server.stop();
-				System.exit(0);
-			});
+			if (server != null)
+				server.stop();
+			System.exit(0);
 		});
 
 	}
