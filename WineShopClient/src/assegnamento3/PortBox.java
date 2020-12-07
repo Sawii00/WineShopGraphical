@@ -39,8 +39,9 @@ public class PortBox
 		{
 			root = FXMLLoader.load(getClass().getResource("port_popup.fxml"));
 			TextField portTextField = (TextField) root.lookup("#portTextField");
+			portTextField.requestFocus();
 			Button connectButton = (Button) root.lookup("#connectButton");
-
+			connectButton.setDefaultButton(true);
 			Scene scene = new Scene(root);
 
 			connectButton.setOnMouseClicked(e ->

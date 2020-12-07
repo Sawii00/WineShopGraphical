@@ -1,13 +1,17 @@
 package assegnamento3;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.collections.ListChangeListener.Change;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +35,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -41,7 +48,7 @@ enum SearchType
 	NAME, YEAR
 };
 
-public class HomeController
+public class HomeController implements Initializable
 {
 
 	@FXML
@@ -64,9 +71,36 @@ public class HomeController
 
 	@FXML
 	RadioButton yearRadioButton;
+	
+	@FXML
+	Label centerLabel1;
+	
+	@FXML
+	AnchorPane layer1;
+	
+	@FXML
+	ImageView labelWallpaper;
+	
+	@FXML
+	VBox layer2;
 
+    @FXML
+    Label centerLabel2;
+
+    @FXML
+    Label topLabel;
+
+    @FXML
+    Button enterButton;
+
+    @FXML
+    Button swipeButton;
+
+	
 	@FXML
 	ChoiceBox<String> typeChoiceBox;
+
+	
 
 	Pane singleWine;
 
@@ -199,9 +233,11 @@ public class HomeController
 		searchWine("", SearchType.NAME);
 	}
 
-	public void initialize() throws IOException
+	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
 
+	
+		
 		typeChoiceBox.getItems().add("All");
 		typeChoiceBox.getItems().add("Red");
 		typeChoiceBox.getItems().add("White");
@@ -243,9 +279,22 @@ public class HomeController
 		});
 
 		populateFullList();
-
 		// retrieve wineList from server
 
 	}
 
+	@FXML
+	public void swipe(MouseEvent event) {
+		TranslateTransition slide = new TranslateTransition();
+		slide.setDuration(Duration.seconds(2.0));
+		slide.setNode(layer1);
+		slide.setToY(-700);
+		slide.play();
+
+		
+		slide.setOnFinished((e ->
+		{
+
+		}));
+	}
 }

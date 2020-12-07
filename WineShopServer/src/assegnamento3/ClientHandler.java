@@ -130,7 +130,7 @@ public class ClientHandler implements Runnable
 			{
 				Customer c = NetworkServer.mainStore.getClientByID(o.getClient());
 				response.addParameter(o.getOrderID() + "<>" + c.getEmail() + "<>" + o.getWine().getName() + "<>"
-						+ o.getWine().getNumber());
+						+ o.getWine().getAmount());
 			}
 			return response;
 		}

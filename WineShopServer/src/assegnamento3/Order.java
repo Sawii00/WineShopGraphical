@@ -73,11 +73,11 @@ public class Order
 
 	public int getAmount()
 	{
-		return wine.getNumber();
+		return wine.getAmount();
 	}
 
 	public void setAmount(int n)
 	{
-		this.wine.setNumber(n);
+		this.wine.setAmount(n);
 	}
 }

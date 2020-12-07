@@ -18,7 +18,8 @@ public class MainServer extends Application
 
 	NetworkServer server = null;
 	Thread mainServerThread = null;
-
+	DatabaseManager db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShop?", "createDatabaseIfNotExist=true","root", "");
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -39,6 +40,10 @@ public class MainServer extends Application
 			stopButton.setDisable(true);
 			portTextField.setEditable(true);
 
+			db.saveWineList(server.mainStore.getWineList());
+			db.close();
+
+			
 		});
 
 		startButton.setOnAction(e ->
@@ -53,6 +58,8 @@ public class MainServer extends Application
 				startButton.setDisable(true);
 				stopButton.setDisable(false);
 				portTextField.setEditable(false);
+				db.open();
+				server.mainStore.setWineList(db.getWineList());
 
 			} catch (NumberFormatException | IOException e2)
 			{
@@ -68,6 +75,9 @@ public class MainServer extends Application
 			e.consume();
 			if (server != null)
 				server.stop();
+			
+			db.saveWineList(server.mainStore.getWineList());
+			db.close();
 			System.exit(0);
 		});
 

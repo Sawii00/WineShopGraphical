@@ -81,6 +81,10 @@ public class CustomerController
 	Image whiteImage = new Image(getClass().getResource("white.jpg").toExternalForm());
 	Image roseImage = new Image(getClass().getResource("rose.jpg").toExternalForm());
 
+	Image mexImage = new Image(getClass().getResource("message.png").toExternalForm());
+	Image mexNotificationImage = new Image(getClass().getResource("not_message.png").toExternalForm());
+	
+	
 	Image images[] = { redImage, whiteImage, roseImage };
 
 	static int customerId;
@@ -93,8 +97,11 @@ public class CustomerController
 	public void displayMessages()
 	{
 		MessageBox msg = new MessageBox(this.customerId);
+		refresh();
 
 	}
+	
+	
 
 	public void search()
 	{
@@ -113,8 +120,20 @@ public class CustomerController
 		}
 	}
 
-	private void refresh()
+	public void refresh()
 	{
+		if(this.customerId != 0)
+		{
+			Request r = new Request("getMessages");
+			r.addParameter("" + this.customerId);
+			Response res = MainClient.client.sendRequest(r);
+			
+			if(res.getParameters().size() != 0)
+				((ImageView)mexButton.getGraphic()).setImage(mexNotificationImage);
+			else 
+				((ImageView)mexButton.getGraphic()).setImage(mexImage);
+		}
+		
 		flowPane.getChildren().clear();
 		for (Wine w : viewedWines)
 		{

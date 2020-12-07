@@ -277,7 +277,7 @@ public class Wine implements Serializable
 	 * 
 	 * @return number the wine's number of bottles.
 	 */
-	public int getNumber()
+	public int getAmount()
 	{
 		return number;
 	}
@@ -287,7 +287,7 @@ public class Wine implements Serializable
 	 * 
 	 * @param number the wine's number of bottles
 	 */
-	public void setNumber(int number)
+	public void setAmount(int number)
 	{
 		this.number = number;
 	}

@@ -223,6 +223,7 @@ public class LoginRegisterController implements Initializable
 				{
 					CustomerController controller = loader.getController();
 					controller.setCustomerID(Integer.parseInt(res.getParameters().get(1)));
+					controller.refresh();
 				} else if (res.getParameters().get(0).equals("seller"))
 				{
 					SellerController controller = loader.getController();

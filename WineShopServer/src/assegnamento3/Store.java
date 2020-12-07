@@ -96,7 +96,7 @@ public class Store
 		((Observer) userList.get(0)).newMessage("Prova Prova");
 		((Observer) userList.get(4)).newMessage("Prova Prova Seller");
 
-		wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot",
+		/*wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot",
 				10, WineType.RED));
 		wineList.add(new Wine(100001, "Lambrusco Reggiano", "Cantina Bruni", 2019,
 				"Asciutto, frizzante e di corpo sapido", "Bacca Nera", 5, WineType.RED));
@@ -113,9 +113,15 @@ public class Store
 		wineList.add(new Wine(100007, "Charme rosé", "Cantina Firriato", 2010,
 				"Gusto è avvolgente, intenso, di sorprendente equilibrio", "Blend di vitigni autoctoni,", 19,
 				WineType.ROSE));
-
+*/
 	}
 
+	public void setWineList(ArrayList<Wine> wines)
+	{
+		this.wineList.clear();
+		this.wineList.addAll(wines);
+	}
+	
 	ArrayList<Wine> getWineList()
 	{
 		return wineList;
@@ -346,7 +352,7 @@ public class Store
 		} else
 		{
 			Wine cur = get(wineList, w);
-			cur.setNumber(w.getNumber() + cur.getNumber());
+			cur.setAmount(w.getAmount() + cur.getAmount());
 		}
 	}
 
@@ -364,13 +370,13 @@ public class Store
 		Wine w = getWineByID(wineId);
 		if (w != null)
 		{
-			w.setNumber(w.getNumber() + extraN);
+			w.setAmount(w.getAmount() + extraN);
 			for (Integer i : notifRequest.keySet())
 			{
 				if (i == wineId)
 				{
 					Entry<Integer, Integer> e = notifRequest.get(i);
-					if ((Integer) e.getValue() <= w.getNumber())
+					if ((Integer) e.getValue() <= w.getAmount())
 					{
 						Customer c = getClientByID((Integer) e.getKey());
 						c.newMessage("Wine: " + w.getName() + " is available.");
@@ -506,13 +512,13 @@ public class Store
 		Wine w = getWineByID(wineId);
 		if (w != null)
 		{
-			if (w.getNumber() > amount)
+			if (w.getAmount() > amount)
 			{
-				w.setNumber(w.getNumber() - amount);
+				w.setAmount(w.getAmount() - amount);
 				orderList.add(new Order(orderList.size(), customerId, new Wine(w.getID(), w.getName(), w.getProducer(),
 						w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
 				return true;
-			} else if (w.getNumber() == amount)
+			} else if (w.getAmount() == amount)
 			{
 				for (LoggableUser s : userList)
 				{
@@ -520,7 +526,7 @@ public class Store
 						((Seller) s).newMessage("Wine: " + w.getName() + " needs to be restocked.");
 				}
 
-				w.setNumber(w.getNumber() - amount);
+				w.setAmount(w.getAmount() - amount);
 				orderList.add(new Order(orderList.size(), customerId, new Wine(w.getID(), w.getName(), w.getProducer(),
 						w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
 				return true;
@@ -550,7 +556,7 @@ public class Store
 	{
 		Customer c = getClientByID(customerId);
 		Wine w = getWineByID(wineId);
-		if (w.getNumber() >= amount)
+		if (w.getAmount() >= amount)
 		{
 			// wine already available
 			((Observer) c).newMessage("Wine " + w.getName() + " is available.");
@@ -591,8 +597,8 @@ public class Store
 		w.setYear(newWine.getYear());
 		w.setTechnicalNotes(newWine.getTechnicalNotes());
 		w.setGrapeType(newWine.getGrapeType());
-		if (newWine.getNumber() >= 0)
-			w.setNumber(newWine.getNumber());
+		if (newWine.getAmount() >= 0)
+			w.setAmount(newWine.getAmount());
 		w.setWineType(newWine.getWineType());
 		return true;
 	}
@@ -601,7 +607,7 @@ public class Store
 	{
 		Order o = getOrderByID(id);
 		Wine w = getWineByID(o.getWine().getID());
-		w.setNumber(w.getNumber() + o.getAmount());
+		w.setAmount(w.getAmount() + o.getAmount());
 		orderList.remove(o);
 	}
 
@@ -609,9 +615,9 @@ public class Store
 	{
 		Order o = getOrderByID(id);
 		Wine w = getWineByID(o.getWine().getID());
-		if ((w.getNumber() + o.getAmount()) < amount)
+		if ((w.getAmount() + o.getAmount()) < amount)
 			return false;
-		w.setNumber(w.getNumber() + o.getAmount() - amount);
+		w.setAmount(w.getAmount() + o.getAmount() - amount);
 		o.setAmount(amount);
 		return true;
 	}
