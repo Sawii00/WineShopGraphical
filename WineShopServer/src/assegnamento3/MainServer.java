@@ -1,6 +1,7 @@
 package assegnamento3;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,12 +19,14 @@ public class MainServer extends Application
 
 	NetworkServer server = null;
 	Thread mainServerThread = null;
-	DatabaseManager db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShop?", "createDatabaseIfNotExist=true","root", "");
+	DatabaseManager db = null;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
 
+		
+		
 		Parent root = FXMLLoader.load(getClass().getResource("main_server.fxml"));
 		primaryStage.setTitle("WineshopServer");
 		primaryStage.setScene(new Scene(root));
@@ -56,6 +59,7 @@ public class MainServer extends Application
 			{
 				int port = Integer.parseInt(portTextField.getText());
 				server = new NetworkServer(port);
+				db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShop?", "createDatabaseIfNotExist=true","root", "");
 				mainServerThread = new Thread(server);
 				mainServerThread.start();
 				startButton.setDisable(true);
@@ -69,7 +73,12 @@ public class MainServer extends Application
 
 			} catch (NumberFormatException | IOException e2)
 			{
-				new BasicAlertBox("Error", "Invalid Port", 200, 100);
+				new BasicAlertBox("Error", "Invalid Port", 200, 150);
+			} catch (SQLException e1)
+			{
+				new BasicAlertBox("Error", "Could not connect to db", 200, 150);
+				if (server != null)
+					server.stop();
 			}
 
 		});
@@ -81,7 +90,7 @@ public class MainServer extends Application
 			e.consume();
 			if (server != null)
 				server.stop();
-			if(db.isOpen())
+			if(db != null && db.isOpen())
 			{
 				db.saveWineList(server.mainStore.getWineList());
 				db.saveUserList(server.mainStore.getUserList());

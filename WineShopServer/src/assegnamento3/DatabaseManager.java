@@ -29,72 +29,63 @@ public class DatabaseManager
 	String password;
 	
 	
-	public DatabaseManager(String url, String args, String user, String password)
+	public DatabaseManager(String url, String args, String user, String password) throws SQLException
 	{
 		this.url = url;
 		this.args = args;
 		this.user = user;
 		this.password = password;
-		try
-		{
-			open();
-			
-			st.executeUpdate("drop table if exists users");
-			st.executeUpdate("drop table if exists notifications");
-			st.executeUpdate("drop table if exists orders");
+		
+		open();
+		
+		/*st.executeUpdate("drop table if exists users");
+		st.executeUpdate("drop table if exists notifications");
+		st.executeUpdate("drop table if exists orders");*/
 
-			
-			String createTableWines = "create table if not exists wines ("
-					+ "id int primary key,"
-					+ "name varchar(50) not null,"
-					+ "producer varchar(50) not null,"
-					+ "year int not null,"
-					+ "technicalNotes varchar(500) not null,"
-					+ "grapeType varchar(50) not null,"
-					+ "amount int not null,"
-					+ "wineType int not null"
-					+ ")";
-			st.executeUpdate(createTableWines);
-			
-			String createTableUsers = "create table if not exists users ("
-					+ "id int primary key,"
-					+ "name varchar(50) not null,"
-					+ "surname varchar(50) not null,"
-					+ "email varchar(50) not null,"
-					+ "password varchar(50) not null,"
-					+ "type int not null"
-					+ ")";
-			st.executeUpdate(createTableUsers);
-			ResultSet res = st.executeQuery("select * from users where id=0");
-			if(!res.next())
-				st.executeUpdate("insert into users values (0, 'Mario', 'Admin', 'p.gay', '0000', 2)");
+		
+		String createTableWines = "create table if not exists wines ("
+				+ "id int primary key,"
+				+ "name varchar(50) not null,"
+				+ "producer varchar(50) not null,"
+				+ "year int not null,"
+				+ "technicalNotes varchar(500) not null,"
+				+ "grapeType varchar(50) not null,"
+				+ "amount int not null,"
+				+ "wineType int not null"
+				+ ")";
+		st.executeUpdate(createTableWines);
+		
+		String createTableUsers = "create table if not exists users ("
+				+ "id int primary key,"
+				+ "name varchar(50) not null,"
+				+ "surname varchar(50) not null,"
+				+ "email varchar(50) not null,"
+				+ "password varchar(50) not null,"
+				+ "type int not null"
+				+ ")";
+		st.executeUpdate(createTableUsers);
+		ResultSet res = st.executeQuery("select * from users where id=0");
+		if(!res.next())
+			st.executeUpdate("insert into users values (0, 'Mario', 'Admin', 'p.gay', '0000', 2)");
 
+		
+		String createTableOrders = "create table if not exists orders ("
+				+ "orderId int primary key,"
+				+ "clientId int not null,"
+				+ "wineId int not null,"
+				+ "amount int not null"
+				+ ")";
+		st.executeUpdate(createTableOrders);
+		
+		String createTableNotifications = "create table if not exists notifications ("
+				+ "id int primary key auto_increment,"
+				+ "clientId int not null,"
+				+ "wineId int not null,"
+				+ "amount int not null"
+				+ ")";
+		st.executeUpdate(createTableNotifications);
 			
-			String createTableOrders = "create table if not exists orders ("
-					+ "orderId int primary key,"
-					+ "clientId int not null,"
-					+ "wineId int not null,"
-					+ "amount int not null"
-					+ ")";
-			st.executeUpdate(createTableOrders);
-			
-			String createTableNotifications = "create table if not exists notifications ("
-					+ "id int primary key auto_increment,"
-					+ "clientId int not null,"
-					+ "wineId int not null,"
-					+ "amount int not null"
-					+ ")";
-			st.executeUpdate(createTableNotifications);
-			
-			
-			
-			
-		}
-		catch(SQLException e)
-		{
-			System.out.println("Error with SQL");
-			e.printStackTrace();
-		}
+	
 		
 	}
 	
@@ -115,16 +106,12 @@ public class DatabaseManager
 		}
 	}
 	
-	public void open()
+	public void open() throws SQLException
 	{
-		try
-		{
+		
 			conn = DriverManager.getConnection(url + args, user, password);
 			st = conn.createStatement();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		
 		
 	}
 	
@@ -336,7 +323,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			String insert = "insert into notifications (clientId, wineId, amount) values (?, ?, ?, ?)";
+			String insert = "insert into notifications (clientId, wineId, amount) values (?, ?, ?)";
 			String delete = "delete from notifications";
 			st.executeUpdate(delete);
 			PreparedStatement stm = conn.prepareStatement(insert);
