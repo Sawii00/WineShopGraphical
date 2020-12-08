@@ -87,14 +87,13 @@ public class Store
 	 */
 	public Store()
 	{
-		userList.add(new Customer("Luca", "Neri", "l.neri@gmail.com", "1234"));
+		/*userList.add(new Customer("Luca", "Neri", "l.neri@gmail.com", "1234"));
 		userList.add(new Customer("Mario", "Rossi", "m.rossi@gmail.com", "1212"));
-		userList.add(new Customer("Giuseppe", "Bianchi", "g.bianchi@gmail.com", "3434"));
-		userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
-		userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
+		userList.add(new Customer("Giuseppe", "Bianchi", "g.bianchi@gmail.com", "3434"));*/
+		//userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
+		//userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
 
-		((Observer) userList.get(0)).newMessage("Prova Prova");
-		((Observer) userList.get(4)).newMessage("Prova Prova Seller");
+
 
 		/*wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot",
 				10, WineType.RED));
@@ -122,6 +121,24 @@ public class Store
 		this.wineList.addAll(wines);
 	}
 	
+	public void setUserList(ArrayList<LoggableUser> users)
+	{
+		this.userList.clear();
+		this.userList.addAll(users);
+	}
+	
+	public void setOrderList(ArrayList<Order> orders)
+	{
+		this.orderList.clear();
+		this.orderList.addAll(orders);
+	}
+	
+	public void setNotificationList(Map<Integer, Entry<Integer, Integer>> notifications)
+	{
+		this.notifRequest.clear();
+		this.notifRequest.putAll(notifications);
+	}
+	
 	ArrayList<Wine> getWineList()
 	{
 		return wineList;
@@ -137,6 +154,11 @@ public class Store
 		return userList;
 	}
 
+	Map<Integer, Entry<Integer, Integer>> getNotificationList()
+	{
+		return notifRequest;
+	}
+	
 	/**
 	 * Logs out the currently logged-in user by setting to {@code null}
 	 * {@code currClient} and {@code currSeller}.
@@ -246,7 +268,7 @@ public class Store
 	 *
 	 * @return the wine if found, null otherwise.
 	 */
-	private Wine getWineByID(int wineId)
+	public Wine getWineByID(int wineId)
 	{
 		for (Wine w : wineList)
 		{
@@ -515,8 +537,7 @@ public class Store
 			if (w.getAmount() > amount)
 			{
 				w.setAmount(w.getAmount() - amount);
-				orderList.add(new Order(orderList.size(), customerId, new Wine(w.getID(), w.getName(), w.getProducer(),
-						w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
+				orderList.add(new Order(orderList.size(), customerId, w.getID(), amount));
 				return true;
 			} else if (w.getAmount() == amount)
 			{
@@ -527,8 +548,7 @@ public class Store
 				}
 
 				w.setAmount(w.getAmount() - amount);
-				orderList.add(new Order(orderList.size(), customerId, new Wine(w.getID(), w.getName(), w.getProducer(),
-						w.getYear(), w.getTechnicalNotes(), w.getGrapeType(), amount, w.getWineType())));
+				orderList.add(new Order(orderList.size(), customerId, w.getID(), amount));
 				return true;
 			} else
 			{
@@ -606,7 +626,7 @@ public class Store
 	synchronized public void removeOrder(int id)
 	{
 		Order o = getOrderByID(id);
-		Wine w = getWineByID(o.getWine().getID());
+		Wine w = getWineByID(o.getWineID());
 		w.setAmount(w.getAmount() + o.getAmount());
 		orderList.remove(o);
 	}
@@ -614,7 +634,7 @@ public class Store
 	synchronized public boolean editOrder(int id, int amount)
 	{
 		Order o = getOrderByID(id);
-		Wine w = getWineByID(o.getWine().getID());
+		Wine w = getWineByID(o.getWineID());
 		if ((w.getAmount() + o.getAmount()) < amount)
 			return false;
 		w.setAmount(w.getAmount() + o.getAmount() - amount);

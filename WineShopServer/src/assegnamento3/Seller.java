@@ -40,6 +40,11 @@ public class Seller extends LoggableUser implements Observer
 	{
 		super(name, surname, email, password);
 	}
+	
+	public Seller(int id, String name, String surname, String email, String password)
+	{
+		super(id, name, surname, email, password);
+	}
 
 	/**
 	 * {@inheritDoc}

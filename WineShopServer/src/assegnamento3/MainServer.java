@@ -41,6 +41,9 @@ public class MainServer extends Application
 			portTextField.setEditable(true);
 
 			db.saveWineList(server.mainStore.getWineList());
+			db.saveUserList(server.mainStore.getUserList());
+			db.saveOrderList(server.mainStore.getOrderList());
+			db.saveNotificationList(server.mainStore.getNotificationList());
 			db.close();
 
 			
@@ -60,6 +63,9 @@ public class MainServer extends Application
 				portTextField.setEditable(false);
 				db.open();
 				server.mainStore.setWineList(db.getWineList());
+				server.mainStore.setUserList(db.getUserList());
+				server.mainStore.setOrderList(db.getOrderList());
+				server.mainStore.setNotificationList(db.getNotificationList());
 
 			} catch (NumberFormatException | IOException e2)
 			{
@@ -75,9 +81,14 @@ public class MainServer extends Application
 			e.consume();
 			if (server != null)
 				server.stop();
-			
-			db.saveWineList(server.mainStore.getWineList());
-			db.close();
+			if(db.isOpen())
+			{
+				db.saveWineList(server.mainStore.getWineList());
+				db.saveUserList(server.mainStore.getUserList());
+				db.saveOrderList(server.mainStore.getOrderList());
+				db.saveNotificationList(server.mainStore.getNotificationList());
+				db.close();
+			}
 			System.exit(0);
 		});
 

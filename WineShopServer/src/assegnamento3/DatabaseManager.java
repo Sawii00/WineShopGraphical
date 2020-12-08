@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class DatabaseManager 
 {
@@ -35,6 +39,11 @@ public class DatabaseManager
 		{
 			open();
 			
+			st.executeUpdate("drop table if exists users");
+			st.executeUpdate("drop table if exists notifications");
+			st.executeUpdate("drop table if exists orders");
+
+			
 			String createTableWines = "create table if not exists wines ("
 					+ "id int primary key,"
 					+ "name varchar(50) not null,"
@@ -52,9 +61,14 @@ public class DatabaseManager
 					+ "name varchar(50) not null,"
 					+ "surname varchar(50) not null,"
 					+ "email varchar(50) not null,"
-					+ "password varchar(50) not null"
+					+ "password varchar(50) not null,"
+					+ "type int not null"
 					+ ")";
 			st.executeUpdate(createTableUsers);
+			ResultSet res = st.executeQuery("select * from users where id=0");
+			if(!res.next())
+				st.executeUpdate("insert into users values (0, 'Mario', 'Admin', 'p.gay', '0000', 2)");
+
 			
 			String createTableOrders = "create table if not exists orders ("
 					+ "orderId int primary key,"
@@ -64,13 +78,15 @@ public class DatabaseManager
 					+ ")";
 			st.executeUpdate(createTableOrders);
 			
-			String createTableMessages = "create table if not exists messages ("
+			String createTableNotifications = "create table if not exists notifications ("
 					+ "id int primary key auto_increment,"
 					+ "clientId int not null,"
 					+ "wineId int not null,"
 					+ "amount int not null"
 					+ ")";
-			st.executeUpdate(createTableMessages);
+			st.executeUpdate(createTableNotifications);
+			
+			
 			
 			
 		}
@@ -82,11 +98,17 @@ public class DatabaseManager
 		
 	}
 	
+	public boolean isOpen()
+	{
+		return conn != null;
+	}
+	
 	public void close() 
 	{
 		try
 		{
 			conn.close();
+			conn = null;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -183,7 +205,6 @@ public class DatabaseManager
 			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
@@ -191,7 +212,175 @@ public class DatabaseManager
 	}
 	
 	
+	public void saveUserList(ArrayList<LoggableUser> users)
+	{
+		try
+		{
+			String insert = "insert into users values (?, ?, ?, ?, ?, ?)";
+			String delete = "delete from users";
+			st.executeUpdate(delete);
+			
+			PreparedStatement stm = conn.prepareStatement(insert);
+			
+			for(LoggableUser u: users)
+			{
+				stm.setString(1, ""+u.getID());
+				stm.setString(2,  u.getName());
+				stm.setString(3,  u.getSurname());
+				stm.setString(4,  u.getEmail());
+				stm.setString(5,  u.getPassword());
+				if(u instanceof Customer)
+					stm.setString(6, "0");
+				else if(u instanceof Seller)
+					stm.setString(6, "1");
+				else 
+					stm.setString(6, "2");
+				stm.addBatch();
+			}
+			
+			stm.executeBatch();
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
 	
+	
+	public ArrayList<LoggableUser> getUserList()
+	{
+		ArrayList<LoggableUser> res = new ArrayList<>();
+		try
+		{
+			String select = "select * from users";
+			
+			ResultSet set = st.executeQuery(select);
+			
+			while(set.next())
+			{
+				LoggableUser u = null;
+				switch(set.getInt("type"))
+				{
+				case 0:
+					u = new Customer(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));
+					break;
+				case 1:
+					u = new Seller(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));
+					break;
+				case 2:
+					u = new Admin(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));
+					break;
+				}
+				res.add(u);
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return res;
+		
+	}
+	
+	public void saveOrderList(ArrayList<Order> orders)
+	{
+		try
+		{
+			String insert = "insert into orders values (?, ?, ?, ?)";
+			String delete = "delete from orders";
+			st.executeUpdate(delete);
+			PreparedStatement stm = conn.prepareStatement(insert);
+			
+			for(Order o: orders)
+			{
+				stm.setString(1, ""+o.getOrderID());
+				stm.setString(2,  ""+o.getClient());
+				stm.setString(3,  ""+o.getWineID());
+				stm.setString(4,  ""+o.getAmount());
+				stm.addBatch();
+			}
+			
+			stm.executeBatch();
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public ArrayList<Order> getOrderList()
+	{
+		ArrayList<Order> res = new ArrayList<>();
+		try
+		{
+			String select = "select * from orders";
+			
+			ResultSet set = st.executeQuery(select);
+			
+			while(set.next())
+			{
+				Order o = new Order(set.getInt("orderId"), set.getInt("clientId"), set.getInt("wineId"), set.getInt("amount"));
+				res.add(o);
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return res;
+		
+	}
+	
+	public void saveNotificationList(Map<Integer, Entry<Integer, Integer>> notifications)
+	{
+		try
+		{
+			String insert = "insert into notifications (clientId, wineId, amount) values (?, ?, ?, ?)";
+			String delete = "delete from notifications";
+			st.executeUpdate(delete);
+			PreparedStatement stm = conn.prepareStatement(insert);
+			
+			for (Integer clientId : notifications.keySet())
+			{
+				
+				Entry<Integer, Integer> wine = notifications.get(clientId);
+				stm.setString(1, ""+clientId);
+				stm.setString(2, ""+wine.getKey());
+				stm.setString(3, ""+wine.getValue());
+				stm.addBatch();
+			}
+			
+			stm.executeBatch();
+			
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public Map<Integer, Entry<Integer, Integer>> getNotificationList()
+	{
+		Map<Integer, Entry<Integer, Integer>> notifications = new HashMap<>();
+		try
+		{
+			String select = "select * from notifications";
+			
+			ResultSet set = st.executeQuery(select);
+			
+			while(set.next())
+			{
+				notifications.put(set.getInt("clientId"), new AbstractMap.SimpleEntry<Integer, Integer>(set.getInt("wineId"), set.getInt("amount")));
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return notifications;
+		
+	}
 	
 
 }

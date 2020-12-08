@@ -11,7 +11,8 @@ public class Order
 
 	private int orderID;
 	private int clientID;
-	private Wine wine;
+	private int wineID;
+	private int amount;
 
 	/**
 	 * Class constructor.
@@ -19,11 +20,12 @@ public class Order
 	 * @param c the client who buy the wine
 	 * @param w the wine that is bought.
 	 */
-	public Order(int id, int c, Wine w)
+	public Order(int id, int c, int w, int a)
 	{
 		orderID = id;
 		clientID = c;
-		wine = w;
+		wineID = w;
+		amount = a;
 	}
 
 	public int getOrderID()
@@ -56,9 +58,9 @@ public class Order
 	 * 
 	 * @return wine the wine that was ordered.
 	 */
-	public Wine getWine()
+	public int getWineID()
 	{
-		return wine;
+		return wineID;
 	}
 
 	/**
@@ -66,18 +68,18 @@ public class Order
 	 * 
 	 * @param wine the wine ordered.
 	 */
-	public void setWine(Wine wine)
+	public void setWineID(int wine)
 	{
-		this.wine = wine;
+		this.wineID = wine;
 	}
 
 	public int getAmount()
 	{
-		return wine.getAmount();
+		return amount;
 	}
 
 	public void setAmount(int n)
 	{
-		this.wine.setAmount(n);
+		this.amount = n;
 	}
 }

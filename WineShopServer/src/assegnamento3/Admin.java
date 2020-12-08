@@ -7,6 +7,11 @@ public class Admin extends LoggableUser
 	{
 		super(name, surname, email, password);
 	}
+	
+	public Admin(int id, String name, String surname, String email, String password)
+	{
+		super(id, name, surname, email, password);
+	}
 
 	@Override
 	public String getUserType()

@@ -129,8 +129,9 @@ public class ClientHandler implements Runnable
 			for (Order o : NetworkServer.mainStore.getOrderList())
 			{
 				Customer c = NetworkServer.mainStore.getClientByID(o.getClient());
-				response.addParameter(o.getOrderID() + "<>" + c.getEmail() + "<>" + o.getWine().getName() + "<>"
-						+ o.getWine().getAmount());
+				Wine w = NetworkServer.mainStore.getWineByID(o.getWineID());
+				response.addParameter(o.getOrderID() + "<>" + c.getEmail() + "<>" + w.getName() + "<>"
+						+ o.getAmount());
 			}
 			return response;
 		}
