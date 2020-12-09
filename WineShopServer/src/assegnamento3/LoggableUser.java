@@ -17,9 +17,6 @@ import java.util.Random;
 
 public class LoggableUser extends Person implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4878874717365268921L;
 
 	/**
@@ -31,7 +28,6 @@ public class LoggableUser extends Person implements Serializable
 	 * @param email    email of the user.
 	 * @param password password of the user.
 	 */
-
 	public LoggableUser(int id, String name, String surname, String email, String password)
 	{
 		super(name, surname);
@@ -98,7 +94,6 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 * @return password of the user.
 	 */
-
 	public String getPassword()
 	{
 		return password;
@@ -119,7 +114,6 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 * @param password of the user.
 	 */
-
 	protected void setPassword(String password)
 	{
 		this.password = password;
@@ -130,17 +124,24 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 * @return the user's id, name, his surname and his email.
 	 */
-
 	public String toString()
 	{
 		return this.id + ", " + super.toString() + ", " + this.email;
 	}
 
+    /**
+     * Returns textual representation of the user type.
+     * @return user type
+     **/
 	public String getUserType()
 	{
 		return "user";
 	}
 
+    /**
+     * Returns serialized version of the user.
+     * @return name, surname, email, password separated by a separator character "<>"
+     **/
 	public String serializedString()
 	{
 		return this.name + "<>" + this.surname + "<>" + this.email + "<>" + this.password;

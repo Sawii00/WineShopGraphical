@@ -31,14 +31,22 @@ public interface Observer
 
 	/**
 	 * Returns the string representation of all the messages.
-	 * 
-	 * @return messages as String
+     * Each message is on a new line.
+	 * @return messages as a single String
 	 */
 
 	public String getMessages();
 
+    /**
+     * Deletes a specific message given by id.
+     * @param id id of the message to be removed
+     **/
 	public void deleteMessage(int id);
 
+    /**
+     * Returns the messages as a list.
+     * @return message list
+     **/
 	ArrayList<String> getMessageList();
 
 }

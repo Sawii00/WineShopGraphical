@@ -12,10 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code MainServer} handles the main execution of the Wineshop Server. <p>
+ * Sets up the connection to the database manager and opens a server connection to accept clients.
+ **/
 public class MainServer extends Application
 {
-
-	// does not close underlying server
 
 	NetworkServer server = null;
 	Thread mainServerThread = null;
@@ -43,6 +45,7 @@ public class MainServer extends Application
 			stopButton.setDisable(true);
 			portTextField.setEditable(true);
 
+            /*Dumps the content of the main lists to the database*/
 			db.saveWineList(server.mainStore.getWineList());
 			db.saveUserList(server.mainStore.getUserList());
 			db.saveOrderList(server.mainStore.getOrderList());
@@ -66,6 +69,8 @@ public class MainServer extends Application
 				stopButton.setDisable(false);
 				portTextField.setEditable(false);
 				db.open();
+
+                /*Loads the content of the database to the main lists*/
 				server.mainStore.setWineList(db.getWineList());
 				server.mainStore.setUserList(db.getUserList());
 				server.mainStore.setOrderList(db.getOrderList());
@@ -83,7 +88,8 @@ public class MainServer extends Application
 
 		});
 
-		primaryStage.show();
+        SchedulerExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(e->{},
 
 		primaryStage.setOnCloseRequest(e ->
 		{
@@ -100,6 +106,9 @@ public class MainServer extends Application
 			}
 			System.exit(0);
 		});
+
+        primaryStage.show();
+
 
 	}
 

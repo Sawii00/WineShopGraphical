@@ -6,6 +6,12 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * The class {@code ClientHandler} is responsible of managing the communication with each connected client. <p>
+ * A connected socket is passed to him by the {@code NetworkServer} after it is accepted. <p>
+ * The handler is closed upon the client's request. <p>
+ * It implements Runnable to be able to be executed concurrently on another thread.
+ **/
 public class ClientHandler implements Runnable
 {
 	private Socket mainSocket = null;
@@ -13,6 +19,11 @@ public class ClientHandler implements Runnable
 	private ObjectInputStream is = null;
 	private boolean isRunning = true;
 
+    /**
+     * Class constructor. <p>
+     * Saves the socket and opens the input and output streams with the client.
+     * @param s client socket
+     **/
 	public ClientHandler(Socket s)
 	{
 		this.mainSocket = s;
@@ -26,6 +37,10 @@ public class ClientHandler implements Runnable
 		}
 	}
 
+    /**
+     * Sends a response object to the client after the request has been handler.
+     * @param r response to be sent
+     **/
 	public void sendResponse(Response r)
 	{
 		try
@@ -41,6 +56,11 @@ public class ClientHandler implements Runnable
 		}
 	}
 
+    /**
+     * Handles the client's rpc-style request
+     * @param request client's request
+     * @return response to be sent back
+     **/
 	private Response handleRequest(Request request)
 	{
 		String method = request.getMethod();
@@ -349,6 +369,9 @@ public class ClientHandler implements Runnable
 
 	}
 
+    /**
+     * Starts the main execution loop.
+     **/
 	public void run()
 	{
 		while (isRunning)
@@ -385,6 +408,9 @@ public class ClientHandler implements Runnable
 		}
 	}
 
+    /**
+     * Stops the server's execution.
+     **/
 	public void stop()
 	{
 		isRunning = false;

@@ -19,26 +19,10 @@ enum SearchType
  * The class {@code Store} manages the Wine Shop through methods that work on
  * the inner data structures.
  * <p>
- * It contains lists of wines, clients, sellers and orders.
+ * It contains lists of wines, clients, sellers, orders, and notification requests.
  * <p>
- * {@code notifRequest} holds the requests of restock notifications made by the
- * users.
- * <p>
- * {@code currSeller} and {@code currClient} hold the currently logged in user
- * (Client and Sellers cannot be simultaneously logged in).
- * <p>
- * NOTE:
- * <p>
- * This implementation does not allow for multiple users logged in
- * simultaneously.
- * <p>
- * Modifications are required in case multiple users have to be served in
- * parallel.
- * <p>
- * A possible solution would be to pass the user/seller id to each method to
- * allow for authentication and logging.
+ * Methods that modify the data structures are synchronized to avoid races between simultanous accesses from different clients.
  */
-
 public class Store
 {
 
@@ -53,7 +37,7 @@ public class Store
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 	/**
-	 * List of LoggableUsers of the system. Both Clients and Sellers are stored
+	 * List of LoggableUsers of the system. Both Clients, Sellers, and admins are stored
 	 * here.
 	 */
 	private ArrayList<LoggableUser> userList = new ArrayList<LoggableUser>();
@@ -70,108 +54,105 @@ public class Store
 	private Map<Integer, Entry<Integer, Integer>> notifRequest = new HashMap<Integer, Entry<Integer, Integer>>();
 
 	/**
-	 * Currently logged-in client.
-	 */
-	private Customer currClient = null;
-
-	/**
-	 * Currently logged-in seller.
-	 */
-	private Seller currSeller = null;
-
-	/**
 	 * Class Constructor.
-	 * <p>
-	 * It sets up an initial list of {@code Wines} available in the Store, some
-	 * registered {@code Clients}, and one {@code Seller}.
 	 */
 	public Store()
 	{
-		/*userList.add(new Customer("Luca", "Neri", "l.neri@gmail.com", "1234"));
-		userList.add(new Customer("Mario", "Rossi", "m.rossi@gmail.com", "1212"));
-		userList.add(new Customer("Giuseppe", "Bianchi", "g.bianchi@gmail.com", "3434"));*/
-		//userList.add(new Admin("Capo", "Supremo", "p.gay", "0000"));
-		//userList.add(new Seller("Lucia", "Mazza", "l.mazza@gmail.com", "1111"));
-
-
-
-		/*wineList.add(new Wine(100000, "Aprilia Merlot", "Cantina Violi", 2012, "Asciutto, morbido e armonico", "Merlot",
-				10, WineType.RED));
-		wineList.add(new Wine(100001, "Lambrusco Reggiano", "Cantina Bruni", 2019,
-				"Asciutto, frizzante e di corpo sapido", "Bacca Nera", 5, WineType.RED));
-		wineList.add(new Wine(100002, "Carso Malvasia", "Cantina Gialli", 2016, "Asciutto, sapido e fresco",
-				"Malvasia Istriana", 100, WineType.WHITE));
-		wineList.add(new Wine(100003, "Franciacorta Spumante", "Cantina Gialli", 2010, "Fine ed armonico",
-				"Pinot Bianco", 1, WineType.WHITE));
-		wineList.add(new Wine(100004, "Negramaro del Salento", "Cantina Pini", 2020, "Fruttato con sentori di tabacco",
-				"Bacca nera", 14, WineType.WHITE));
-		wineList.add(new Wine(100005, "La Bioca", "Cantina di via Alba", 2000, "Scorrevole e di buon equilibrio",
-				"Bacca nera", 2, WineType.RED));
-		wineList.add(new Wine(100006, "Calafuria", "Cantina Tromaresca", 1999,
-				"Intenso e delicato, note fragranti di frutta bianca", "Negramaro", 23, WineType.ROSE));
-		wineList.add(new Wine(100007, "Charme rosé", "Cantina Firriato", 2010,
-				"Gusto è avvolgente, intenso, di sorprendente equilibrio", "Blend di vitigni autoctoni,", 19,
-				WineType.ROSE));
-*/
 	}
 
+    /**
+     * Setter for the wine list.
+     *
+     * @param wines list of wines
+     **/
 	public void setWineList(ArrayList<Wine> wines)
 	{
 		this.wineList.clear();
 		this.wineList.addAll(wines);
 	}
 	
+    /**
+     * Setter for the user list.
+     *
+     * @param users list of users
+     **/
 	public void setUserList(ArrayList<LoggableUser> users)
 	{
 		this.userList.clear();
 		this.userList.addAll(users);
 	}
 	
+    /**
+     * Setter for the order list.
+     *
+     * @param orders list of orders
+     **/
 	public void setOrderList(ArrayList<Order> orders)
 	{
 		this.orderList.clear();
 		this.orderList.addAll(orders);
 	}
 	
+    /**
+     * Setter for the notification map.
+     *
+     * @param notifications map of notifications
+     **/
 	public void setNotificationList(Map<Integer, Entry<Integer, Integer>> notifications)
 	{
 		this.notifRequest.clear();
 		this.notifRequest.putAll(notifications);
 	}
 	
+    /**
+     * Getter for the wine list.
+     *
+     * @return list of wines
+     **/
 	ArrayList<Wine> getWineList()
 	{
 		return wineList;
 	}
 
+    /**
+     * Getter for the order list.
+     *
+     * @return list of orders
+     **/
 	ArrayList<Order> getOrderList()
 	{
 		return orderList;
 	}
 
+    /**
+     * Getter for the user list.
+     *
+     * @return list of users
+     **/
 	ArrayList<LoggableUser> getUserList()
 	{
 		return userList;
 	}
 
+    /**
+     * Getter for the notifications map.
+     *
+     * @return map of notifications
+     **/
 	Map<Integer, Entry<Integer, Integer>> getNotificationList()
 	{
 		return notifRequest;
 	}
-	
-	/**
-	 * Logs out the currently logged-in user by setting to {@code null}
-	 * {@code currClient} and {@code currSeller}.
-	 */
-	private void logout()
-	{
-		currClient = null;
-		currSeller = null;
-	}
 
+    /**
+     * Returns the array of messages of the user with the specified id.
+     *
+     * @return array of messages
+     **/
 	public String[] getMessages(int id)
 	{
 		LoggableUser u = getLoggableUserByID(id);
+        if(u instanceof Admin)return null;
 		Observer o = (Observer) u;
 		String mex[] = o.getMessages().split("\n");
 		if (mex.length == 1 && mex[0] == "")
@@ -180,9 +161,17 @@ public class Store
 			return mex;
 	}
 
+    /**
+     * Deletes the specified message of the user with the specified id. <p>
+     * If mexId is negative, it removes all the messages for the specified user.
+     *
+     * @param userId id of the user
+     * @param mexId id of the message (<0 for all messages)
+     **/
 	public void deleteMessage(int userId, int mexId)
 	{
 		LoggableUser u = getLoggableUserByID(userId);
+        if(u instanceof Admin)return;
 		Observer o = (Observer) u;
 		if (mexId < 0)
 			o.deleteMessages();
@@ -264,9 +253,9 @@ public class Store
 	/**
 	 * It retrieves the Wine that matches the specified id.
 	 *
-	 * @param wineId the id of the wine to be retrieved.
+	 * @param wineId id of the wine
 	 *
-	 * @return the wine if found, null otherwise.
+	 * @return wine if found, null otherwise
 	 */
 	public Wine getWineByID(int wineId)
 	{
@@ -278,6 +267,13 @@ public class Store
 		return null;
 	}
 
+    /**
+     * Retrieves the Order that matches the specified id.
+     *
+     * @param id id of the order
+     *
+     * @return order if found, null otherwise
+     **/
 	private Order getOrderByID(int id)
 	{
 		for (Order o : orderList)
@@ -287,8 +283,14 @@ public class Store
 		}
 		return null;
 	}
-
-	public boolean editUser(String email, LoggableUser newUser)
+    
+    /**
+     * Edits the specified user with the info provided.
+     *
+     * @param email email of the user to be modified
+     * @param newUser object containing the new data for the user
+     **/
+	public synchronized boolean editUser(String email, LoggableUser newUser)
 	{
 		if (alreadyRegistered(newUser) && !email.equals(newUser.getEmail()))
 			return false;
@@ -307,23 +309,28 @@ public class Store
 	}
 
 	/**
-	 * It retrieves the Client that matches the specified id.
-	 * <p>
+	 * Retrieves the Customer that matches the specified id.
+     *
+	 * @param clientId the id of the Customer to be retrieved.
 	 *
-	 * @param clientId the id of the client to be retrieved.
-	 *
-	 * @return the client if found, null otherwise.
+	 * @return the customer if found, null otherwise.
 	 */
 	public Customer getClientByID(int clientId)
 	{
-		for (LoggableUser w : userList)
-		{
-			if (w instanceof Customer && ((Customer) w).getID() == clientId)
-				return (Customer) w;
-		}
-		return null;
+        LoggableUser res = getLoggableUserByID(id);
+        if(res != null)
+            return (Customer)res;
+        else
+            return null;
 	}
 
+    /**
+     * Retrieves the LoggableUser that matches the specified id.
+     *
+     * @param id id of the user
+     *
+     * @return user if found, null otherwise
+     **/
 	public LoggableUser getLoggableUserByID(int id)
 	{
 		for (LoggableUser w : userList)
@@ -335,12 +342,11 @@ public class Store
 	}
 
 	/**
-	 * It allows the registration of a new {@code LoggableUser} to the Store.
-	 * <p>
+	 * It allows the registration of a new {@code LoggableUser} to the Store. <p>
+     * Synchronized among different threads.
 	 * 
 	 * @param usr the client or seller to be registered.
 	 */
-
 	synchronized public boolean register(LoggableUser usr)
 	{
 		if (!alreadyRegistered(usr))
@@ -353,17 +359,13 @@ public class Store
 	}
 
 	/**
-	 * Adds a wine to the wineList.
-	 * <p>
-	 * Precondition: a seller is logged in. If a seller is logged in it check if the
-	 * wine you want to add is in wineList.
-	 * <p>
+	 * Adds a wine to the wineList. <p>
+     * Synchronized among different threads.
 	 * If the wine passed as parameter is not in the list it is added to the
-	 * wineList e added a wineId.
-	 * <p>
+	 * wineList.<p>
 	 * If it is already present in the list, the number of bottles is updated.
 	 * 
-	 * @param w the wine you want to add to the wineList.
+	 * @param w the wine 
 	 */
 	synchronized public void addWine(Wine w)
 	{
@@ -379,10 +381,9 @@ public class Store
 	}
 
 	/**
-	 * Restocks {@code extraN} numbers of bottles of the specified wine.
-	 * <p>
-	 * Precondition: a seller is logged in.
-	 * 
+	 * Restocks {@code extraN} numbers of bottles of the specified wine. <p>
+     * Synchronized among different threads.
+     *
 	 * @param wineId id of the wine to be restocked.
 	 * @param extraN number of bottles to be added.
 	 */
@@ -411,12 +412,11 @@ public class Store
 	}
 
 	/**
-	 * It allows the login of a {@code LoggableUser} to the Store.
-	 * <p>
-	 * It logs out any previous logged-in user.
+	 * It allows the login of a {@code LoggableUser} to the Store. <p>
 	 * 
 	 * @param email    the user's email.
 	 * @param password the user's password.
+     *
 	 * @return true if email and password are correct, false otherwise.
 	 */
 	public LoggableUser login(String email, String password)
@@ -432,61 +432,11 @@ public class Store
 	}
 
 	/**
-	 * Displays all the wines.
-	 * <p>
-	 * Precondition: there are clients or sellers logged in.
-	 * <p>
-	 * If there are any, it prints to the standard output the list, otherwise
-	 * displays an error message.
-	 */
-	public void displayWines()
-	{
-		if (currClient == null && currSeller == null)
-		{
-			System.out.println("No user is logged in.");
-			return;
-		}
-
-		for (Wine w : wineList)
-		{
-			System.out.println(w.toString());
-		}
-		System.out.println();
-	}
-
-	/**
-	 * Displays only the wines that match the specified query.
-	 * <p>
-	 * Precondition: there are clients or sellers logged in.
-	 * <p>
-	 * It employs the search method and therefore allows to show all the wines that
-	 * match a specified name or year.
-	 * <p>
-	 *
-	 * @param searchText text to be searched
-	 * @param searchType type of search (YEAR, NAME, ID)
-	 */
-	public void displayWines(String searchText, SearchType searchType)
-	{
-		if (currClient == null && currSeller == null)
-		{
-			System.out.println("No user is logged in.");
-			return;
-		}
-
-		for (Wine w : search(searchText, searchType))
-		{
-			System.out.println(w.toString());
-		}
-		System.out.println();
-
-	}
-
-	/**
 	 * Searches by Year or Name or ID through the list of wines.
 	 * 
 	 * @param searchText text to be searched for
 	 * @param searchType type of search
+     *
 	 * @return list of wines that match the query
 	 */
 	public ArrayList<Wine> search(String searchText, SearchType searchType)
@@ -512,22 +462,17 @@ public class Store
 		}
 
 		return res;
-
 	}
 
 	/**
-	 * Sells {@code amount} bottles of the wine specified by the {@code wineId} to
-	 * the currently logged-in client.
-	 * <p>
+	 * Sells {@code amount} bottles of the wine specified by the {@code wineId} to the user specified by the {@code customerId}. <p>
+     * Synchronized among different Threads.
 	 *
-	 * Precondition: a client is logged in.
+	 * @param wineId                id of the wine
+     * @param customerId            id of the customer
+	 * @param amount                amount of bottles
 	 *
-	 * @param wineId                id of the wine to be bought
-	 * @param amount                amount of bottles to be bought
-	 * @param requestIfNotAvailable express willingness to be notified in case of
-	 *                              the absence of the needed amount
-	 *
-	 * @return true if the wine is available to be bought, false otherwise.
+	 * @return true if the wine is sold, false otherwise.
 	 */
 	synchronized public boolean buy(int wineId, int customerId, int amount)
 	{
@@ -562,15 +507,13 @@ public class Store
 	}
 
 	/**
-	 * A notification request for the specified amount of wine associated with the
-	 * current client is saved.
-	 * <p>
-	 * When the amount is available, the client will be warned with a message.
-	 * <p>
-	 * Precondition: a client is logged in.
+	 * A notification request for the specified amount of wine associated with the specified client is saved. <p>
+	 * When the amount is available, the client will be warned with a message. <p>
+     * Sychronized among different Threads.
 	 * 
-	 * @param wineId the id of the wine that allows to uniquely identify it.
-	 * @param amount the numbers of bottles requested.
+	 * @param wineId id of the wine
+     * @param customerId id of the customer
+	 * @param amount numbers of bottles requested
 	 */
 	synchronized public void requestWine(int wineId, int customerId, int amount)
 	{
@@ -582,6 +525,7 @@ public class Store
 			((Observer) c).newMessage("Wine " + w.getName() + " is available.");
 		} else
 		{
+            //wine is not available, request is placed
 			notifRequest.put(wineId, new AbstractMap.SimpleEntry<Integer, Integer>(customerId, amount));
 			for (LoggableUser s : userList)
 			{
@@ -592,6 +536,12 @@ public class Store
 		}
 	}
 
+    /**
+     * Removes a seller from the user list. <p>
+     * Synchronized among different Threads.
+     *
+     * @param email email of the seller
+     **/
 	synchronized public void removeSeller(String email)
 	{
 		for (LoggableUser usr : userList)
@@ -604,12 +554,26 @@ public class Store
 		}
 	}
 
+    /**
+     * Removes a wine from the wine list. <p>
+     * Synchronized among different Threads.
+     *
+     * @param id id of the wine
+     * */
 	synchronized public void removeWine(int id)
 	{
 		wineList.remove(getWineByID(id));
 	}
 
-	synchronized public boolean editWine(int id, Wine newWine)
+    /**
+     * Edits the information of the specified wine. <p>
+     * Synchronized among different Threads.
+     *
+     * @param id id of the wine
+     * @param newWine Wine object containing the new data
+     *
+     **/
+	synchronized public void editWine(int id, Wine newWine)
 	{
 		Wine w = getWineByID(id);
 		w.setName(newWine.getName());
@@ -620,9 +584,14 @@ public class Store
 		if (newWine.getAmount() >= 0)
 			w.setAmount(newWine.getAmount());
 		w.setWineType(newWine.getWineType());
-		return true;
 	}
 
+    /**
+     * Removes the order with the specified id from the list. <p>
+     * Synchronized among different Threads.
+     *
+     * @param id id of the order
+     **/
 	synchronized public void removeOrder(int id)
 	{
 		Order o = getOrderByID(id);
@@ -631,6 +600,15 @@ public class Store
 		orderList.remove(o);
 	}
 
+    /**
+     * Edits the amount of bottles of a specified order. <p>
+     * Synchronized among differen Threads.
+     *
+     * @param id id of the order
+     * @param amount new amount of ordered wine
+     *
+     * @return true if there is enough wine to satisfy the change, false otherwise
+     **/
 	synchronized public boolean editOrder(int id, int amount)
 	{
 		Order o = getOrderByID(id);

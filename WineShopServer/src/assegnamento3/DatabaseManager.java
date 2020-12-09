@@ -12,13 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * The class {@code DatabaseManager} handles the persistency of the data. <p>
+ * Creates a connection to the database and implements the methods for saving wine, user, order, notification, and message lists as well as loading them back from main memory.
+ **/
 public class DatabaseManager 
 {
-	
-	final String WINE_TABLE = "wines";
-	final String USER_TABLE = "users";
-	final String ORDER_TABLE = "orders";
-	final String MEX_TABLE = "messages";
 	
 	Connection conn = null;
 	Statement st = null;
@@ -29,6 +28,10 @@ public class DatabaseManager
 	String password;
 	
 	
+    /**
+     * Class constructor. <p>
+     * Initializes the connection to the database and creates the tables if not already present.
+     **/
 	public DatabaseManager(String url, String args, String user, String password) throws SQLException
 	{
 		this.url = url;
@@ -37,11 +40,6 @@ public class DatabaseManager
 		this.password = password;
 		
 		open();
-		
-		/*st.executeUpdate("drop table if exists users");
-		st.executeUpdate("drop table if exists notifications");
-		st.executeUpdate("drop table if exists orders");*/
-
 		
 		String createTableWines = "create table if not exists wines ("
 				+ "id int primary key,"
@@ -90,16 +88,19 @@ public class DatabaseManager
 				+ "userId int not null,"
 				+ "text varchar(100)";
 		st.executeUpdate(createTableMessages);
-
-	
-		
 	}
 	
+    /**
+     * @return true if the connection is open, false otherwise.
+     **/
 	public boolean isOpen()
 	{
 		return conn != null;
 	}
 	
+    /**
+     * Closes the connection to the database.
+     **/
 	public void close() 
 	{
 		try
@@ -112,6 +113,10 @@ public class DatabaseManager
 		}
 	}
 	
+    /**
+     * Opens the connection to the database. <p>
+     * Delegates possible errors to the invoking method to allow for the disconnection of the server.
+     **/
 	public void open() throws SQLException
 	{
 		
@@ -123,6 +128,10 @@ public class DatabaseManager
 	
 	
 	
+    /**
+     * Saves the given wineList to the database.
+     * @param wines list of wines
+     **/
 	public void saveWineList(ArrayList<Wine> wines)
 	{
 		try
@@ -168,6 +177,10 @@ public class DatabaseManager
 	}
 	
 	
+    /**
+     * Retrieves the winelist from the database.
+     * @return list of the stored wines
+     **/
 	public ArrayList<Wine> getWineList()
 	{
 		ArrayList<Wine> res = new ArrayList<>();
@@ -206,6 +219,10 @@ public class DatabaseManager
 	}
 	
 	
+    /**
+     * Saves the given userList to the database and for each user all the personal messages.
+     * @param users list of users
+     **/
 	public void saveUserList(ArrayList<LoggableUser> users)
 	{
 		try
@@ -263,7 +280,11 @@ public class DatabaseManager
 		
 	}
 	
-	
+		
+    /**
+     * Retrieves the userList from the database and loads all the personal messages.
+     * @return list of the stored users 
+     **/
 	public ArrayList<LoggableUser> getUserList()
 	{
 		ArrayList<LoggableUser> res = new ArrayList<>();
@@ -303,7 +324,11 @@ public class DatabaseManager
 		return res;
 		
 	}
-	
+		
+    /**
+     * Saves the given orderlist to the database.
+     * @param orders list of orders
+     **/
 	public void saveOrderList(ArrayList<Order> orders)
 	{
 		try
@@ -331,7 +356,10 @@ public class DatabaseManager
 		
 	}
 	
-	
+	 /**
+     * Retrieves the orderList from the database.
+     * @return list of the stored orders 
+     **/
 	public ArrayList<Order> getOrderList()
 	{
 		ArrayList<Order> res = new ArrayList<>();
@@ -353,7 +381,11 @@ public class DatabaseManager
 		return res;
 		
 	}
-	
+
+	 /**
+     * Saves the given notificationMap to the database.
+     * @param notifications map of notifications
+     **/
 	public void saveNotificationList(Map<Integer, Entry<Integer, Integer>> notifications)
 	{
 		try
@@ -383,6 +415,10 @@ public class DatabaseManager
 	}
 	
 	
+	 /**
+     * Retrieves the notificationMap from the database.
+     * @return list of the stored notifications 
+     **/
 	public Map<Integer, Entry<Integer, Integer>> getNotificationList()
 	{
 		Map<Integer, Entry<Integer, Integer>> notifications = new HashMap<>();

@@ -30,16 +30,30 @@ public class Seller extends LoggableUser implements Observer
 	 * Invokes the parent {@code LoggableUser}'s constructor.
 	 * 
 	 * @see LoggableUser
-	 * 
-	 * @param name     of the seller.
-	 * @param surname  of the seller.
-	 * @param email    of the seller.
-	 * @param password of the seller.
+     *
+	 * @param name name of the seller.
+	 * @param surname surname of the seller.
+	 * @param email email of the seller.
+	 * @param password password of the seller.
 	 */
 	public Seller(String name, String surname, String email, String password)
 	{
 		super(name, surname, email, password);
 	}
+
+	/**
+	 * Class constructor.
+	 * <p>
+	 * Invokes the parent {@code LoggableUser}'s constructor.
+	 * 
+	 * @see LoggableUser
+	 * 
+     * @param id id of the seller
+	 * @param name name of the seller.
+	 * @param surname surname of the seller.
+	 * @param email email of the seller.
+	 * @param password password of the seller.
+	 */
 	
 	public Seller(int id, String name, String surname, String email, String password)
 	{
@@ -91,24 +105,31 @@ public class Seller extends LoggableUser implements Observer
 		for (String s : messages)
 		{
 			res += s + '\n';
-
 		}
 		return res;
-
 	}
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<String> getMessageList()
 	{
 		return this.messages;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getUserType()
 	{
 		return "seller";
 	}
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteMessage(int id)
 	{

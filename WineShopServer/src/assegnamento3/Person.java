@@ -3,8 +3,6 @@ package assegnamento3;
 /**
  * The class {@code Person} defines a generic person described by a name and a
  * surname.
- * <p>
- * Getters and Setters are provided.
  */
 public class Person
 {
@@ -59,7 +57,6 @@ public class Person
 	 * 
 	 * @param surname of the person.
 	 */
-
 	protected void setSurname(String surname)
 	{
 		this.surname = surname;
@@ -70,7 +67,6 @@ public class Person
 	 * 
 	 * @return the person's name and his surname.
 	 */
-
 	public String toString()
 	{
 		return this.name + " " + this.surname;

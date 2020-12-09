@@ -6,10 +6,11 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/*
- * list of threads to be join
- * */
 
+/**
+ * The class {@code NetworkServer} is responsible to create a persistent Server that accepts clients and creates instances of {@code ClientHandler} to handle them. <p>
+ * Implements Runnable to allow it to be executed in background.
+ **/
 public class NetworkServer implements Runnable
 {
 
@@ -17,15 +18,20 @@ public class NetworkServer implements Runnable
 	private boolean isRunning = true;
 	public static Store mainStore = new Store();
 
+    /**
+     * Class constructor. <p>
+     * Creates the server socket from which to accept incoming connections.
+     * @param port port to listen from 
+     **/
 	public NetworkServer(int port) throws IOException
 	{
-
 		mainSocket = new ServerSocket(port);
 		System.out.println("Started on port: " + port);
-		// mainStore.loadData() --> read sql database
-
 	}
 
+    /**
+     * Start the execution of the server.
+     **/
 	public void run()
 	{
 		isRunning = true;
@@ -45,11 +51,12 @@ public class NetworkServer implements Runnable
 			}
 		}
 
-		// save all lists
-		// periodic timer saves the lists
-
 	}
 
+
+    /**
+     * Stops the execution of the server.
+     **/
 	public void stop()
 	{
 		isRunning = false;

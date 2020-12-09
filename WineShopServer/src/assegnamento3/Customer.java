@@ -26,10 +26,8 @@ public class Customer extends LoggableUser implements Observer
 	 * Class constructor.
 	 * <p>
 	 * Invokes the parent {@code LoggableUser}'s constructor.
-	 * 
 	 * @see LoggableUser
-	 * 
-	 *      The id, if not specified, is generated random.
+	 * The id, if not specified, is generated random.
 	 * @param name     of the client.
 	 * @param surname  of the client.
 	 * @param email    of the client.
@@ -44,9 +42,7 @@ public class Customer extends LoggableUser implements Observer
 	 * Class constructor.
 	 * <p>
 	 * Invokes the parent {@code LoggableUser}'s constructor.
-	 * 
 	 * @see LoggableUser
-	 * 
 	 * @param id       of the client.
 	 * @param name     of the client.
 	 * @param surname  of the client.
@@ -110,18 +106,27 @@ public class Customer extends LoggableUser implements Observer
 
 	}
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<String> getMessageList()
 	{
 		return this.messages;
 	}
 	
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
+    @Override
 	public String getUserType()
 	{
 		return "customer";
 	}
 
+    /**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteMessage(int id)
 	{
