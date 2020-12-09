@@ -98,6 +98,12 @@ public class Seller extends LoggableUser implements Observer
 	}
 
 	@Override
+	public ArrayList<String> getMessageList()
+	{
+		return this.messages;
+	}
+	
+	@Override
 	public String getUserType()
 	{
 		return "seller";

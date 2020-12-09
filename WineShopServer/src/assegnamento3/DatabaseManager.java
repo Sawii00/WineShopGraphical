@@ -84,7 +84,13 @@ public class DatabaseManager
 				+ "amount int not null"
 				+ ")";
 		st.executeUpdate(createTableNotifications);
-			
+		
+		String createTableMessages = "create table if not exists messages("
+				+ "id int primary key auto_increment,"
+				+ "userId int not null,"
+				+ "text varchar(100)";
+		st.executeUpdate(createTableMessages);
+
 	
 		
 	}
@@ -114,6 +120,7 @@ public class DatabaseManager
 		
 		
 	}
+	
 	
 	
 	public void saveWineList(ArrayList<Wine> wines)
@@ -204,11 +211,13 @@ public class DatabaseManager
 		try
 		{
 			String insert = "insert into users values (?, ?, ?, ?, ?, ?)";
-			String delete = "delete from users";
-			st.executeUpdate(delete);
+			String insertMex = "insert into messages (userId, text) values (?, ?)";
+			
+			st.executeUpdate("delete from users");
+			st.executeUpdate("delete from messages");
 			
 			PreparedStatement stm = conn.prepareStatement(insert);
-			
+			PreparedStatement stmMex = conn.prepareStatement(insertMex);
 			for(LoggableUser u: users)
 			{
 				stm.setString(1, ""+u.getID());
@@ -217,9 +226,29 @@ public class DatabaseManager
 				stm.setString(4,  u.getEmail());
 				stm.setString(5,  u.getPassword());
 				if(u instanceof Customer)
+				{
 					stm.setString(6, "0");
+					ArrayList<String> mex = ((Customer) u).getMessageList();
+					for(String m : mex)
+					{
+						stmMex.setString(1, ""+u.getID());
+						stmMex.setString(2, m);
+						stmMex.addBatch();
+					}
+					stmMex.executeBatch();
+				}
 				else if(u instanceof Seller)
+				{
 					stm.setString(6, "1");
+					ArrayList<String> mex = ((Customer) u).getMessageList();
+					for(String m : mex)
+					{
+						stmMex.setString(1, ""+u.getID());
+						stmMex.setString(2, m);
+						stmMex.addBatch();
+					}
+					stmMex.executeBatch();
+				}
 				else 
 					stm.setString(6, "2");
 				stm.addBatch();
@@ -241,19 +270,25 @@ public class DatabaseManager
 		try
 		{
 			String select = "select * from users";
-			
+			String selectMex = "select * from messages where userId = ";
 			ResultSet set = st.executeQuery(select);
 			
 			while(set.next())
 			{
 				LoggableUser u = null;
+				ResultSet mexSet = st.executeQuery(selectMex+set.getInt("id"));
 				switch(set.getInt("type"))
 				{
 				case 0:
 					u = new Customer(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));
+					while(mexSet.next())
+						((Observer)u).newMessage(mexSet.getString("text"));
+					
 					break;
 				case 1:
 					u = new Seller(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));
+					while(mexSet.next())
+						((Observer)u).newMessage(mexSet.getString("text"));
 					break;
 				case 2:
 					u = new Admin(set.getInt("id"), set.getString("name") , set.getString("surname"), set.getString("email"), set.getString("password"));

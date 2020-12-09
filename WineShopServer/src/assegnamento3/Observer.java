@@ -1,5 +1,7 @@
 package assegnamento3;
 
+import java.util.ArrayList;
+
 /**
  * The {@code Observer} interface is used to implement the Observer Design
  * Pattern.
@@ -36,5 +38,7 @@ public interface Observer
 	public String getMessages();
 
 	public void deleteMessage(int id);
+
+	ArrayList<String> getMessageList();
 
 }
