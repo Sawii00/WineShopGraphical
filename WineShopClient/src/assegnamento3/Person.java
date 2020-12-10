@@ -2,9 +2,7 @@ package assegnamento3;
 
 /**
  * The class {@code Person} defines a generic person described by a name and a
- * surname.
- * <p>
- * Getters and Setters are provided.
+ * surname. <p> <p>
  */
 public class Person
 {

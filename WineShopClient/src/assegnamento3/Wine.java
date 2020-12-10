@@ -3,6 +3,9 @@ package assegnamento3;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * The enum {@code WineType} represents the type of wine.
+ **/
 enum WineType
 {
 	RED, WHITE, ROSE
@@ -18,13 +21,9 @@ enum WineType
  * <p>
  * Each wine is identified by a unique {@code id}.
  */
-
 public class Wine implements Serializable
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4609912367894803090L;
 
 	private int id;
@@ -37,21 +36,43 @@ public class Wine implements Serializable
 	private int number;
 	private WineType wineType;
 
+    /**
+     * Getter for the wine type.
+     *
+     * @return type of wine (ROSE, WHITE, RED)
+     **/
 	public WineType getWineType()
 	{
 		return wineType;
 	}
 
+    /**
+     * Setter for the wine type.
+     *
+     * @param wineType type of wine
+     **/
 	public void setWineType(WineType wineType)
 	{
 		this.wineType = wineType;
 	}
 
+    /**
+     * Setter for the wine type given a string.
+     *
+     * @param wineType string representation of the wine type
+     **/
 	public void setWineType(String wineType)
 	{
 		this.wineType = parseWineType(wineType);
 	}
 
+    /**
+     * Utility method that returns a WineType object given its string representation.
+     *
+     * @param type string representing a wine type
+     *
+     * @return WineType object
+     **/
 	private static WineType parseWineType(String type)
 	{
 		type = type.toLowerCase().replace("é", "e");
@@ -79,14 +100,14 @@ public class Wine implements Serializable
 	 * <p>
 	 * The id, if not specified, is generated random.
 	 * 
-	 * @param name           the name of the wine.
-	 * @param producer       the producer of the wine.
-	 * @param year           the year of production.
-	 * @param technicalNotes technical notes that describe the kind of wine.
-	 * @param grapeType      the grape from which are produced the wines.
-	 * @param number         the number of bottles of wine.
+	 * @param name           the name of the wine
+	 * @param producer       the producer of the wine
+	 * @param year           the year of production
+	 * @param technicalNotes technical notes that describe the kind of wine
+	 * @param grapeType      the grape from which are produced the wines
+	 * @param number         the number of bottles of wine
+     * @param wt             the type of the wine
 	 */
-
 	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number,
 			WineType wt)
 	{
@@ -101,6 +122,20 @@ public class Wine implements Serializable
 		this.wineType = wt;
 	}
 
+
+	/**
+	 * Class constructor.
+	 * <p>
+	 * The id, if not specified, is generated random.
+	 * 
+	 * @param name           the name of the wine
+	 * @param producer       the producer of the wine
+	 * @param year           the year of production
+	 * @param technicalNotes technical notes that describe the kind of wine
+	 * @param grapeType      the grape from which are produced the wines
+	 * @param number         the number of bottles of wine
+     * @param wt             string representing the type of the wine
+	 */
 	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number, String wt)
 	{
 		Random r = new Random();
@@ -114,6 +149,20 @@ public class Wine implements Serializable
 		this.wineType = parseWineType(wt);
 	}
 
+
+	/**
+	 * Class constructor.
+	 * <p>
+	 * 
+     * @param id             the id of the wine
+	 * @param name           the name of the wine
+	 * @param producer       the producer of the wine
+	 * @param year           the year of production
+	 * @param technicalNotes technical notes that describe the kind of wine
+	 * @param grapeType      the grape from which are produced the wines
+	 * @param number         the number of bottles of wine
+     * @param wt             string representing the type of the wine
+	 */
 	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number,
 			String wt)
 	{
@@ -127,17 +176,19 @@ public class Wine implements Serializable
 		this.wineType = parseWineType(wt);
 	}
 
+
 	/**
 	 * Class constructor.
 	 * <p>
 	 * 
-	 * @param id             the id of the wine.
-	 * @param name           the name of the wine.
-	 * @param producer       the producer of the wine.
-	 * @param year           the year of production.
-	 * @param technicalNotes technical notes that describe the kind of wine.
-	 * @param grapeType      the grape from which are produced the wines.
-	 * @param number         the number of bottles of wine.
+     * @param id             the id of the wine
+	 * @param name           the name of the wine
+	 * @param producer       the producer of the wine
+	 * @param year           the year of production
+	 * @param technicalNotes technical notes that describe the kind of wine
+	 * @param grapeType      the grape from which are produced the wines
+	 * @param number         the number of bottles of wine
+     * @param wt             the type of the wine
 	 */
 	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number,
 			WineType wt)
@@ -304,6 +355,12 @@ public class Wine implements Serializable
 				+ " AMOUNT: " + this.number + "\nTechnical Notes: " + this.technicalNotes;
 	}
 
+    /**
+     * Returns a serialized string that can be parsed by the server. <p>
+     * The fields are separated by "<>".
+     *
+     * @return serialized parseable version of the wine
+     **/
 	public String serializedString()
 	{
 		return this.id + "<>" + this.name + "<>" + this.producer + "<>" + this.year + "<>" + this.technicalNotes + "<>"

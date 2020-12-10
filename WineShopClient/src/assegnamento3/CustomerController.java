@@ -37,11 +37,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The enum {@code SearchType1} defines two research fees for the wines.
+ */
 enum SearchType1
 {
 	NAME, YEAR
 };
 
+/**
+ * The class {@code CustomerController} defines the controller for the customer.fxml.<p>
+ * It allows the customer to have a graphical representation of the wines, and of his messages box.<p>
+ * It gives the customer method to buy wines, notify that he needs some bottles that aren't
+ * available, search wines and see his messages.
+ */
 public class CustomerController
 {
 
@@ -89,23 +98,32 @@ public class CustomerController
 
 	static int customerId;
 
+	/**
+	 * Setter for the customer's id.
+	 * @param id of the customer
+	 */
 	public void setCustomerID(int id)
 	{
 		customerId = id;
 	}
 
+	/**
+	 * Gives a graphical representation for the messages, creating a new MessageBox instance.
+	 */
 	public void displayMessages()
 	{
 		MessageBox msg = new MessageBox(this.customerId);
 		refresh();
-
 	}
 	
-	
-
+	/**
+	 * Handle the search function according to the SearchTYpe and calls the serachWine function. <p>
+	 * The search can be done by name or by year.
+	 */
 	public void search()
 	{
-		if (searchTextField.getText().equals(""))
+		//If the serachTextField is empty, it call the popilateFullList to update the list of wines.
+		if (searchTextField.getText().equals("")) 
 		{
 			populateFullList();
 			return;
@@ -120,6 +138,12 @@ public class CustomerController
 		}
 	}
 
+	/**
+	 * Synchronizes the graphical representation of messages and wines.<p>
+	 * It sends a request to the server to get new messages and changes the message image 
+	 * according to whether there are new messages or not <p>
+	 * It clears the wine grid to synchronize the updated list of wines. 
+	 */
 	public void refresh()
 	{
 		if(this.customerId != 0)
@@ -139,8 +163,9 @@ public class CustomerController
 		{
 			try
 			{
-				// TODO: duplicate instead of reloading each time
 				singleWine = FXMLLoader.load(getClass().getResource("wine.fxml"));
+				/*Sets the image according to the type of wine since that images 
+				are called as the type of wines.*/
 				((ImageView) ((StackPane) ((VBox) singleWine.getChildren().get(0)).getChildren().get(0)).getChildren()
 						.get(1)).setImage(images[w.getWineType().ordinal()]);
 
@@ -172,6 +197,10 @@ public class CustomerController
 		}
 	}
 
+	/**
+	 * Allows to logout the current customer.<p>
+	 * It loads the home stage.
+	 */
 	public void logout()
 	{
 		Stage mainStage;
@@ -190,6 +219,11 @@ public class CustomerController
 		}
 	}
 
+	/**
+	 * Allows to search a wine. The search is done in real time.
+	 * @param text the key word used to search a wine
+	 * @param type the customer can search any wine, or specifying if is red, white or rosé. 
+	 */
 	private void searchWine(String text, SearchType type)
 	{
 		viewedWines.clear();
@@ -197,6 +231,12 @@ public class CustomerController
 		{
 			for (Wine w : wines)
 			{
+				/**
+				 * To have a correct comparison between the keyword entered in the searchTextField 
+				 * and the name of the wine, all letters are transformed into lowercase. <p>
+				 * It does the same thing regarding the comparison between the type of wine and 
+				 * the text in the typeChoiceBox and then replaces accents on the 'e' of 'rosé'.
+				 */
 				if (w.getName().toLowerCase().contains(text.toLowerCase())
 						&& (typeChoiceBox.getValue().equals("All") || w.getWineType().toString().toLowerCase()
 								.equals(typeChoiceBox.getValue().toLowerCase().replace("é", "e"))))
@@ -218,6 +258,12 @@ public class CustomerController
 
 			for (Wine w : wines)
 			{
+				/**
+				 * It controls if the year searched is contained in a wine year.<p>
+				 * To have a correct comparison between the type of wine and 
+				 * the text in the typeChoiceBox, all letters are transformed into lowercase. <p>
+				 * Then replaces accents on the 'e' of 'rosé'.  
+				 */
 				if (String.valueOf(w.getYear()).contains(String.valueOf(year))
 						&& (typeChoiceBox.getValue().equals("All") || w.getWineType().toString().toLowerCase()
 								.contains(typeChoiceBox.getValue().toLowerCase().replace("é", "e"))))
@@ -228,9 +274,12 @@ public class CustomerController
 		}
 
 		refresh();
-
 	}
 
+	/*
+	 * Sends a request to the server to get the wineLis.
+	 * Clears the current list and updates thanks to the response received by the server.
+	 */
 	private void populateFullList()
 	{
 		Request r = new Request("getWinesList");
@@ -243,7 +292,10 @@ public class CustomerController
 		searchWine("", SearchType.NAME);
 	}
 
-	public void initialize() throws IOException
+	/**
+	 * It initializes the choiceBox with the wine type and set attributes for the scrollPane.
+	 */
+	public void initialize() 
 	{
 
 		typeChoiceBox.getItems().add("All");
@@ -264,7 +316,7 @@ public class CustomerController
 
 		searchTextField.textProperty().addListener(new ChangeListener<String>()
 		{
-
+			//Allows to updates the search for each textField change, thus guaranteeing the search in real time.
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2)
 			{
@@ -275,21 +327,15 @@ public class CustomerController
 
 		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
 		{
-
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2)
 			{
-
 				// forcing choicebox text change... it does not happen until out of this handler
 				typeChoiceBox.setValue(typeChoiceBox.getItems().get((int) arg2));
 				search();
 			}
 		});
-
+		
 		populateFullList();
-
-		// retrieve wineList from server
-
 	}
-
 }

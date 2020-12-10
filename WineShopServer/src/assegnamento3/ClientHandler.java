@@ -266,12 +266,9 @@ public class ClientHandler implements Runnable
 			String grape = request.getParameters().get(5);
 			String type = request.getParameters().get(6);
 
-			boolean ok = NetworkServer.mainStore.editWine(Integer.parseInt(id),
+			NetworkServer.mainStore.editWine(Integer.parseInt(id),
 					new Wine(name, producer, Integer.parseInt(year), notes, grape, -1, type));
-			if (ok)
-				return new Response(StatusCode.SUCCESS);
-			else
-				return new Response(StatusCode.INVALID_ARGUMENTS);
+			return new Response(StatusCode.SUCCESS);
 		}
 		case "restockWine":
 		{
@@ -320,7 +317,7 @@ public class ClientHandler implements Runnable
 			if (buy)
 				return new Response(StatusCode.SUCCESS);
 			else
-				return new Response(StatusCode.ERROR);
+				return new Response(StatusCode.INVALID_ARGUMENTS);
 		}
 		case "notification":
 		{

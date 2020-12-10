@@ -2,6 +2,9 @@ package assegnamento3;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -46,12 +49,8 @@ public class MainServer extends Application
 			portTextField.setEditable(true);
 
             /*Dumps the content of the main lists to the database*/
-			db.saveWineList(server.mainStore.getWineList());
-			db.saveUserList(server.mainStore.getUserList());
-			db.saveOrderList(server.mainStore.getOrderList());
-			db.saveNotificationList(server.mainStore.getNotificationList());
+			saveAllLists();
 			db.close();
-
 			
 		});
 
@@ -70,11 +69,8 @@ public class MainServer extends Application
 				portTextField.setEditable(false);
 				db.open();
 
-                /*Loads the content of the database to the main lists*/
-				server.mainStore.setWineList(db.getWineList());
-				server.mainStore.setUserList(db.getUserList());
-				server.mainStore.setOrderList(db.getOrderList());
-				server.mainStore.setNotificationList(db.getNotificationList());
+                 /*Loads the content of the database to the main lists*/
+				loadAllLists();
 
 			} catch (NumberFormatException | IOException e2)
 			{
@@ -84,12 +80,21 @@ public class MainServer extends Application
 				new BasicAlertBox("Error", "Could not connect to db", 200, 150);
 				if (server != null)
 					server.stop();
+				//primaryStage.close();
 			}
 
 		});
 
-        SchedulerExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(e->{},
+		/**
+		 * Periodic task that saves the lists in the database as backup.
+		 **/
+		ScheduledExecutorService  scheduler = Executors.newScheduledThreadPool(1);
+		scheduler.scheduleAtFixedRate(()->{
+			
+			if(db.isOpen())
+				saveAllLists();
+					
+		}, 10, 10, TimeUnit.SECONDS);
 
 		primaryStage.setOnCloseRequest(e ->
 		{
@@ -98,10 +103,7 @@ public class MainServer extends Application
 				server.stop();
 			if(db != null && db.isOpen())
 			{
-				db.saveWineList(server.mainStore.getWineList());
-				db.saveUserList(server.mainStore.getUserList());
-				db.saveOrderList(server.mainStore.getOrderList());
-				db.saveNotificationList(server.mainStore.getNotificationList());
+				saveAllLists();
 				db.close();
 			}
 			System.exit(0);
@@ -110,6 +112,27 @@ public class MainServer extends Application
         primaryStage.show();
 
 
+	}
+	/**
+	 * Loads all the lists from the database to memory 
+	 **/
+	private void loadAllLists()
+	{
+		server.mainStore.setWineList(db.getWineList());
+		server.mainStore.setUserList(db.getUserList());
+		server.mainStore.setOrderList(db.getOrderList());
+		server.mainStore.setNotificationList(db.getNotificationList());
+	}
+	
+	/**
+	 * Saves all the lists onto the database
+	 **/
+	private void saveAllLists()
+	{
+		db.saveWineList(server.mainStore.getWineList());
+		db.saveUserList(server.mainStore.getUserList());
+		db.saveOrderList(server.mainStore.getOrderList());
+		db.saveNotificationList(server.mainStore.getNotificationList());
 	}
 
 	public static void main(String[] args)

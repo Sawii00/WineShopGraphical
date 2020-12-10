@@ -12,17 +12,33 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class RegistrationBox
+/**
+ * The class {@code RegistrationBox} displays a popup that allows the registration of a new Seller or the modification of its data. <p>
+ * It checks the validity of the provided input.
+ **/
+public class SellerBox
 {
 	private String values[] = { "", "", "", "" };
 	private boolean validData = false;
 
-	public RegistrationBox(String title)
+    /**
+     * Class constructor.
+     * 
+     * @param title title of the window
+     **/
+	public SellerBox(String title)
 	{
 		display(title);
 	}
 
-	public RegistrationBox(String title, String[] defaultValues)
+    /**
+     * Class constructor. <p>
+     * Sets the default values that will be used to populate the fields in case the seller is being edited. 
+     *
+     * @param defaultValues default values of the fields
+     * @param title title of the window
+     **/
+	public SellerBox(String title, String[] defaultValues)
 	{
 		if (defaultValues.length != 4)
 			throw new IllegalArgumentException("Invalid Arguments to Regitration Box");
@@ -30,11 +46,21 @@ public class RegistrationBox
 		display(title);
 	}
 
+    /**
+     * Getter for the input values.
+     *
+     * @return array of the provided input
+     **/
 	public String[] getValues()
 	{
 		return values;
 	}
 
+    /**
+     * Displays the popup.
+     * 
+     * @param title title of the window
+     **/
 	private void display(String title)
 
 	{
@@ -88,6 +114,11 @@ public class RegistrationBox
 
 	}
 
+    /**
+     * Returns whether the inserted data is valid.
+     *
+     * @return data is valid
+     **/
 	public boolean isValid()
 	{
 		return validData;

@@ -16,6 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code RestockBox} displays a popup that prompts the Seller for the amount of bottles of a wine to be restocked.
+ **/
 public class RestockBox
 {
 
@@ -23,16 +26,27 @@ public class RestockBox
 	Button confirmButton;
 	TextField amountTextField;
 
+    /**
+     * Class constructor.
+     **/
 	public RestockBox()
 	{
 		display();
 	}
 
+    /**
+     * Getter for the amount of wine to be restocked.
+     *
+     * @return amount of bottles
+     **/
 	public int getAmount()
 	{
 		return val;
 	}
 
+    /**
+     * Displays the popup.
+     **/
 	public void display()
 	{
 		Stage window = new Stage();

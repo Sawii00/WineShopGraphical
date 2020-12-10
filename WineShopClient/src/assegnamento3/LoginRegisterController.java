@@ -3,6 +3,9 @@ package assegnamento3;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,192 +22,205 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
+/**
+ * The class {@code LoginRegisterController} defines the controller for the log_reg.fxml.<p>
+ * It allows the user to have a graphical representation of the login and of the registration.
+ */
 public class LoginRegisterController implements Initializable
 {
 
 	@FXML
-	private AnchorPane layersignup;
+	private AnchorPane layerFather;
 
 	@FXML
-	private AnchorPane layer1;
+	private AnchorPane layerSign;
 
 	@FXML
-	private Label a2;
+	private Label labelCreateAccount;
 
 	@FXML
-	private Label a1;
+	private Label orUseEmailLabelReg;
 
 	@FXML
-	private Label b2;
+	private Label labelSignInToWineShop;
 
 	@FXML
-	private TextField r1;
+	private TextField regNameTextField;
 
 	@FXML
-	private TextField r2;
+	private TextField regSurnameTextField;
+	
+	@FXML
+	private TextField regEmailTextField;
 
 	@FXML
-	private TextField r3;
-
-	@FXML
-	private PasswordField r4;
+	private PasswordField regPasswordField;
 
 	@FXML
 	private Button signUpButton;
 
 	@FXML
-	private Label b1;
+	private Label orUseEmailLabelLog;
 
 	@FXML
 	private Button signInButton;
 
 	@FXML
-	private TextField l1;
+	private TextField emailLogTextField;
 
 	@FXML
-	private PasswordField l2;
+	private PasswordField logPasswordField;
 
 	@FXML
-	private AnchorPane layer2;
+	private AnchorPane layerRed;
 
 	@FXML
-	private Label s1;
+	private Label WelcomeBackLabel;
 
 	@FXML
-	private Label s2;
+	private Label wineShopLabel;
 
 	@FXML
-	private Label s3;
+	private Label winesfromLabel;
 
 	@FXML
-	private Button signInSButton;
+	private Button signInTransButton;
 
 	@FXML
-	private Button signUpSButton;
+	private Button signUpTransButton;
 
 	@FXML
-	private Label t1;
+	private Label helloFriendLabel;
 
 	@FXML
-	private Label t2;
+	private Label enterYourDetailLabel;
 
 	@FXML
-	private Label t3;
+	private Label andStartJourneyLabel;
 
 	@FXML
 	private Button exitButton;
 
+	/**
+	 * Sets the elements that are shown when the stage is opened.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
-		t1.setVisible(false);
-		t2.setVisible(false);
-		t3.setVisible(false);
-		signUpSButton.setVisible(false);
-		b1.setVisible(false);
-		b2.setVisible(false);
-		s2.setVisible(true);
+		helloFriendLabel.setVisible(false);
+		enterYourDetailLabel.setVisible(false);
+		andStartJourneyLabel.setVisible(false);
+		signUpTransButton.setVisible(false);
+		orUseEmailLabelLog.setVisible(false);
+		labelSignInToWineShop.setVisible(false);
+		wineShopLabel.setVisible(true);
 		signInButton.setVisible(false);
-		l1.setVisible(false);
-		l2.setVisible(false);
-		r1.setVisible(true);
-		r2.setVisible(true);
-		r3.setVisible(true);
-		r4.setVisible(true);
+		emailLogTextField.setVisible(false);
+		logPasswordField.setVisible(false);
+		regNameTextField.setVisible(true);
+		regSurnameTextField.setVisible(true);
+		regEmailTextField.setVisible(true);
+		regPasswordField.setVisible(true);
 		signInButton.setDefaultButton(false);
 		signUpButton.setDefaultButton(true);
-
 	}
 
+	/**
+	 * Handles the animation that allows the layerRed to move to right in order to set not visible
+	 * the fields and buttons linked to registration and to set visible the login ones.
+	 * @param event the event generated on mouse click
+	 */
 	@FXML
-	private void btn(MouseEvent event)
+	private void transToRight(MouseEvent event)
 	{
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.seconds(0.7));
-		slide.setNode(layer2);
+		slide.setNode(layerRed);
 
 		slide.setToX(491);
 		slide.play();
 
-		layer1.setTranslateX(-309);
+		layerSign.setTranslateX(-309);
 		signInButton.setVisible(true);
-		b1.setVisible(true);
-		b2.setVisible(true);
+		orUseEmailLabelLog.setVisible(true);
+		labelSignInToWineShop.setVisible(true);
 
-		t1.setVisible(true);
-		t2.setVisible(true);
-		t3.setVisible(true);
-		signUpSButton.setVisible(true);
-		s1.setVisible(false);
-		s2.setVisible(false);
-		s3.setVisible(false);
-		signInSButton.setVisible(false);
-		a1.setVisible(false);
-		a2.setVisible(false);
+		helloFriendLabel.setVisible(true);
+		enterYourDetailLabel.setVisible(true);
+		andStartJourneyLabel.setVisible(true);
+		signUpTransButton.setVisible(true);
+		WelcomeBackLabel.setVisible(false);
+		wineShopLabel.setVisible(false);
+		winesfromLabel.setVisible(false);
+		signInTransButton.setVisible(false);
+		orUseEmailLabelReg.setVisible(false);
+		labelCreateAccount.setVisible(false);
 		signUpButton.setVisible(false);
-		l1.setVisible(true);
-		l2.setVisible(true);
-		r1.setVisible(false);
-		r2.setVisible(false);
-		r3.setVisible(false);
-		r4.setVisible(false);
+		emailLogTextField.setVisible(true);
+		logPasswordField.setVisible(true);
+		regNameTextField.setVisible(false);
+		regSurnameTextField.setVisible(false);
+		regEmailTextField.setVisible(false);
+		regPasswordField.setVisible(false);
 		signInButton.setDefaultButton(true);
 		signUpButton.setDefaultButton(false);
 
-		slide.setOnFinished((e ->
-		{
-
-		}));
 	}
 
+	/**
+	 * Handles the animation that allows the layerRed to move to left in order to set not visible
+	 * the fields and buttons linked to login and to set visible the registration ones.
+	 * @param event the event generated on mouse click
+	 */
 	@FXML
-	private void btn2(MouseEvent event)
+	private void transToLeft(MouseEvent event)
 	{
 		TranslateTransition slide = new TranslateTransition();
 		slide.setDuration(Duration.seconds(0.7));
-		slide.setNode(layer2);
+		slide.setNode(layerRed);
 
 		slide.setToX(0);
 		slide.play();
 
-		layer1.setTranslateX(0);
+		layerSign.setTranslateX(0);
 		signInButton.setVisible(false);
-		b1.setVisible(false);
-		b2.setVisible(false);
+		orUseEmailLabelLog.setVisible(false);
+		labelSignInToWineShop.setVisible(false);
 
-		t1.setVisible(false);
-		t2.setVisible(false);
-		t3.setVisible(false);
-		signUpSButton.setVisible(false);
-		s1.setVisible(true);
-		s2.setVisible(true);
-		s3.setVisible(true);
-		signInSButton.setVisible(true);
-		a1.setVisible(true);
-		a2.setVisible(true);
+		helloFriendLabel.setVisible(false);
+		enterYourDetailLabel.setVisible(false);
+		andStartJourneyLabel.setVisible(false);
+		signUpTransButton.setVisible(false);
+		WelcomeBackLabel.setVisible(true);
+		wineShopLabel.setVisible(true);
+		winesfromLabel.setVisible(true);
+		signInTransButton.setVisible(true);
+		orUseEmailLabelReg.setVisible(true);
+		labelCreateAccount.setVisible(true);
 		signUpButton.setVisible(true);
-		l1.setVisible(false);
-		l2.setVisible(false);
-		r1.setVisible(true);
-		r2.setVisible(true);
-		r3.setVisible(true);
-		r4.setVisible(true);
+		emailLogTextField.setVisible(false);
+		logPasswordField.setVisible(false);
+		regNameTextField.setVisible(true);
+		regSurnameTextField.setVisible(true);
+		regEmailTextField.setVisible(true);
+		regPasswordField.setVisible(true);
 		signInButton.setDefaultButton(false);
 		signUpButton.setDefaultButton(true);
 
-		slide.setOnFinished((e ->
-		{
-
-		}));
 	}
 
+	/**
+	 * Allows the user to log in.<p>
+	 * Takes and sends to the server the parameters from the fields and loads a new stage
+	 * depending on the response.
+	 */
 	public void login()
 	{
 		System.out.println("Login Pressed");
 
 		Request r = new Request("login");
-		r.addParameter(l1.getText());
-		r.addParameter(l2.getText());
+		r.addParameter(emailLogTextField.getText());
+		r.addParameter(logPasswordField.getText());
 
 		Response res = MainClient.client.sendRequest(r);
 
@@ -241,41 +257,47 @@ public class LoginRegisterController implements Initializable
 		}
 	}
 
-	private String vals[] = { "", "", "", "" };
-
-	public String[] getValues()
-	{
-		return vals;
-	}
-
+	/**
+	 * Allows the user to be registered as Customer.<p>
+	 * Takes and sends to the server the parameters from the fields and then clear the them.
+	 */
 	public void register()
 	{
-		System.out.println("Register Pressed");
-
 		Request r = new Request("register");
-		vals[0] = r1.getText();
-		vals[1] = r2.getText();
-		vals[2] = r3.getText();
-		vals[3] = r4.getText();
+		
+		String vals[]= new String[4];
 
-		for (String s : vals)
+		vals[0] = regNameTextField.getText();
+		vals[1] = regSurnameTextField.getText();
+		vals[2] = regSurnameTextField.getText();
+		vals[3] = regPasswordField.getText();
+
+		Pattern namePattern = Pattern.compile("[^0-9]+");
+		Pattern emailPattern = Pattern.compile("[a-zA-Z0-9.\\_]+@[a-zA-Z]+\\.[a-zA-Z]+");
+		Matcher matcherName  = namePattern.matcher(vals[0]);
+		Matcher matcherSurname  = namePattern.matcher(vals[1]);
+		Matcher matcherEmail = emailPattern.matcher(vals[2]);
+		
+		if(!(matcherName.find() && matcherSurname.find() && matcherEmail.find()) || vals[3].equals(""))
 		{
-			if (s.equals(""))
-			{
-				new BasicAlertBox("Error", "Fill-in all the information", 300, 100);
-				return;
-			}
+			new BasicAlertBox("Error", "Fill-in all the information", 300, 100);
+			return;
 		}
+		
 		r.addAllParameters(vals);
 		Response res = MainClient.client.sendRequest(r);
-		r1.clear();
-		r2.clear();
-		r3.clear();
-		r4.clear();
+		regNameTextField.clear();
+		regSurnameTextField.clear();
+		regSurnameTextField.clear();
+		regPasswordField.clear();
 		if (res.getReturnCode() == StatusCode.INVALID_ARGUMENTS)
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 	}
 
+	/**
+	 * Allows to go out from the loginRegistration scene.<p>
+	 * It loads the home stage.
+	 */
 	public void exit()
 	{
 		Stage mainStage = (Stage) exitButton.getScene().getWindow();

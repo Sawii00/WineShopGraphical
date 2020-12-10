@@ -26,6 +26,8 @@ public class Response implements Serializable
 
     /**
      * Class constructor.
+     *
+     * @param code status code of the response
      **/
 	public Response(StatusCode code)
 	{

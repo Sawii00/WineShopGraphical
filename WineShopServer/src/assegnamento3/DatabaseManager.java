@@ -86,7 +86,8 @@ public class DatabaseManager
 		String createTableMessages = "create table if not exists messages("
 				+ "id int primary key auto_increment,"
 				+ "userId int not null,"
-				+ "text varchar(100)";
+				+ "text varchar(100)"
+				+ ")";
 		st.executeUpdate(createTableMessages);
 	}
 	
@@ -119,11 +120,8 @@ public class DatabaseManager
      **/
 	public void open() throws SQLException
 	{
-		
 			conn = DriverManager.getConnection(url + args, user, password);
-			st = conn.createStatement();
-		
-		
+			st = conn.createStatement();		
 	}
 	
 	
@@ -293,11 +291,11 @@ public class DatabaseManager
 			String select = "select * from users";
 			String selectMex = "select * from messages where userId = ";
 			ResultSet set = st.executeQuery(select);
-			
+			Statement st2 = conn.createStatement();
 			while(set.next())
 			{
 				LoggableUser u = null;
-				ResultSet mexSet = st.executeQuery(selectMex+set.getInt("id"));
+				ResultSet mexSet = st2.executeQuery(selectMex+set.getInt("id"));
 				switch(set.getInt("type"))
 				{
 				case 0:

@@ -14,24 +14,39 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code PortBox} displays a popup that prompts the user for the server port. <p>
+ * The input is checked against the restricted ports and invalid characters.
+ **/
 public class PortBox
 {
 
-	public PortBox(String title)
+	private int port = -1;
+
+    /**
+     * Class constructor.
+     **/
+	public PortBox()
 	{
 
-		display(title);
+		display();
 
 	}
 
-	private int port = -1;
-
+    /**
+     * Getter for the server port.
+     *
+     * @return port of the server
+     **/
 	public int getPort()
 	{
 		return port;
 	}
 
-	private void display(String title)
+    /**
+     * Displays the popup.
+     **/
+	private void display()
 	{
 		Stage window = new Stage();
 		Parent root;
@@ -46,10 +61,15 @@ public class PortBox
 
 			connectButton.setOnMouseClicked(e ->
 			{
-
 				try
 				{
+                    /**
+                     * Checks whether the input are valid numbers.
+                     **/
 					port = Integer.parseInt(portTextField.getText());
+                    /**
+                     * Ports before 1000 are reserved and cannot be used.
+                     **/
 					if (port < 1000 || port >= 65535)
 					{
 						new BasicAlertBox("Error", "Invalid port (1000 - 65535)", 200, 150);
@@ -66,7 +86,7 @@ public class PortBox
 			});
 
 			window.initModality(Modality.APPLICATION_MODAL);
-			window.setTitle(title);
+			window.setTitle("Port");
 			window.setResizable(false);
 			window.setScene(scene);
 			window.showAndWait();

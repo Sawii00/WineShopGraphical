@@ -1,7 +1,6 @@
 package assegnamento3;
 
 import java.io.IOException;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +18,10 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code SellerController} defines the controller for seller.fxml <p>
+ * Defines methods that handle adding, editing, and removing wines, as well as those for handling orders.
+ **/
 public class SellerController
 {
 
@@ -57,11 +60,19 @@ public class SellerController
 
 	private int sellerId;
 
+    /**
+     * Setter for the seller id.
+     *
+     * @param id id of the seller 
+     **/
 	public void setSellerID(int id)
 	{
 		this.sellerId = id;
 	}
 
+    /**
+     * Logs out the Seller by loading back the home page.
+     **/
 	public void logout()
 	{
 		Stage mainStage;
@@ -80,11 +91,17 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Displays the MessageBox to show the inbox messages.
+     **/
 	public void displayMessages()
 	{
 		MessageBox msg = new MessageBox(this.sellerId);
 	}
 
+    /**
+     * Opens a WineBox popup to allow the Seller to add a new wine to the collection.
+     **/
 	public void add()
 	{
 		WineBox box = new WineBox("Add Wine");
@@ -102,6 +119,9 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Opens a RestockBox to allow the Seller to restock the selected wine with a number of new bottles.
+     **/
 	public void restock()
 	{
 		RestockBox box = new RestockBox();
@@ -121,6 +141,10 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Displays a WineBox or Orderbox to allow a Seller to edit wines or orders. <p>
+     * The functionality is based upon the table that is currently visible.
+     **/
 	public void edit()
 	{
 		if (sellerWineTable.isVisible())
@@ -144,7 +168,9 @@ public class SellerController
 					new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 				else
 				{
-					// TODO
+                    /**
+                     * Modifies the table to display changes.
+                     **/
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setName(vals[0]);
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setProducer(vals[1]);
 					sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w))
@@ -162,6 +188,10 @@ public class SellerController
 
 			Order o = sellerOrderTable.getSelectionModel().getSelectedItem();
 			String val = "";
+
+            /**
+             * Retrieves the amount of bottles currently available to clamp the max number of bottles.
+             **/
 			for (Wine w : wines)
 			{
 				if (w.getName().equals(o.getWineName()))
@@ -183,7 +213,6 @@ public class SellerController
 					new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 				else
 				{
-					// TODO
 					sellerOrderTable.getItems().get(sellerOrderTable.getItems().indexOf(o))
 							.setAmount(Integer.parseInt(val));
 					sellerOrderTable.refresh();
@@ -195,6 +224,10 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Allows a Seller to remove a wine or order. <p>
+     * The functionality is based upon the table that is currently visible.
+     **/
 	public void remove()
 	{
 		if (sellerWineTable.isVisible())
@@ -225,6 +258,10 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Refreshes the content of the table by requesting the update list from the Server. <p>
+     * The functionality is based upon the table that is currently visible.
+     **/
 	public void refresh()
 	{
 		String selectedTable = sellerChoiceBox.getSelectionModel().getSelectedItem();
@@ -264,6 +301,9 @@ public class SellerController
 		}
 	}
 
+    /**
+     * Initializes the Scene by setting up the table, populating the ChoiceBox, and installing the listeners to changes in the Scene. 
+     **/
 	public void initialize()
 	{
 		String vals[] = { "Wines", "Orders" };
@@ -288,9 +328,12 @@ public class SellerController
 		selectionModelOrder.setSelectionMode(SelectionMode.SINGLE);
 
 		ObservableList<Wine> selectedWines = selectionModelWine.getSelectedItems();
+
+        /**
+         * Listener to changes of currently selected wine.
+         **/
 		selectedWines.addListener(new ListChangeListener<Wine>()
 		{
-
 			@Override
 			public void onChanged(Change<? extends Wine> arg0)
 			{
@@ -306,13 +349,15 @@ public class SellerController
 					restockButton.setDisable(true);
 				}
 			}
-
 		});
 
 		ObservableList<Order> selectedOrders = selectionModelOrder.getSelectedItems();
+
+        /**
+         * Listener to changes to currently selected orders.
+         **/
 		selectedOrders.addListener(new ListChangeListener<Order>()
 		{
-
 			@Override
 			public void onChanged(Change<? extends Order> arg0)
 			{
@@ -326,9 +371,11 @@ public class SellerController
 					removeButton.setDisable(true);
 				}
 			}
-
 		});
 
+        /**
+         *  Listener to changes in the ChoiceBox.
+         **/
 		sellerChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
 		{
 			@Override

@@ -13,10 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code BuyBox} defines the controller for the buy_popup.fxml.<p>
+ * It allows the customer to buy some bottles of wine or to notify to the seller that he 
+ * needs more bottles than there are available.
+ */
 public class BuyBox
 {
 
 	Wine wine;
+	
 	int customerId;
 
 	Button buyButton;
@@ -33,6 +39,25 @@ public class BuyBox
 
 	private Stage window;
 
+	/**
+	 * Class constructor.
+	 * @param w the wine selected
+	 * @param customerId the id of the customer who want to buy the selected wine 
+	 */
+	public BuyBox(Wine w, int customerId)
+	{
+		this.customerId = customerId;
+		this.wine = w;
+
+		display();
+	}
+	
+	/**
+	 * If there are some bottles of a certain wine populates the amountChoiceBox with the number of 
+	 * available bottles and sets not visible the notifyButton and the notificationTextField. <p>
+	 * If there aren't bottles of a certain wine it set not visible the amountChoiceBox and 
+	 * the buyButton.
+	 */
 	private void populateChoiceBox()
 	{
 		if (wine.getNumber() > 0)
@@ -54,6 +79,11 @@ public class BuyBox
 		}
 	}
 
+	/**
+	 * It shows the notifictionTextField where is possible to set the number of bottles that you
+	 * want to order and the notifyButton that allows to send a notification to the seller. <p>
+	 * It set not visible the buyButton and the amountChoiceBox.
+	 */
 	private void showNotifyBox()
 	{
 		notifyButton.setVisible(true);
@@ -64,6 +94,10 @@ public class BuyBox
 		hereButton.setVisible(false);
 	}
 
+	/**
+	 * Creates a new stage and loads the buy_popup.fxml.<p>
+	 * Items are extracted from the .fxml file using id. <p> 
+	 */
 	private void display()
 	{
 		window = new Stage();
@@ -109,15 +143,11 @@ public class BuyBox
 
 	}
 
-	public BuyBox(Wine w, int customerId)
-	{
-		this.customerId = customerId;
-		this.wine = w;
-
-		display();
-
-	}
-
+	/**
+	 * It allows to buy some bottles of wine.
+	 * It sends a request to the server containing the number of bottles, the customerID and the
+	 * wineID.
+	 */
 	public void buy()
 	{
 		int val = (int) amountChoiceBox.getValue();
@@ -131,11 +161,17 @@ public class BuyBox
 			BasicAlertBox box = new BasicAlertBox("Error", "The order could not be processed", 200, 100);
 		} else
 		{
-			BasicAlertBox box = new BasicAlertBox("Success", "Succesfully bought " + val + " bottles", 200, 150);
+			BasicAlertBox box = new BasicAlertBox("Success", "Succesfully bought " + val + " bottles", 200, 150, true);
 		}
 		window.close();
 	}
 
+
+	/**
+	 * It allows to notify the seller that the customer needs some bottles of wine that aren't available.
+	 * It sends a request to the server containing the number of bottles, the customerID and the
+	 * wineID.
+	 */
 	public void notification()
 	{
 		try
@@ -152,7 +188,7 @@ public class BuyBox
 			} else
 			{
 				BasicAlertBox box = new BasicAlertBox("Success", "You will notified when the bottles will be available",
-						350, 150);
+						350, 150, true);
 				window.close();
 			}
 		} catch (NumberFormatException e)

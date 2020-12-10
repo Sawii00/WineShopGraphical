@@ -317,7 +317,7 @@ public class Store
 	 */
 	public Customer getClientByID(int clientId)
 	{
-        LoggableUser res = getLoggableUserByID(id);
+        LoggableUser res = getLoggableUserByID(clientId);
         if(res != null)
             return (Customer)res;
         else

@@ -1,7 +1,6 @@
 package assegnamento3;
 
 import java.io.IOException;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,11 +19,23 @@ public class WineBox
 	private boolean validData = false;
 	private boolean isEditing = false;
 
+    /**
+     * Class constructor.
+     * 
+     * @param title title of the window
+     **/
 	public WineBox(String title)
 	{
 		display(title);
 	}
 
+    /**
+     * Class constructor. <p>
+     * Allows to specify default values in case the wine is being edited.
+     * 
+     * @param title title of the window
+     * @param defaultValues current values of the wine
+     **/
 	public WineBox(String title, String[] defaultValues)
 	{
 		this.isEditing = true;
@@ -34,11 +45,21 @@ public class WineBox
 		display(title);
 	}
 
+    /**
+     * Getter for the inserted values.
+     *
+     * @return inserted values
+     **/
 	public String[] getValues()
 	{
 		return values;
 	}
 
+    /**
+     * Displays the popup.
+     * 
+     * @param title title of the window
+     **/
 	private void display(String title)
 
 	{
@@ -59,6 +80,10 @@ public class WineBox
 			Label typeLabel = (Label) root.lookup("#typeLabel");
 			ChoiceBox<String> type = (ChoiceBox) root.lookup("#typeChoiceBox");
 
+            /**
+             * If the wine is being edited, you cannot change the number of bottles. <p>
+             * Restocking the wine allows to change the amount.
+             **/
 			if (isEditing)
 			{
 				number.setVisible(false);
@@ -127,8 +152,8 @@ public class WineBox
 			window.initModality(Modality.APPLICATION_MODAL);
 			window.setScene(new Scene(root));
 			window.setResizable(false);
-
 			window.showAndWait();
+
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -136,6 +161,10 @@ public class WineBox
 
 	}
 
+    /**
+     * Returns whether the data in "values" is valid or not. <p>
+     * If the user closes the popup, the values are not valid since no change is meant.
+     **/
 	public boolean isValid()
 	{
 		return validData;

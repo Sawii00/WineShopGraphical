@@ -27,7 +27,7 @@ public class BasicAlertBox
 	}
 
     /**
-     * Displays the popup
+     * Displays the popup.
      * @param title title of the window
      * @param message message to be displayed
      * @param width width of the popup

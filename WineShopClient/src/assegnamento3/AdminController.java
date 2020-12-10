@@ -23,6 +23,12 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code AdminController} defines the controller for the admin.fxml.<p>
+ * It allows the admin to have a graphical representation of the sellerList, customerList,
+ * wineList and orderList. <p>
+ * It gives the admin methods to add, edit or remove sellers. 
+ */
 public class AdminController
 {
 
@@ -59,6 +65,11 @@ public class AdminController
 	@FXML
 	TableView<Order> adminOrderTable;
 
+
+	/**
+	 * Allows to logout the current admin. <p>
+	 * It loads the home stage.
+	 */
 	public void logout()
 	{
 		Stage mainStage;
@@ -77,6 +88,12 @@ public class AdminController
 		}
 	}
 
+
+	/**
+	 * Allows to remove a seller. <p>
+	 * It sends a request to the server and when it receives a response it
+	 * removes the selected seller from the tableView.
+	 */
 	public void removeSeller()
 	{
 		LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();
@@ -88,6 +105,15 @@ public class AdminController
 		adminPersonTable.getSelectionModel().clearSelection();
 	}
 
+
+	/**
+	 * Refresh the tableView. <p>
+	 * It sends a request to the server in order to get the update lists that populate
+	 * the tables. <p>
+	 * Before populating the tables it clears them to set the update ones. <p>
+	 * It also sets enable or disable the different buttons depending on the selected tables 
+	 * or tables' rows.
+	 */
 	public void refresh()
 	{
 		String selectedTable = adminChoiceBox.getSelectionModel().getSelectedItem();
@@ -169,10 +195,17 @@ public class AdminController
 		}
 	}
 
+	/**
+	 * Allows to add a new seller.<p>
+	 * It creates a new pop up using the RegistraionBox Class 
+	 * and allows the admin to fill in his fields. <p>
+	 * It sends a request to the server and and populates the table with the elements extracted
+	 * from the response. 
+	 */
 	public void addSeller()
 	{
 		// TODO fixed dimensions...no need to specify them
-		RegistrationBox box = new RegistrationBox("Add Seller");
+		SellerBox box = new SellerBox("Add Seller");
 		if (box.isValid())
 		{
 			String[] vals = box.getValues();
@@ -187,11 +220,19 @@ public class AdminController
 		}
 	}
 
+	/**
+	 * Allows to edit seller.<p>
+	 * It creates a new pop up using the RegistraionBox Class  
+	 * filling in the fields with the seller's already existing data, 
+ 	 * giving the admin the possibility to change them. <p>
+	 * It sends a request to the server and populates the table with the new elements extracted
+	 * from the response. 
+	 */
 	public void editSeller()
 	{
 		LoggableUser usr = adminPersonTable.getSelectionModel().getSelectedItem();
 		String vals[] = { usr.getName(), usr.getSurname(), usr.getEmail(), usr.getPassword() };
-		RegistrationBox box = new RegistrationBox("Edit Seller", vals);
+		SellerBox box = new SellerBox("Edit Seller", vals);
 		if (box.isValid())
 		{
 			vals = box.getValues();
@@ -216,6 +257,13 @@ public class AdminController
 
 	}
 
+	/**
+	 * Initializes the stage. <p>
+	 * Is populated the ChoiceBox that allows to see the different tables.<p>
+	 * Are set the columns of the tables and is specified that is possible to select only
+	 * one row at a time.<p>
+	 * It contains the selection handler.
+	 */
 	public void initialize()
 	{
 		String vals[] = { "Customers", "Sellers", "Wines", "Orders" };
@@ -240,10 +288,12 @@ public class AdminController
 		TableViewSelectionModel<LoggableUser> selectionModelPerson = adminPersonTable.getSelectionModel();
 		selectionModelPerson.setSelectionMode(SelectionMode.SINGLE);
 
+		/**
+		 * Allows to enable or disable the buttons depending the selected row.
+		 */
 		ObservableList<LoggableUser> selectedItems = selectionModelPerson.getSelectedItems();
 		selectedItems.addListener(new ListChangeListener<LoggableUser>()
 		{
-
 			@Override
 			public void onChanged(Change<? extends LoggableUser> arg0)
 			{
@@ -259,7 +309,10 @@ public class AdminController
 			}
 
 		});
-
+		
+		/**
+		 * Update the tables after they are selected thanks to the choiceBox.
+		 */
 		adminChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
 		{
 			@Override
@@ -269,9 +322,7 @@ public class AdminController
 				refresh();
 			}
 		});
-
-		adminChoiceBox.getSelectionModel().select(1);
-		adminChoiceBox.getSelectionModel().select(0);
-
+		
+		refresh();
 	}
 }

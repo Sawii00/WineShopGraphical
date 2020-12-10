@@ -13,14 +13,29 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code ConfirmationBox} displays a popup with a custom message regarding an action the user can confirm or deny. <p>
+ * Allows the execution of a custom action if the user presses the "yes" button. <p>
+ * If "no" is pressed the popup is closed and no further action is performed.
+ **/
 public class ConfirmationBox
 {
 
+    /**
+     * Class constructor.
+     *
+     * @param title title of the window
+     * @param message message to be displayed
+     * @param todo action to be performed
+     **/
 	public ConfirmationBox(String title, String message, Action todo)
 	{
 		display(title, message, todo);
 	}
 
+    /**
+     * Diplays the popup and sets the handler for the yes button. <p>
+     **/
 	private void display(String title, String message, Action todo)
 	{
 		Stage window = new Stage();
@@ -60,7 +75,5 @@ public class ConfirmationBox
 		}
 		
 	}
-
-	
 
 }

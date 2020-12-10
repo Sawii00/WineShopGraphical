@@ -17,6 +17,8 @@ public class Request implements Serializable
 
     /**
      * Class constructor.
+     *
+     * @param m request method
      **/
 	public Request(String m)
 	{
