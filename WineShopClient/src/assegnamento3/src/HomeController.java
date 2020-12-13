@@ -221,7 +221,7 @@ public class HomeController implements Initializable
 			producer.setText(w.getProducer());
 			techNotes.setText(w.getTechnicalNotes());
 			grapeType.setText(w.getGrapeType());
-			amount.setText("" + w.getNumber());
+			amount.setText("" + w.getAmount());
 			wineId.setText("");
 			flowPane.getChildren().add(singleWine);
 

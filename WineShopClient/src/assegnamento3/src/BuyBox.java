@@ -165,9 +165,9 @@ public class BuyBox
 	 */
 	private void populateChoiceBox()
 	{
-		if (wine.getNumber() > 0)
+		if (wine.getAmount() > 0)
 		{
-			for (int i = 1; i <= wine.getNumber(); i++)
+			for (int i = 1; i <= wine.getAmount(); i++)
 			{
 				amountChoiceBox.getItems().add(i);
 			}

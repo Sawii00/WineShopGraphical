@@ -212,7 +212,6 @@ public class Store
 	 */
 	private boolean alreadyRegistered(LoggableUser usr)
 	{
-
 		for (LoggableUser u : userList)
 		{
 			if (u.getEmail().equals(usr.getEmail()))
@@ -250,6 +249,39 @@ public class Store
 		return null;
 	}
 
+	 /**
+     * Retrieves the LoggableUser that matches the specified id.
+     *
+     * @param id id of the user
+     *
+     * @return user if found, null otherwise
+     **/
+	public LoggableUser getLoggableUserByID(int id)
+	{
+		for (LoggableUser w : userList)
+		{
+			if (w.getID() == id)
+				return w;
+		}
+		return null;
+	}
+
+	/**
+	 * Retrieves the Customer that matches the specified id.
+     *
+	 * @param clientId the id of the Customer to be retrieved.
+	 *
+	 * @return the customer if found, null otherwise.
+	 */
+	public Customer getClientByID(int clientId)
+	{
+        LoggableUser res = getLoggableUserByID(clientId);
+        if(res != null)
+            return (Customer)res;
+        else
+            return null;
+	}
+	
 	/**
 	 * It retrieves the Wine that matches the specified id.
 	 *
@@ -307,40 +339,7 @@ public class Store
 		}
 		return false;
 	}
-
-	/**
-	 * Retrieves the Customer that matches the specified id.
-     *
-	 * @param clientId the id of the Customer to be retrieved.
-	 *
-	 * @return the customer if found, null otherwise.
-	 */
-	public Customer getClientByID(int clientId)
-	{
-        LoggableUser res = getLoggableUserByID(clientId);
-        if(res != null)
-            return (Customer)res;
-        else
-            return null;
-	}
-
-    /**
-     * Retrieves the LoggableUser that matches the specified id.
-     *
-     * @param id id of the user
-     *
-     * @return user if found, null otherwise
-     **/
-	public LoggableUser getLoggableUserByID(int id)
-	{
-		for (LoggableUser w : userList)
-		{
-			if (w.getID() == id)
-				return w;
-		}
-		return null;
-	}
-
+ 
 	/**
 	 * It allows the registration of a new {@code LoggableUser} to the Store. <p>
      * Synchronized among different threads.
@@ -509,7 +508,7 @@ public class Store
 	/**
 	 * A notification request for the specified amount of wine associated with the specified client is saved. <p>
 	 * When the amount is available, the client will be warned with a message. <p>
-     * Sychronized among different Threads.
+     * Synchronized among different Threads.
 	 * 
 	 * @param wineId id of the wine
      * @param customerId id of the customer
@@ -608,7 +607,7 @@ public class Store
 
     /**
      * Edits the amount of bottles of a specified order. <p>
-     * Synchronized among differen Threads.
+     * Synchronized among different Threads.
      *
      * @param id id of the order
      * @param amount new amount of ordered wine

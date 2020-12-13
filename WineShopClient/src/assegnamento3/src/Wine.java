@@ -54,7 +54,7 @@ public class Wine implements Serializable
 	private int year;
 	private String technicalNotes;
 	private String grapeType;
-	private int number;
+	private int amount;
 
 	private WineType wineType;
 
@@ -68,10 +68,10 @@ public class Wine implements Serializable
 	 * @param year           the year of production
 	 * @param technicalNotes technical notes that describe the kind of wine
 	 * @param grapeType      the grape from which are produced the wines
-	 * @param number         the number of bottles of wine
+	 * @param amount         the number of bottles of wine
 	 * @param wt             string representing the type of the wine
 	 */
-	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number,
+	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			String wt)
 	{
 		this.id = id;
@@ -80,7 +80,7 @@ public class Wine implements Serializable
 		this.year = year;
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
-		this.number = number;
+		this.amount = amount;
 		this.wineType = parseWineType(wt);
 	}
 
@@ -94,10 +94,10 @@ public class Wine implements Serializable
 	 * @param year           the year of production
 	 * @param technicalNotes technical notes that describe the kind of wine
 	 * @param grapeType      the grape from which are produced the wines
-	 * @param number         the number of bottles of wine
+	 * @param amount         the number of bottles of wine
 	 * @param wt             the type of the wine
 	 */
-	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int number,
+	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			WineType wt)
 	{
 		this.id = id;
@@ -106,7 +106,7 @@ public class Wine implements Serializable
 		this.year = year;
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
-		this.number = number;
+		this.amount = amount;
 		this.wineType = wt;
 	}
 
@@ -120,10 +120,10 @@ public class Wine implements Serializable
 	 * @param year           the year of production
 	 * @param technicalNotes technical notes that describe the kind of wine
 	 * @param grapeType      the grape from which are produced the wines
-	 * @param number         the number of bottles of wine
+	 * @param amount         the number of bottles of wine
 	 * @param wt             string representing the type of the wine
 	 */
-	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number, String wt)
+	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int amount, String wt)
 	{
 		Random r = new Random();
 		this.id = r.nextInt();
@@ -132,7 +132,7 @@ public class Wine implements Serializable
 		this.year = year;
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
-		this.number = number;
+		this.amount = amount;
 		this.wineType = parseWineType(wt);
 	}
 
@@ -146,10 +146,10 @@ public class Wine implements Serializable
 	 * @param year           the year of production
 	 * @param technicalNotes technical notes that describe the kind of wine
 	 * @param grapeType      the grape from which are produced the wines
-	 * @param number         the number of bottles of wine
+	 * @param amount         the number of bottles of wine
 	 * @param wt             the type of the wine
 	 */
-	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int number,
+	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			WineType wt)
 	{
 		Random r = new Random();
@@ -159,7 +159,7 @@ public class Wine implements Serializable
 		this.year = year;
 		this.technicalNotes = technicalNotes;
 		this.grapeType = grapeType;
-		this.number = number;
+		this.amount = amount;
 		this.wineType = wt;
 	}
 
@@ -198,9 +198,9 @@ public class Wine implements Serializable
 	 * 
 	 * @return number the wine's number of bottles.
 	 */
-	public int getNumber()
+	public int getAmount()
 	{
-		return number;
+		return amount;
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class Wine implements Serializable
 	public String serializedString()
 	{
 		return this.id + "<>" + this.name + "<>" + this.producer + "<>" + this.year + "<>" + this.technicalNotes + "<>"
-				+ this.grapeType + "<>" + this.number + "<>" + this.wineType.toString();
+				+ this.grapeType + "<>" + this.amount + "<>" + this.wineType.toString();
 	}
 
 	/**
@@ -289,11 +289,11 @@ public class Wine implements Serializable
 	/**
 	 * Setter for the wine's number of bottles.
 	 * 
-	 * @param number the wine's number of bottles
+	 * @param amount the wine's number of bottles
 	 */
-	public void setNumber(int number)
+	public void setAmount(int amount)
 	{
-		this.number = number;
+		this.amount = amount;
 	}
 
 	/**
@@ -356,7 +356,7 @@ public class Wine implements Serializable
 	public String toString()
 	{
 		return "ID: " + this.id + ": " + this.name + ", " + this.producer + "(" + this.year + ") " + this.grapeType
-				+ " AMOUNT: " + this.number + "\nTechnical Notes: " + this.technicalNotes;
+				+ " AMOUNT: " + this.amount + "\nTechnical Notes: " + this.technicalNotes;
 	}
 
 };

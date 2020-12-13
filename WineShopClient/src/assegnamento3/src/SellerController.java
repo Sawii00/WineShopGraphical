@@ -148,7 +148,7 @@ public class SellerController
 			{
 				if (w.getName().equals(o.getWineName()))
 				{
-					val = "" + (w.getNumber() + o.getAmount());
+					val = "" + (w.getAmount() + o.getAmount());
 					break;
 				}
 			}
@@ -386,7 +386,7 @@ public class SellerController
 			new BasicAlertBox("Error", "Invalid parameter", 200, 100);
 		} else
 		{
-			sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setNumber(w.getNumber() + val);
+			sellerWineTable.getItems().get(sellerWineTable.getItems().indexOf(w)).setAmount(w.getAmount() + val);
 			sellerWineTable.refresh();
 		}
 	}

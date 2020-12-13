@@ -233,7 +233,7 @@ public class CustomerController
 			producer.setText(w.getProducer());
 			techNotes.setText(w.getTechnicalNotes());
 			grapeType.setText(w.getGrapeType());
-			amount.setText("" + w.getNumber());
+			amount.setText("" + w.getAmount());
 			wineId.setText("" + w.getID());
 			flowPane.getChildren().add(singleWine);
 
