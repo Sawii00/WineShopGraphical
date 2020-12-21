@@ -25,12 +25,10 @@ import javafx.stage.Stage;
  **/
 public class MessageBox
 {
-
 	private Button removeMex;
 	private Button removeAll;
 	private TableView<Message> table;
 	private int customerID;
-
 	ObservableList<Message> messages = FXCollections.<Message>observableArrayList();
 
 	/**
@@ -77,14 +75,12 @@ public class MessageBox
 			// Adds the listener to changes in the selection model of the table
 			table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Message>()
 			{
-
 				@Override
 				public void onChanged(Change<? extends Message> arg0)
 				{
 					// The remove button is enabled only if a message is selected
 					removeMex.setDisable(false);
 				}
-
 			});
 
 			refreshMessages();
@@ -99,7 +95,6 @@ public class MessageBox
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -125,7 +120,6 @@ public class MessageBox
 				}
 				table.getItems().addAll(messages);
 			}
-
 		}
 	}
 
@@ -134,14 +128,12 @@ public class MessageBox
 	 **/
 	private void removeAll()
 	{
-
 		Request r = new Request("deleteAllMessages");
 		r.addParameter("" + this.customerID);
 		Response res = MainClient.client.sendRequest(r);
 		if (res.getReturnCode() != StatusCode.SUCCESS)
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 		refreshMessages();
-
 	}
 
 	/**
@@ -158,5 +150,4 @@ public class MessageBox
 			new BasicAlertBox("Error", "Invalid Arguments", 200, 100);
 		refreshMessages();
 	}
-
 }

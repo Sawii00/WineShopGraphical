@@ -16,22 +16,21 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * The class {@code MainServer} handles the main execution of the Wineshop Server. <p>
- * Sets up the connection to the database manager and opens a server connection to accept clients.
+ * The class {@code MainServer} handles the main execution of the Wineshop
+ * Server.
+ * <p>
+ * Sets up the connection to the database manager and opens a server connection
+ * to accept clients.
  **/
 public class MainServer extends Application
 {
-
 	NetworkServer server = null;
 	Thread mainServerThread = null;
 	DatabaseManager db = null;
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-
-		
-		
 		Parent root = FXMLLoader.load(getClass().getResource("../res/main_server.fxml"));
 		primaryStage.setTitle("WineshopServer");
 		primaryStage.setScene(new Scene(root));
@@ -48,20 +47,19 @@ public class MainServer extends Application
 			stopButton.setDisable(true);
 			portTextField.setEditable(true);
 
-            /*Dumps the content of the main lists to the database*/
+			/* Dumps the content of the main lists to the database */
 			saveAllLists();
 			db.close();
-			
 		});
 
 		startButton.setOnAction(e ->
 		{
-
 			try
 			{
 				int port = Integer.parseInt(portTextField.getText());
 				server = new NetworkServer(port);
-				db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShopNasturzioPindozzi?", "createDatabaseIfNotExist=true","root", "");
+				db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShopNasturzioPindozzi?",
+						"createDatabaseIfNotExist=true", "root", "");
 				mainServerThread = new Thread(server);
 				mainServerThread.start();
 				startButton.setDisable(true);
@@ -69,9 +67,8 @@ public class MainServer extends Application
 				portTextField.setEditable(false);
 				db.open();
 
-                 /*Loads the content of the database to the main lists*/
+				/* Loads the content of the database to the main lists */
 				loadAllLists();
-
 			} catch (NumberFormatException | IOException e2)
 			{
 				new BasicAlertBox("Error", "Invalid Port", 200, 150);
@@ -80,20 +77,18 @@ public class MainServer extends Application
 				new BasicAlertBox("Error", "Could not connect to db", 200, 150);
 				if (server != null)
 					server.stop();
-				//primaryStage.close();
+				// primaryStage.close();
 			}
-
 		});
 
 		/**
 		 * Periodic task that saves the lists in the database as backup.
 		 **/
-		ScheduledExecutorService  scheduler = Executors.newScheduledThreadPool(1);
-		scheduler.scheduleAtFixedRate(()->{
-			
-			if(db.isOpen())
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		scheduler.scheduleAtFixedRate(() ->
+		{
+			if (db.isOpen())
 				saveAllLists();
-					
 		}, 10, 10, TimeUnit.SECONDS);
 
 		primaryStage.setOnCloseRequest(e ->
@@ -101,7 +96,7 @@ public class MainServer extends Application
 			e.consume();
 			if (server != null)
 				server.stop();
-			if(db != null && db.isOpen())
+			if (db != null && db.isOpen())
 			{
 				saveAllLists();
 				db.close();
@@ -109,12 +104,11 @@ public class MainServer extends Application
 			System.exit(0);
 		});
 
-        primaryStage.show();
-
-
+		primaryStage.show();
 	}
+
 	/**
-	 * Loads all the lists from the database to memory 
+	 * Loads all the lists from the database to memory
 	 **/
 	private void loadAllLists()
 	{
@@ -123,7 +117,7 @@ public class MainServer extends Application
 		server.mainStore.setOrderList(db.getOrderList());
 		server.mainStore.setNotificationList(db.getNotificationList());
 	}
-	
+
 	/**
 	 * Saves all the lists onto the database
 	 **/

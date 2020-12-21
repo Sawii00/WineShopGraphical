@@ -19,23 +19,14 @@ import javafx.stage.Stage;
  */
 public class BuyBox
 {
-
 	Wine wine;
-
 	int customerId;
-
 	Button buyButton;
-
 	Button notifyButton;
-
 	Button hereButton;
-
 	Label label1;
-
 	TextField notificationTextField;
-
 	ChoiceBox amountChoiceBox;
-
 	private Stage window;
 
 	/**
@@ -78,7 +69,6 @@ public class BuyBox
 	 * Creates a new stage and loads the buy_popup.fxml.
 	 * <p>
 	 * Items are extracted from the .fxml file using id.
-	 * <p>
 	 */
 	private void display()
 	{
@@ -122,7 +112,6 @@ public class BuyBox
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -180,7 +169,6 @@ public class BuyBox
 			amountChoiceBox.setVisible(false);
 			label1.setVisible(false);
 			hereButton.setVisible(false);
-
 		}
 	}
 
@@ -200,5 +188,4 @@ public class BuyBox
 		label1.setVisible(false);
 		hereButton.setVisible(false);
 	}
-
 }

@@ -51,5 +51,4 @@ public class Message
 	{
 		this.message = m;
 	}
-
 };

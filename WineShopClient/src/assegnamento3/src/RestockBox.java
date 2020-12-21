@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  **/
 public class RestockBox
 {
-
 	private int val = 0;
 	Button confirmButton;
 	TextField amountTextField;
@@ -52,7 +51,6 @@ public class RestockBox
 				{
 					new BasicAlertBox("Error", "Invalid parameters", 200, 100);
 				}
-
 				window.close();
 			});
 
@@ -76,5 +74,4 @@ public class RestockBox
 	{
 		return val;
 	}
-
 }

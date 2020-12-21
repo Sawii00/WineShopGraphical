@@ -6,11 +6,10 @@ package assegnamento3.src;
  **/
 public class Parser
 {
-
 	/**
 	 * Creates a Order object based on the received string representation.
 	 * 
-	 * @param str string representation of the Order
+	 * @param orders string representation of the Order
 	 *
 	 * @return Order object
 	 **/
@@ -47,5 +46,4 @@ public class Parser
 		return new Wine(Integer.parseInt(vals[0]), vals[1], vals[2], Integer.parseInt(vals[3]), vals[4], vals[5],
 				Integer.parseInt(vals[6]), vals[7]);
 	}
-
 }

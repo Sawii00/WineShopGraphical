@@ -6,7 +6,6 @@ package assegnamento3.src;
  */
 public class Person
 {
-
 	protected String name;
 	protected String surname;
 
@@ -71,5 +70,4 @@ public class Person
 	{
 		return this.name + " " + this.surname;
 	}
-
 }

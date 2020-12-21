@@ -11,11 +11,8 @@ import java.util.ArrayList;
  **/
 public class Response implements Serializable
 {
-
 	private static final long serialVersionUID = -577767441985222421L;
-
 	StatusCode returnCode;
-
 	ArrayList<String> parameters = new ArrayList<String>();
 
 	/**
@@ -70,7 +67,6 @@ public class Response implements Serializable
 	{
 		return returnCode;
 	}
-
 }
 
 /**

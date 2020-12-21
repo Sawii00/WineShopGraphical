@@ -26,40 +26,28 @@ import javafx.stage.Stage;
  **/
 public class SellerController
 {
-
 	ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
 	ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
-
 	@FXML
 	ChoiceBox<String> sellerChoiceBox;
-
 	@FXML
 	Button addButton;
-
 	@FXML
 	Button editButton;
-
 	@FXML
 	Button mexButton;
-
 	@FXML
 	Button logoutButton;
-
 	@FXML
 	Button removeButton;
-
 	@FXML
 	Button refreshButton;
-
 	@FXML
 	TableView<Wine> sellerWineTable;
-
 	@FXML
 	TableView<Order> sellerOrderTable;
-
 	@FXML
 	Button restockButton;
-
 	private int sellerId;
 
 	/**
@@ -132,11 +120,9 @@ public class SellerController
 					sellerWineTable.refresh();
 				}
 				sellerWineTable.getSelectionModel().clearSelection();
-
 			}
 		} else
 		{
-
 			Order o = sellerOrderTable.getSelectionModel().getSelectedItem();
 			String val = "";
 
@@ -152,7 +138,6 @@ public class SellerController
 					break;
 				}
 			}
-
 			OrderBox box = new OrderBox(val);
 			if (box.isValid())
 			{
@@ -170,9 +155,7 @@ public class SellerController
 					sellerOrderTable.refresh();
 				}
 				sellerOrderTable.getSelectionModel().clearSelection();
-
 			}
-
 		}
 	}
 
@@ -264,7 +247,6 @@ public class SellerController
 
 		sellerChoiceBox.getSelectionModel().select(1);
 		sellerChoiceBox.getSelectionModel().select(0);
-
 	}
 
 	/**
@@ -276,7 +258,6 @@ public class SellerController
 		Parent root;
 
 		mainStage = (Stage) logoutButton.getScene().getWindow();
-
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("../res/home.fxml"));
@@ -297,7 +278,6 @@ public class SellerController
 	public void refresh()
 	{
 		String selectedTable = sellerChoiceBox.getSelectionModel().getSelectedItem();
-
 		if (selectedTable.equals("Orders"))
 		{
 			sellerWineTable.setVisible(false);
@@ -364,7 +344,6 @@ public class SellerController
 				sellerOrderTable.refresh();
 				sellerOrderTable.getSelectionModel().clearSelection();
 			}
-
 		}
 	}
 

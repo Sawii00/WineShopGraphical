@@ -7,10 +7,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * The class {@code ClientHandler} is responsible of managing the communication with each connected client. <p>
- * A connected socket is passed to him by the {@code NetworkServer} after it is accepted. <p>
- * The handler is closed upon the client's request. <p>
- * It implements Runnable to be able to be executed concurrently on another thread.
+ * The class {@code ClientHandler} is responsible of managing the communication
+ * with each connected client.
+ * <p>
+ * A connected socket is passed to him by the {@code NetworkServer} after it is
+ * accepted.
+ * <p>
+ * The handler is closed upon the client's request.
+ * <p>
+ * It implements Runnable to be able to be executed concurrently on another
+ * thread.
  **/
 public class ClientHandler implements Runnable
 {
@@ -19,11 +25,13 @@ public class ClientHandler implements Runnable
 	private ObjectInputStream is = null;
 	private boolean isRunning = true;
 
-    /**
-     * Class constructor. <p>
-     * Saves the socket and opens the input and output streams with the client.
-     * @param s client socket
-     **/
+	/**
+	 * Class constructor.
+	 * <p>
+	 * Saves the socket and opens the input and output streams with the client.
+	 * 
+	 * @param s client socket
+	 **/
 	public ClientHandler(Socket s)
 	{
 		this.mainSocket = s;
@@ -37,10 +45,11 @@ public class ClientHandler implements Runnable
 		}
 	}
 
-    /**
-     * Sends a response object to the client after the request has been handler.
-     * @param r response to be sent
-     **/
+	/**
+	 * Sends a response object to the client after the request has been handler.
+	 * 
+	 * @param r response to be sent
+	 **/
 	public void sendResponse(Response r)
 	{
 		try
@@ -56,11 +65,12 @@ public class ClientHandler implements Runnable
 		}
 	}
 
-    /**
-     * Handles the client's rpc-style request
-     * @param request client's request
-     * @return response to be sent back
-     **/
+	/**
+	 * Handles the client's rpc-style request
+	 * 
+	 * @param request client's request
+	 * @return response to be sent back
+	 **/
 	private Response handleRequest(Request request)
 	{
 		String method = request.getMethod();
@@ -71,7 +81,6 @@ public class ClientHandler implements Runnable
 		{
 			stop();
 			return new Response(StatusCode.SUCCESS);
-
 		}
 		case "login":
 		{
@@ -103,7 +112,6 @@ public class ClientHandler implements Runnable
 
 			Customer c = new Customer(name, surname, email, password);
 			boolean succesfullyRegistered = NetworkServer.mainStore.register(c);
-
 			if (succesfullyRegistered)
 			{
 				response = new Response(StatusCode.SUCCESS);
@@ -111,7 +119,6 @@ public class ClientHandler implements Runnable
 			{
 				response = new Response(StatusCode.INVALID_ARGUMENTS);
 			}
-
 			return response;
 		}
 		case "getCustomersList":
@@ -151,14 +158,13 @@ public class ClientHandler implements Runnable
 				Order o = NetworkServer.mainStore.getOrderList().get(i);
 				Customer c = NetworkServer.mainStore.getClientByID(o.getClient());
 				Wine w = NetworkServer.mainStore.getWineByID(o.getWineID());
-				if(w == null || c == null)
+				if (w == null || c == null)
 				{
 					NetworkServer.mainStore.removeOrder(o.getOrderID());
 					i--;
 					continue;
 				}
-				response.addParameter(o.getOrderID() + "<>" + c.getEmail() + "<>" + w.getName() + "<>"
-						+ o.getAmount());
+				response.addParameter(o.getOrderID() + "<>" + c.getEmail() + "<>" + w.getName() + "<>" + o.getAmount());
 			}
 			return response;
 		}
@@ -173,7 +179,6 @@ public class ClientHandler implements Runnable
 
 			Seller s = new Seller(name, surname, email, password);
 			boolean succesfullyRegistered = NetworkServer.mainStore.register(s);
-
 			if (succesfullyRegistered)
 			{
 				response = new Response(StatusCode.SUCCESS);
@@ -181,7 +186,6 @@ public class ClientHandler implements Runnable
 			{
 				response = new Response(StatusCode.INVALID_ARGUMENTS);
 			}
-
 			return response;
 		}
 		case "editSeller":
@@ -290,7 +294,6 @@ public class ClientHandler implements Runnable
 				return new Response(StatusCode.SUCCESS);
 			else
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-
 		}
 		case "editOrder":
 		{
@@ -344,7 +347,6 @@ public class ClientHandler implements Runnable
 				for (int i = 0; i < mex.length; ++i)
 				{
 					response.addParameter(i + "<>" + mex[i]);
-
 				}
 			return response;
 		}
@@ -370,12 +372,11 @@ public class ClientHandler implements Runnable
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + method);
 		}
-
 	}
 
-    /**
-     * Starts the main execution loop.
-     **/
+	/**
+	 * Starts the main execution loop.
+	 **/
 	public void run()
 	{
 		while (isRunning)
@@ -402,7 +403,6 @@ public class ClientHandler implements Runnable
 				stop();
 			}
 		}
-		
 		isRunning = false;
 		try
 		{
@@ -413,9 +413,9 @@ public class ClientHandler implements Runnable
 		}
 	}
 
-    /**
-     * Stops the server's execution.
-     **/
+	/**
+	 * Stops the server's execution.
+	 **/
 	public void stop()
 	{
 		isRunning = false;

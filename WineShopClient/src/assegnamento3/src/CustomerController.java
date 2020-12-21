@@ -35,48 +35,33 @@ import javafx.stage.Stage;
  */
 public class CustomerController
 {
-
 	static ArrayList<Wine> viewedWines = new ArrayList<>();
-
 	static int customerId;
-
 	@FXML
 	Button searchButton;
-
 	@FXML
 	Button logoutButton;
-
 	@FXML
 	Button mexButton;
-
 	@FXML
 	TextField searchTextField;
-
 	@FXML
 	FlowPane flowPane;
-
 	@FXML
 	ScrollPane scrollPane;
-
 	@FXML
 	RadioButton nameRadioButton;
-
 	@FXML
 	RadioButton yearRadioButton;
-
 	@FXML
 	ChoiceBox<String> typeChoiceBox;
 	Pane singleWine;
-
 	ArrayList<Wine> wines = new ArrayList<>();
 	Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
 	Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
-
 	Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
 	Image mexImage = new Image(getClass().getResource("../res/message.png").toExternalForm());
-
 	Image mexNotificationImage = new Image(getClass().getResource("../res/not_message.png").toExternalForm());
-
 	Image images[] = { redImage, whiteImage, roseImage };
 
 	/**
@@ -95,7 +80,6 @@ public class CustomerController
 	 */
 	public void initialize()
 	{
-
 		typeChoiceBox.getItems().add("All");
 		typeChoiceBox.getItems().add("Red");
 		typeChoiceBox.getItems().add("White");
@@ -149,7 +133,6 @@ public class CustomerController
 		Parent root;
 
 		mainStage = (Stage) logoutButton.getScene().getWindow();
-
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("../res/home.fxml"));
@@ -198,7 +181,6 @@ public class CustomerController
 			else
 				((ImageView) mexButton.getGraphic()).setImage(mexImage);
 		}
-
 		flowPane.getChildren().clear();
 		for (Wine w : viewedWines)
 		{
@@ -236,7 +218,6 @@ public class CustomerController
 			amount.setText("" + w.getAmount());
 			wineId.setText("" + w.getID());
 			flowPane.getChildren().add(singleWine);
-
 		}
 	}
 
@@ -255,7 +236,6 @@ public class CustomerController
 			populateFullList();
 			return;
 		}
-
 		if (nameRadioButton.isSelected())
 		{
 			searchWine(searchTextField.getText(), SearchType.NAME);
@@ -305,7 +285,6 @@ public class CustomerController
 				new BasicAlertBox("Error", "Invalid year", 200, 100);
 				return;
 			}
-
 			for (Wine w : wines)
 			{
 				/**
@@ -324,7 +303,6 @@ public class CustomerController
 				}
 			}
 		}
-
 		refresh();
 	}
 

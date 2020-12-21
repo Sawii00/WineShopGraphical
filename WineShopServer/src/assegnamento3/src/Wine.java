@@ -23,11 +23,8 @@ enum WineType
  */
 public class Wine implements Serializable
 {
-
 	private static final long serialVersionUID = -4609912367894803090L;
-
 	private int id;
-
 	private String name;
 	private String producer;
 	private int year;
@@ -36,42 +33,43 @@ public class Wine implements Serializable
 	private int amount;
 	private WineType wineType;
 
-    /**
-     * Getter for the wine type.
-     *
-     * @return type of wine
-     **/
+	/**
+	 * Getter for the wine type.
+	 *
+	 * @return type of wine
+	 **/
 	public WineType getWineType()
 	{
 		return wineType;
 	}
 
-    /**
-     * Setter for the wine type.
-     *
-     * @param wineType wine type
-     **/
+	/**
+	 * Setter for the wine type.
+	 *
+	 * @param wineType wine type
+	 **/
 	public void setWineType(WineType wineType)
 	{
 		this.wineType = wineType;
 	}
 
-    /**
-     * Setter for the wine type given a string representation.
-     *
-     * @param wineType string representation of the wine type
-     **/
+	/**
+	 * Setter for the wine type given a string representation.
+	 *
+	 * @param wineType string representation of the wine type
+	 **/
 	public void setWineType(String wineType)
 	{
 		this.wineType = parseWineType(wineType);
 	}
 
-    /**
-     * Helper method that converts the string representation into the correct wine type.
-     *
-     * @param type string representation of the wine type
-     * @return WineType object
-     **/
+	/**
+	 * Helper method that converts the string representation into the correct wine
+	 * type.
+	 *
+	 * @param type string representation of the wine type
+	 * @return WineType object
+	 **/
 	private static WineType parseWineType(String type)
 	{
 		type = type.toLowerCase().replace("é", "e");
@@ -105,7 +103,7 @@ public class Wine implements Serializable
 	 * @param technicalNotes technical notes that describe the kind of wine.
 	 * @param grapeType      the grape from which the wine is produced.
 	 * @param amount         the number of bottles of wine.
-     * @param wt             type of wine
+	 * @param wt             type of wine
 	 */
 	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			WineType wt)
@@ -132,7 +130,7 @@ public class Wine implements Serializable
 	 * @param technicalNotes technical notes that describe the kind of wine.
 	 * @param grapeType      the grape from which the wine is produced.
 	 * @param amount         the number of bottles of wine.
-     * @param wt             string representation of the type of wine.
+	 * @param wt             string representation of the type of wine.
 	 */
 	public Wine(String name, String producer, int year, String technicalNotes, String grapeType, int amount, String wt)
 	{
@@ -151,14 +149,14 @@ public class Wine implements Serializable
 	 * Class constructor.
 	 * <p>
 	 * 
-     * @para id              id of the wine.
+	 * @param id             id of the wine.
 	 * @param name           the name of the wine.
 	 * @param producer       the producer of the wine.
 	 * @param year           the year of production.
 	 * @param technicalNotes technical notes that describe the kind of wine.
 	 * @param grapeType      the grape from which the wine is produced.
 	 * @param amount         the number of bottles of wine.
-     * @param wt             string representation of the type of wine.
+	 * @param wt             string representation of the type of wine.
 	 */
 	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			String wt)
@@ -184,7 +182,7 @@ public class Wine implements Serializable
 	 * @param technicalNotes technical notes that describe the kind of wine.
 	 * @param grapeType      the grape from which the wine is produced.
 	 * @param amount         the number of bottles of wine.
-     * @param wt             type of wine.
+	 * @param wt             type of wine.
 	 */
 	public Wine(int id, String name, String producer, int year, String technicalNotes, String grapeType, int amount,
 			WineType wt)
@@ -351,16 +349,16 @@ public class Wine implements Serializable
 				+ " AMOUNT: " + this.amount + "\nTechnical Notes: " + this.technicalNotes;
 	}
 
-    /**
-     * Gives a serialized representation of the wine, useful to be parsed back into a Wine object.
-     *
-     * @return wine fields separated with the separator "<>"
-     *
-     **/
+	/**
+	 * Gives a serialized representation of the wine, useful to be parsed back into
+	 * a Wine object.
+	 *
+	 * @return wine fields separated with a default separator
+	 *
+	 **/
 	public String serializedString()
 	{
 		return this.id + "<>" + this.name + "<>" + this.producer + "<>" + this.year + "<>" + this.technicalNotes + "<>"
 				+ this.grapeType + "<>" + this.amount + "<>" + this.wineType.toString();
 	}
-
 }

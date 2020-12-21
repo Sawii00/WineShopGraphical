@@ -10,29 +10,34 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * The class {@code BasicAlertBox} displays a basic popup in which title and message can be customized. <p>
+ * The class {@code BasicAlertBox} displays a basic popup in which title and
+ * message can be customized.
  **/
 public class BasicAlertBox
 {
-
-    /**
-     * Class constructor. <p>
-     * Invokes the method display that is responsible to show it.
-     **/
+	/**
+	 * Class constructor.
+	 * <p>
+	 * Invokes the method display that is responsible to show it.
+	 * 
+	 * @param title   title of window
+	 * @param message message to be displayed
+	 * @param width   width of window
+	 * @param height  height of window
+	 **/
 	public BasicAlertBox(String title, String message, int width, int height)
 	{
-
 		display(title, message, width, height);
-
 	}
 
-    /**
-     * Displays the popup.
-     * @param title title of the window
-     * @param message message to be displayed
-     * @param width width of the popup
-     * @param height height of the popup
-     **/
+	/**
+	 * Displays the popup.
+	 * 
+	 * @param title   title of the window
+	 * @param message message to be displayed
+	 * @param width   width of the popup
+	 * @param height  height of the popup
+	 **/
 	private void display(String title, String message, int width, int height)
 	{
 		Stage window = new Stage();
@@ -62,5 +67,4 @@ public class BasicAlertBox
 
 		window.showAndWait();
 	}
-
 }

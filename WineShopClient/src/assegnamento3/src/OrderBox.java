@@ -67,7 +67,6 @@ public class OrderBox
 			{
 				chbox.getItems().add(i);
 			}
-
 			btn.setOnAction(e ->
 			{
 				if (!("" + chbox.getValue()).equals(""))
@@ -87,7 +86,6 @@ public class OrderBox
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

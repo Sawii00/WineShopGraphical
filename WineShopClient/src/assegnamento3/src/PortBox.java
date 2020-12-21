@@ -18,7 +18,6 @@ import javafx.stage.Stage;
  **/
 public class PortBox
 {
-
 	private int port = -1;
 
 	/**
@@ -26,9 +25,7 @@ public class PortBox
 	 **/
 	public PortBox()
 	{
-
 		display();
-
 	}
 
 	/**
@@ -64,13 +61,11 @@ public class PortBox
 						return;
 					}
 					window.close();
-
 				} catch (NumberFormatException e2)
 				{
 					new BasicAlertBox("Error", "Invalid port (1000 - 65535)", 200, 150);
 					return;
 				}
-
 			});
 
 			window.initModality(Modality.APPLICATION_MODAL);
@@ -82,7 +77,6 @@ public class PortBox
 		{
 			e1.printStackTrace();
 		}
-
 	}
 
 	/**

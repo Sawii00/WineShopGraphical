@@ -30,76 +30,52 @@ import javafx.util.Duration;
  */
 public class LoginRegisterController implements Initializable
 {
-
 	@FXML
 	private AnchorPane layerFather;
-
 	@FXML
 	private AnchorPane layerSign;
-
 	@FXML
 	private Label labelCreateAccount;
-
 	@FXML
 	private Label orUseEmailLabelReg;
-
 	@FXML
 	private Label labelSignInToWineShop;
-
 	@FXML
 	private TextField regNameTextField;
-
 	@FXML
 	private TextField regSurnameTextField;
-
 	@FXML
 	private TextField regEmailTextField;
-
 	@FXML
 	private PasswordField regPasswordField;
-
 	@FXML
 	private Button signUpButton;
-
 	@FXML
 	private Label orUseEmailLabelLog;
-
 	@FXML
 	private Button signInButton;
-
 	@FXML
 	private TextField emailLogTextField;
-
 	@FXML
 	private PasswordField logPasswordField;
-
 	@FXML
 	private AnchorPane layerRed;
-
 	@FXML
 	private Label WelcomeBackLabel;
-
 	@FXML
 	private Label wineShopLabel;
-
 	@FXML
 	private Label winesfromLabel;
-
 	@FXML
 	private Button signInTransButton;
-
 	@FXML
 	private Button signUpTransButton;
-
 	@FXML
 	private Label helloFriendLabel;
-
 	@FXML
 	private Label enterYourDetailLabel;
-
 	@FXML
 	private Label andStartJourneyLabel;
-
 	@FXML
 	private Button exitButton;
 
@@ -112,7 +88,6 @@ public class LoginRegisterController implements Initializable
 	{
 		Stage mainStage = (Stage) exitButton.getScene().getWindow();
 		Parent root;
-
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("../res/home.fxml"));
@@ -163,17 +138,16 @@ public class LoginRegisterController implements Initializable
 		r.addParameter(logPasswordField.getText());
 
 		Response res = MainClient.client.sendRequest(r);
-
 		if (res.getReturnCode() == StatusCode.SUCCESS)
 		{
 			Stage mainStage;
 			Parent root;
 
 			mainStage = (Stage) signInButton.getScene().getWindow();
-
 			try
 			{
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("../res/" + res.getParameters().get(0) + ".fxml"));
+				FXMLLoader loader = new FXMLLoader(
+						getClass().getResource("../res/" + res.getParameters().get(0) + ".fxml"));
 				root = loader.load();
 				if (res.getParameters().get(0).equals("customer"))
 				{
@@ -220,13 +194,11 @@ public class LoginRegisterController implements Initializable
 		Matcher matcherName = namePattern.matcher(vals[0]);
 		Matcher matcherSurname = surnamePattern.matcher(vals[1]);
 		Matcher matcherEmail = emailPattern.matcher(vals[2]);
-
 		if (!(matcherName.matches() && matcherSurname.matches() && matcherEmail.matches()) || vals[3].equals(""))
 		{
 			new BasicAlertBox("Error", "Invalid parameters", 300, 100);
 			return;
 		}
-
 		r.addAllParameters(vals);
 		Response res = MainClient.client.sendRequest(r);
 		regNameTextField.clear();
@@ -278,7 +250,6 @@ public class LoginRegisterController implements Initializable
 		regPasswordField.setVisible(true);
 		signInButton.setDefaultButton(false);
 		signUpButton.setDefaultButton(true);
-
 	}
 
 	/**
@@ -322,6 +293,5 @@ public class LoginRegisterController implements Initializable
 		regPasswordField.setVisible(false);
 		signInButton.setDefaultButton(true);
 		signUpButton.setDefaultButton(false);
-
 	}
 }

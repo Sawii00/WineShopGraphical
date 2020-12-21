@@ -21,11 +21,8 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 4878874717365268921L;
-
 	protected int id;
-
 	protected String email;
-
 	protected String password;
 
 	/**
@@ -148,5 +145,4 @@ public class LoggableUser extends Person implements Serializable
 	{
 		return this.id + ", " + super.toString() + ", " + this.email;
 	}
-
 }

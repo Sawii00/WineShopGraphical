@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class Seller extends LoggableUser implements Observer
 {
-
 	private static final long serialVersionUID = 4777921477023020754L;
 	protected ArrayList<String> messages = new ArrayList<String>();
 
@@ -31,10 +30,10 @@ public class Seller extends LoggableUser implements Observer
 	 * Invokes the parent {@code LoggableUser}'s constructor.
 	 * 
 	 * @see LoggableUser
-     *
-	 * @param name name of the seller.
-	 * @param surname surname of the seller.
-	 * @param email email of the seller.
+	 *
+	 * @param name     name of the seller.
+	 * @param surname  surname of the seller.
+	 * @param email    email of the seller.
 	 * @param password password of the seller.
 	 */
 	public Seller(String name, String surname, String email, String password)
@@ -49,13 +48,13 @@ public class Seller extends LoggableUser implements Observer
 	 * 
 	 * @see LoggableUser
 	 * 
-     * @param id id of the seller
-	 * @param name name of the seller.
-	 * @param surname surname of the seller.
-	 * @param email email of the seller.
+	 * @param id       id of the seller
+	 * @param name     name of the seller.
+	 * @param surname  surname of the seller.
+	 * @param email    email of the seller.
 	 * @param password password of the seller.
 	 */
-	
+
 	public Seller(int id, String name, String surname, String email, String password)
 	{
 		super(id, name, surname, email, password);
@@ -110,7 +109,7 @@ public class Seller extends LoggableUser implements Observer
 		return res;
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -128,7 +127,7 @@ public class Seller extends LoggableUser implements Observer
 		return "seller";
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -137,5 +136,4 @@ public class Seller extends LoggableUser implements Observer
 		if (id < messages.size())
 			messages.remove(id);
 	}
-
 }

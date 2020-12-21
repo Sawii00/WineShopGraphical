@@ -15,7 +15,6 @@ import java.util.Random;
  */
 public class Wine implements Serializable
 {
-
 	private static final long serialVersionUID = -4609912367894803090L;
 
 	/**
@@ -55,7 +54,6 @@ public class Wine implements Serializable
 	private String technicalNotes;
 	private String grapeType;
 	private int amount;
-
 	private WineType wineType;
 
 	/**
@@ -358,7 +356,6 @@ public class Wine implements Serializable
 		return "ID: " + this.id + ": " + this.name + ", " + this.producer + "(" + this.year + ") " + this.grapeType
 				+ " AMOUNT: " + this.amount + "\nTechnical Notes: " + this.technicalNotes;
 	}
-
 };
 
 /**

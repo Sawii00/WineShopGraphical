@@ -34,68 +34,47 @@ import javafx.util.Duration;
  * The class {@code HomeController} defines the controller for the home.fxml.
  * <p>
  * It allows the user to have a graphical representation of the wines.
- * <p>
  */
 public class HomeController implements Initializable
 {
-
 	@FXML
 	Button searchButton;
-
 	@FXML
 	Button loginRegisterButton;
-
 	@FXML
 	TextField searchTextField;
-
 	@FXML
 	FlowPane flowPane;
-
 	@FXML
 	ScrollPane scrollPane;
-
 	@FXML
 	RadioButton nameRadioButton;
-
 	@FXML
 	RadioButton yearRadioButton;
-
 	@FXML
 	Label centerLabel1;
-
 	@FXML
 	AnchorPane layer1;
-
 	@FXML
 	ImageView labelWallpaper;
-
 	@FXML
 	VBox layer2;
-
 	@FXML
 	Label centerLabel2;
-
 	@FXML
 	Label topLabel;
-
 	@FXML
 	Button enterButton;
-
 	@FXML
 	Button swipeButton;
-
 	@FXML
 	ChoiceBox<String> typeChoiceBox;
-
 	Pane singleWine;
-
 	ArrayList<Wine> viewedWines = new ArrayList<>();
 	ArrayList<Wine> wines = new ArrayList<>();
-
 	Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
 	Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
 	Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
-
 	Image images[] = { redImage, whiteImage, roseImage };
 
 	/**
@@ -135,11 +114,9 @@ public class HomeController implements Initializable
 
 		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
 		{
-
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2)
 			{
-
 				// Forcing choicebox text change... it does not happen until out of this handler
 				typeChoiceBox.setValue(typeChoiceBox.getItems().get((int) arg2));
 				search();
@@ -158,7 +135,6 @@ public class HomeController implements Initializable
 	{
 		Stage mainStage = (Stage) loginRegisterButton.getScene().getWindow();
 		Parent root;
-
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("../res/log_reg.fxml"));
@@ -168,7 +144,6 @@ public class HomeController implements Initializable
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/*
@@ -224,7 +199,6 @@ public class HomeController implements Initializable
 			amount.setText("" + w.getAmount());
 			wineId.setText("");
 			flowPane.getChildren().add(singleWine);
-
 		}
 	}
 
@@ -241,7 +215,6 @@ public class HomeController implements Initializable
 			populateFullList();
 			return;
 		}
-
 		if (nameRadioButton.isSelected())
 		{
 			searchWine(searchTextField.getText(), SearchType.NAME);
@@ -291,7 +264,6 @@ public class HomeController implements Initializable
 				new BasicAlertBox("Error", "Invalid year", 200, 100);
 				return;
 			}
-
 			for (Wine w : wines)
 			{
 				/**

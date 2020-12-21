@@ -82,7 +82,6 @@ public class WineBox
 				numberLabel.setVisible(false);
 				typeLabel.setLayoutY(248);
 			}
-
 			Label title_label = (Label) root.lookup("#title");
 			title_label.setText(title);
 			name.setText(values[0]);
@@ -106,7 +105,6 @@ public class WineBox
 				values[4] = grape.getText();
 				values[5] = number.getText();
 				values[6] = type.getValue();
-
 				try
 				{
 					int y = Integer.parseInt(year.getText());
@@ -114,14 +112,11 @@ public class WineBox
 					{
 						int n = Integer.parseInt(number.getText());
 					}
-
 				} catch (NumberFormatException e1)
 				{
 					new BasicAlertBox("Error", "Invalid data", 300, 100);
 					return;
 				}
-				
-
 				for (int i = 0; i < 7; ++i)
 				{
 					if (i == 5)
@@ -132,7 +127,6 @@ public class WineBox
 						return;
 					}
 				}
-
 				validData = true;
 				window.close();
 			});
@@ -142,12 +136,10 @@ public class WineBox
 			window.setScene(new Scene(root));
 			window.setResizable(false);
 			window.showAndWait();
-
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -165,6 +157,8 @@ public class WineBox
 	 * <p>
 	 * If the user closes the popup, the values are not valid since no change is
 	 * meant.
+	 * 
+	 * @return value data is valid
 	 **/
 	public boolean isValid()
 	{

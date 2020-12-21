@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public interface Observer
 {
-
 	/**
 	 * Prints to the standard output the messages' list.
 	 */
@@ -30,23 +29,25 @@ public interface Observer
 	public void newMessage(String m);
 
 	/**
-	 * Returns the string representation of all the messages.
-     * Each message is on a new line.
+	 * Returns the string representation of all the messages. Each message is on a
+	 * new line.
+	 * 
 	 * @return messages as a single String
 	 */
 
 	public String getMessages();
 
-    /**
-     * Deletes a specific message given by id.
-     * @param id id of the message to be removed
-     **/
+	/**
+	 * Deletes a specific message given by id.
+	 * 
+	 * @param id id of the message to be removed
+	 **/
 	public void deleteMessage(int id);
 
-    /**
-     * Returns the messages as a list.
-     * @return message list
-     **/
+	/**
+	 * Returns the messages as a list.
+	 * 
+	 * @return message list
+	 **/
 	ArrayList<String> getMessageList();
-
 }

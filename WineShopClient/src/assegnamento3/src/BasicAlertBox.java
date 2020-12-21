@@ -17,7 +17,6 @@ import javafx.stage.Stage;
  **/
 public class BasicAlertBox
 {
-
 	/**
 	 * Class constructor.
 	 * <p>
@@ -93,5 +92,4 @@ public class BasicAlertBox
 
 		window.showAndWait();
 	}
-
 }

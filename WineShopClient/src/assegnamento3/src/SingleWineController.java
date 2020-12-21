@@ -23,13 +23,10 @@ import javafx.util.Duration;
  **/
 public class SingleWineController
 {
-
 	@FXML
 	ImageView imageView;
-
 	@FXML
 	AnchorPane anchorPane;
-
 	boolean selected = false;
 
 	/**
@@ -51,7 +48,6 @@ public class SingleWineController
 
 	public void initialize()
 	{
-
 	}
 
 	/**
@@ -83,7 +79,6 @@ public class SingleWineController
 					break;
 				}
 			}
-
 			BuyBox buyPopup = new BuyBox(w, CustomerController.customerId);
 			Pane father = (Pane) anchorPane.getParent();
 			/**
@@ -95,7 +90,6 @@ public class SingleWineController
 		{
 			return;
 		}
-
 	}
 
 	/**
@@ -106,7 +100,6 @@ public class SingleWineController
 	 **/
 	public void showInfo()
 	{
-
 		TranslateTransition translation = new TranslateTransition(new Duration(350), imageView);
 		translation.setToY(-180);
 		translation.play();
@@ -114,6 +107,5 @@ public class SingleWineController
 		fading.setFromValue(1.0);
 		fading.setToValue(0);
 		fading.play();
-
 	}
 }

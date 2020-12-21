@@ -6,32 +6,36 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 /**
- * The class {@code NetworkServer} is responsible to create a persistent Server that accepts clients and creates instances of {@code ClientHandler} to handle them. <p>
+ * The class {@code NetworkServer} is responsible to create a persistent Server
+ * that accepts clients and creates instances of {@code ClientHandler} to handle
+ * them.
+ * <p>
  * Implements Runnable to allow it to be executed in background.
  **/
 public class NetworkServer implements Runnable
 {
-
 	private ServerSocket mainSocket;
 	private boolean isRunning = true;
 	public static Store mainStore = new Store();
 
-    /**
-     * Class constructor. <p>
-     * Creates the server socket from which to accept incoming connections.
-     * @param port port to listen from 
-     **/
+	/**
+	 * Class constructor.
+	 * <p>
+	 * Creates the server socket from which to accept incoming connections.
+	 * 
+	 * @param port port to listen from
+	 * @throws IOException Could not connect socket
+	 **/
 	public NetworkServer(int port) throws IOException
 	{
 		mainSocket = new ServerSocket(port);
 		System.out.println("Started on port: " + port);
 	}
 
-    /**
-     * Start the execution of the server.
-     **/
+	/**
+	 * Start the execution of the server.
+	 **/
 	public void run()
 	{
 		isRunning = true;
@@ -50,13 +54,11 @@ public class NetworkServer implements Runnable
 				isRunning = false;
 			}
 		}
-
 	}
 
-
-    /**
-     * Stops the execution of the server.
-     **/
+	/**
+	 * Stops the execution of the server.
+	 **/
 	public void stop()
 	{
 		isRunning = false;

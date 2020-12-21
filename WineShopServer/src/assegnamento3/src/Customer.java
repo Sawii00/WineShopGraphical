@@ -19,15 +19,14 @@ import java.util.ArrayList;
  */
 public class Customer extends LoggableUser implements Observer
 {
-
 	protected ArrayList<String> messages = new ArrayList<String>();
 
 	/**
 	 * Class constructor.
 	 * <p>
 	 * Invokes the parent {@code LoggableUser}'s constructor.
-	 * @see LoggableUser
-	 * The id, if not specified, is generated random.
+	 * 
+	 * @see LoggableUser The id, if not specified, is generated random.
 	 * @param name     of the client.
 	 * @param surname  of the client.
 	 * @param email    of the client.
@@ -42,6 +41,7 @@ public class Customer extends LoggableUser implements Observer
 	 * Class constructor.
 	 * <p>
 	 * Invokes the parent {@code LoggableUser}'s constructor.
+	 * 
 	 * @see LoggableUser
 	 * @param id       of the client.
 	 * @param name     of the client.
@@ -95,18 +95,15 @@ public class Customer extends LoggableUser implements Observer
 	@Override
 	public String getMessages()
 	{
-
 		String res = "";
 		for (String s : messages)
 		{
 			res += s + '\n';
-
 		}
 		return res;
-
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -114,17 +111,17 @@ public class Customer extends LoggableUser implements Observer
 	{
 		return this.messages;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-    @Override
+	@Override
 	public String getUserType()
 	{
 		return "customer";
 	}
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -133,5 +130,4 @@ public class Customer extends LoggableUser implements Observer
 		if (id < messages.size())
 			messages.remove(id);
 	}
-
 }

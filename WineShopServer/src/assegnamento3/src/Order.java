@@ -3,11 +3,11 @@ package assegnamento3.src;
 /**
  * The {@code Order} class represents a purchase order.
  * <p>
- * Contains a unique id, the id of the client, the id of the wine, and the amount that was bought.
+ * Contains a unique id, the id of the client, the id of the wine, and the
+ * amount that was bought.
  */
 public class Order
 {
-
 	private int orderID;
 	private int clientID;
 	private int wineID;
@@ -16,8 +16,10 @@ public class Order
 	/**
 	 * Class constructor.
 	 * 
-	 * @param c the client who buy the wine
-	 * @param w the wine that is bought.
+	 * @param id id of the order
+	 * @param c  the client who buy the wine
+	 * @param w  the wine that is bought.
+	 * @param a  amount
 	 */
 	public Order(int id, int c, int w, int a)
 	{
@@ -27,11 +29,11 @@ public class Order
 		amount = a;
 	}
 
-    /**
-     * Getter for the order id.
-     *
-     * @return order id  
-     **/
+	/**
+	 * Getter for the order id.
+	 *
+	 * @return order id
+	 **/
 	public int getOrderID()
 	{
 		return orderID;
@@ -77,21 +79,21 @@ public class Order
 		this.wineID = wine;
 	}
 
-    /**
-     * Getter for the amount.
-     *
-     * @return amount of bottles that were bought
-     **/
+	/**
+	 * Getter for the amount.
+	 *
+	 * @return amount of bottles that were bought
+	 **/
 	public int getAmount()
 	{
 		return amount;
 	}
 
-    /**
-     * Setter for the amount of bottles that were bought.
-     *
-     * @param n number of bottles
-     **/
+	/**
+	 * Setter for the amount of bottles that were bought.
+	 *
+	 * @param n number of bottles
+	 **/
 	public void setAmount(int n)
 	{
 		this.amount = n;

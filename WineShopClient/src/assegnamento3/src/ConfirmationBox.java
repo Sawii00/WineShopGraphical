@@ -20,7 +20,6 @@ import javafx.stage.Stage;
  **/
 public class ConfirmationBox
 {
-
 	/**
 	 * Class constructor.
 	 *
@@ -35,7 +34,10 @@ public class ConfirmationBox
 
 	/**
 	 * Diplays the popup and sets the handler for the yes button.
-	 * <p>
+	 * 
+	 * @param title   title of window
+	 * @param message message to be displayed
+	 * @param todo    action to be performed
 	 **/
 	private void display(String title, String message, Action todo)
 	{
@@ -73,7 +75,5 @@ public class ConfirmationBox
 		{
 			e1.printStackTrace();
 		}
-
 	}
-
 }

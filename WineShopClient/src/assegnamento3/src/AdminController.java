@@ -28,37 +28,27 @@ import javafx.stage.Stage;
  */
 public class AdminController
 {
-
 	ObservableList<LoggableUser> customers = FXCollections.<LoggableUser>observableArrayList();
 	ObservableList<LoggableUser> sellers = FXCollections.<LoggableUser>observableArrayList();
 	ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
 	ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
 	boolean sellerTableOn = false;
-
 	@FXML
 	ChoiceBox<String> adminChoiceBox;
-
 	@FXML
 	Button addButton;
-
 	@FXML
 	Button editButton;
-
 	@FXML
 	Button logoutButton;
-
 	@FXML
 	Button removeButton;
-
 	@FXML
 	Button refreshButton;
-
 	@FXML
 	TableView<LoggableUser> adminPersonTable;
-
 	@FXML
 	TableView<Wine> adminWineTable;
-
 	@FXML
 	TableView<Order> adminOrderTable;
 
@@ -121,9 +111,7 @@ public class AdminController
 				adminPersonTable.refresh();
 			}
 			adminPersonTable.getSelectionModel().clearSelection();
-
 		}
-
 	}
 
 	/**
@@ -179,7 +167,6 @@ public class AdminController
 					removeButton.setDisable(true);
 				}
 			}
-
 		});
 
 		/**
@@ -209,7 +196,6 @@ public class AdminController
 		Parent root;
 
 		mainStage = (Stage) logoutButton.getScene().getWindow();
-
 		try
 		{
 			root = FXMLLoader.load(getClass().getResource("../res/home.fxml"));
@@ -254,7 +240,6 @@ public class AdminController
 			}
 			adminPersonTable.getItems().clear();
 			adminPersonTable.getItems().addAll(customers);
-
 		} else if (selectedTable.equals("Sellers"))
 		{
 			adminPersonTable.getSelectionModel().clearSelection();

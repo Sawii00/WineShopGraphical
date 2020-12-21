@@ -91,14 +91,12 @@ public class SellerBox
 				Matcher matcherName = namePattern.matcher(values[0]);
 				Matcher matcherSurname = surnamePattern.matcher(values[1]);
 				Matcher matcherEmail = emailPattern.matcher(values[2]);
-
 				if (!(matcherName.matches() && matcherSurname.matches() && matcherEmail.matches())
 						|| values[3].equals(""))
 				{
 					new BasicAlertBox("Error", "Invalid parameters", 300, 100);
 					return;
 				}
-
 				validData = true;
 				window.close();
 			});
@@ -113,7 +111,6 @@ public class SellerBox
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

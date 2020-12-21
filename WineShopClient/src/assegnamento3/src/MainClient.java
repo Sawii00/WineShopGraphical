@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  **/
 public class MainClient extends Application
 {
-
 	static NetworkClient client;
 
 	public static void main(String[] args)
@@ -27,21 +26,18 @@ public class MainClient extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-
 		PortBox pb = new PortBox();
 		if (pb.getPort() < 0)
 		{
 			primaryStage.close();
 			return;
 		}
-
 		client = new NetworkClient("127.0.0.1", pb.getPort());
 		if (!client.isConnected())
 		{
 			primaryStage.close();
 			return;
 		}
-
 		Parent root = FXMLLoader.load(getClass().getResource("../res/home.fxml"));
 		primaryStage.setTitle("WineShop");
 		primaryStage.setScene(new Scene(root));
@@ -57,6 +53,5 @@ public class MainClient extends Application
 				System.exit(0);
 			});
 		});
-
 	}
 }

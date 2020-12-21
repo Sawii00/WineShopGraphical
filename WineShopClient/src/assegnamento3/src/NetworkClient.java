@@ -11,7 +11,6 @@ import java.net.Socket;
  **/
 public class NetworkClient
 {
-
 	private Socket mainSocket;
 	private ObjectOutputStream os = null;
 	private ObjectInputStream is = null;
@@ -80,8 +79,6 @@ public class NetworkClient
 		{
 			System.out.println("No longer connected to server");
 		}
-
 		return new Response(StatusCode.ERROR);
-
 	}
 }
