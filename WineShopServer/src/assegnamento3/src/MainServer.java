@@ -61,7 +61,7 @@ public class MainServer extends Application
 			{
 				int port = Integer.parseInt(portTextField.getText());
 				server = new NetworkServer(port);
-				db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShop?", "createDatabaseIfNotExist=true","root", "");
+				db = new DatabaseManager("jdbc:mysql://localhost:3306/wineShopNasturzioPindozzi?", "createDatabaseIfNotExist=true","root", "");
 				mainServerThread = new Thread(server);
 				mainServerThread.start();
 				startButton.setDisable(true);
