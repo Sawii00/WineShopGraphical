@@ -303,7 +303,7 @@ public class HomeController implements Initializable
 };
 
 /**
- * The enum {@code SearchType1} defines two research fees for the wines.
+ * The enum {@code SearchType} defines two research fees for the wines.
  */
 enum SearchType
 {
