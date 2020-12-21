@@ -151,7 +151,7 @@ public class AdminController
 		adminWineTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("year"));
 		adminWineTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("technicalNotes"));
 		adminWineTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grapeType"));
-		adminWineTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("number"));
+		adminWineTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("amount"));
 
 		adminOrderTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("customerEmail"));
 		adminOrderTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("wineName"));

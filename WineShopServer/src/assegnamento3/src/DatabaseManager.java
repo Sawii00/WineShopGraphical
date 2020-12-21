@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * The class {@code DatabaseManager} handles the persistency of the data. <p>
+ * The class {@code DatabaseManager} handles the persistence of the data. <p>
  * Creates a connection to the database and implements the methods for saving wine, user, order, notification, and message lists as well as loading them back from main memory.
  **/
 public class DatabaseManager 
@@ -28,9 +28,25 @@ public class DatabaseManager
 	String password;
 	
 	
+	public boolean tableExist(Connection conn, String tableName) throws SQLException {
+	    boolean tExists = false;
+	    try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
+	        while (rs.next()) { 
+	            String tName = rs.getString("TABLE_NAME");
+	            if (tName != null && tName.equals(tableName)) {
+	                tExists = true;
+	                break;
+	            }
+	        }
+	    }
+	    return tExists;
+	}
+	
     /**
      * Class constructor. <p>
-     * Initializes the connection to the database and creates the tables if not already present.
+     * Initializes the connection to the database and creates the tables if not already present. <p>
+     * A default Admin "m.rossi@gmail.com" with password "1234" is created. <p>
+     * A default list of Wines is provided
      **/
 	public DatabaseManager(String url, String args, String user, String password) throws SQLException
 	{
@@ -40,6 +56,8 @@ public class DatabaseManager
 		this.password = password;
 		
 		open();
+		
+		boolean addWines = !tableExist(conn, "wines");
 		
 		String createTableWines = "create table if not exists wines ("
 				+ "id int primary key,"
@@ -52,6 +70,71 @@ public class DatabaseManager
 				+ "wineType int not null"
 				+ ")";
 		st.executeUpdate(createTableWines);
+		//The table did not exist and default wines are added.
+		if(addWines)
+		{
+			st.executeUpdate("insert into wines values (0, 'Barolo', 'Marchesi di Barolo', 2012, "
+					+ "'Profumo intenso con sentori floreali e fruttati, ricco di corpo e asciutto.', "
+					+ "'Uve Nebbiolo',"
+					+ "20,"
+					+ "0)");
+			
+			st.executeUpdate("insert into wines values (1, 'Amarone', 'Fratelli Vogatori', 2018, "
+					+ "'Profumo di frutta matura, muschio e tabacco. Ricco e denso. Spiccato grado alcolico.', "
+					+ "'Corvina, Rondinella, Molinara',"
+					+ "5,"
+					+ "0)");
+
+			st.executeUpdate("insert into wines values (2, 'Cannonau', 'Dorgali', 2020, "
+					+ "'Profumo leggero di frutti rossi, sapido e caldo.', "
+					+ "'Uva Cannonau',"
+					+ "50,"
+					+ "0)");
+
+			st.executeUpdate("insert into wines values (3, 'Merlot', 'Colli Morenici', 2015, "
+					+ "'Profumo intenso di ciliegia e amarena. Gusto armonico ed asciutto.',"
+					+ "'Uve Merlot',"
+					+ "12,"
+					+ "0)");
+
+			st.executeUpdate("insert into wines values (4, 'Marzemino', 'Cantina La Vis', 2018, "
+					+ "'Aroma gentile di frutti di bosco e menta. Gusto secco, morbido e succoso.', "
+					+ "'Uve Marzemino',"
+					+ "10,"
+					+ "0)");
+			
+			st.executeUpdate("insert into wines values (5, 'Gewurztraminer', 'Cantina Tramin', 2020, "
+					+ "'Aroma intenso di rose, gelsomino e frutta dolce. Gusto pieno e persistente.', "
+					+ "'Uve Picolit',"
+					+ "2,"
+					+ "1)");
+			
+			st.executeUpdate("insert into wines values (6, 'Picolit', 'Cantina Rocchi di Manzano', 2010, "
+					+ "'Profumo di mandorla, pesca e scorza di arancia. Sentori di frutta candita e miele.', "
+					+ "'Uve Marzemino',"
+					+ "10,"
+					+ "1)");
+			
+			st.executeUpdate("insert into wines values (7, 'Verdicchio', 'Cantina Sartarelli', 2008, "
+					+ "'Profumo di fiori di campo, pesca e mela. Gusto finale di mandorla amarognola.', "
+					+ "'Uve Verdicchio',"
+					+ "15,"
+					+ "1)");
+			
+			st.executeUpdate("insert into wines values (8, 'Lagrein Rosé', 'Cantina Tramin', 2017, "
+					+ "'Aromi di frutta matura, fresco e leggermente vinoso.', "
+					+ "'Uve Lagrein',"
+					+ "5,"
+					+ "2)");
+			
+			st.executeUpdate("insert into wines values (9, 'Vetere', 'Cantina San Salvatore', 2019, "
+					+ "'Delicato profumo di fiori, fresco e sapido con sapore di agrumi finale.', "
+					+ "'Uve Aglianico',"
+					+ "3,"
+					+ "2)");
+			
+		}
+		
 		
 		String createTableUsers = "create table if not exists users ("
 				+ "id int primary key,"
@@ -63,6 +146,7 @@ public class DatabaseManager
 				+ ")";
 		st.executeUpdate(createTableUsers);
 		ResultSet res = st.executeQuery("select * from users where id=0");
+		//adding administrator
 		if(!res.next())
 			st.executeUpdate("insert into users values (0, 'Mario', 'Rossi', 'm.rossi@gmail.com', '1234', 2)");
 

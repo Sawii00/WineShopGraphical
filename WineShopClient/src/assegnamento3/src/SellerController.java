@@ -191,7 +191,7 @@ public class SellerController
 		sellerWineTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("year"));
 		sellerWineTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("technicalNotes"));
 		sellerWineTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grapeType"));
-		sellerWineTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("number"));
+		sellerWineTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("amount"));
 
 		sellerOrderTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("customerEmail"));
 		sellerOrderTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("wineName"));
