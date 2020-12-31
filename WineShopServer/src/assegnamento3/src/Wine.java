@@ -4,12 +4,23 @@ import java.io.Serializable;
 import java.util.Random;
 
 /**
- * The enum {@code WineType} represents the category of the wine.
+ * The enum {@code WineType} represents the type of wine.
  **/
 enum WineType
 {
-	RED, WHITE, ROSE
-};
+	/**
+	 * Represents red wine. 
+	 **/
+	RED, 
+	/**
+	 * Represents white wine. 
+	 **/
+	WHITE,
+	/**
+	 * Represents rosé wine. 
+	 **/
+	ROSE
+}
 
 /**
  * The {@code Wine} class defines the different kinds of wines.

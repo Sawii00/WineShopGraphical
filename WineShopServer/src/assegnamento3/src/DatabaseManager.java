@@ -21,12 +21,12 @@ import java.util.Map.Entry;
  **/
 public class DatabaseManager
 {
-	Connection conn = null;
-	Statement st = null;
-	String url;
-	String args;
-	String user;
-	String password;
+	private Connection conn = null;
+	private Statement st = null;
+	private String url;
+	private String args;
+	private String user;
+	private String password;
 
 	/**
 	 * Class constructor.
@@ -86,11 +86,11 @@ public class DatabaseManager
 
 			st.executeUpdate("insert into wines values (5, 'Gewurztraminer', 'Cantina Tramin', 2020, "
 					+ "'Aroma intenso di rose, gelsomino e frutta dolce. Gusto pieno e persistente.', "
-					+ "'Uve Picolit'," + "2," + "1)");
+					+ "'Uve Traminer'," + "2," + "1)");
 
 			st.executeUpdate("insert into wines values (6, 'Picolit', 'Cantina Rocchi di Manzano', 2010, "
 					+ "'Profumo di mandorla, pesca e scorza di arancia. Sentori di frutta candita e miele.', "
-					+ "'Uve Marzemino'," + "10," + "1)");
+					+ "'Uve Picolit'," + "10," + "1)");
 
 			st.executeUpdate("insert into wines values (7, 'Verdicchio', 'Cantina Sartarelli', 2008, "
 					+ "'Profumo di fiori di campo, pesca e mela. Gusto finale di mandorla amarognola.', "

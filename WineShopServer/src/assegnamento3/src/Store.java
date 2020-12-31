@@ -12,7 +12,18 @@ import java.util.Map.Entry;
  */
 enum SearchType
 {
-	NAME, YEAR, ID;
+	/**
+	 * Search by Name. 
+	 **/
+	NAME,
+	/**
+	 * Search by Year. 
+	 **/
+	YEAR, 
+	/**
+	 * Search by Id. 
+	 **/
+	ID;
 };
 
 /**
@@ -52,7 +63,7 @@ public class Store
 	private Map<Integer, Entry<Integer, Integer>> notifRequest = new HashMap<Integer, Entry<Integer, Integer>>();
 
 	/**
-	 * Class Constructor.
+	 * Default Class Constructor.
 	 */
 	public Store()
 	{

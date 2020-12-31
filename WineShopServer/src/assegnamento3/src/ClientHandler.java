@@ -66,7 +66,7 @@ public class ClientHandler implements Runnable
 	}
 
 	/**
-	 * Handles the client's rpc-style request
+	 * Handles the client's rpc-style request.
 	 * 
 	 * @param request client's request
 	 * @return response to be sent back

@@ -22,7 +22,11 @@ import java.util.ArrayList;
 public class Seller extends LoggableUser implements Observer
 {
 	private static final long serialVersionUID = 4777921477023020754L;
-	protected ArrayList<String> messages = new ArrayList<String>();
+	
+	/**
+	 * Message list of the seller. 
+	 **/
+	private ArrayList<String> messages = new ArrayList<String>();
 
 	/**
 	 * Class constructor.

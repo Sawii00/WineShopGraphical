@@ -24,10 +24,24 @@ import javafx.stage.Stage;
  **/
 public class MainServer extends Application
 {
+	/**
+	 * Main instance of the NetworkServer that handles incoming new connections.<p>
+	 * Executed on a separated thread.
+	 **/
 	NetworkServer server = null;
+	/**
+	 * Thread that handles the NetworkServer. 
+	 **/
 	Thread mainServerThread = null;
+	/**
+	 * Creates the Database Manager that handles the persistency of the data. 
+	 **/
 	DatabaseManager db = null;
 
+	/**
+	 * Starts the Primary Stage with the prompt for the server port. <p>
+	 * If the start button is pressed the server is setup to listen for incoming connections and the connection to the DB manager is open. 
+	 **/
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -129,6 +143,9 @@ public class MainServer extends Application
 		db.saveNotificationList(server.mainStore.getNotificationList());
 	}
 
+	/**
+	 * Launches the Software. 
+	 **/
 	public static void main(String[] args)
 	{
 		launch(args);
