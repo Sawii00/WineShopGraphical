@@ -3,8 +3,6 @@ package assegnamento3.src;
 /**
  * The class {@code Person} defines a generic person described by a name and a
  * surname.
- * <p>
- * <p>
  */
 public class Person
 {

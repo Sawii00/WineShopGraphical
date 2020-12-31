@@ -326,11 +326,3 @@ public class CustomerController
 		customerId = id;
 	}
 };
-
-/**
- * The enum {@code SearchType1} defines two research fees for the wines.
- */
-enum SearchType1
-{
-	NAME, YEAR
-}

@@ -17,6 +17,11 @@ public class Order
 
 	/**
 	 * Class constructor.
+	 * 
+	 * @param id     id of the order
+	 * @param email  email of the customer
+	 * @param wine   wine that was ordered
+	 * @param amount that was ordered
 	 **/
 	public Order(int id, String email, String wine, int amount)
 	{

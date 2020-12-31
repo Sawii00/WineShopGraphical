@@ -132,6 +132,8 @@ public class DatabaseManager
 	}
 
 	/**
+	 * Returns whether the Connection is Open.
+	 * 
 	 * @return true if the connection is open, false otherwise.
 	 **/
 	public boolean isOpen()

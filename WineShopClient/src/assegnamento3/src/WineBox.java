@@ -12,6 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The class {@code WineBox} displays a popup that prompts the user for editing
+ * / adding information about a wine.
+ **/
 public class WineBox
 {
 	private String values[] = { "", "", "", "", "", "", "" };

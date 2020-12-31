@@ -244,7 +244,6 @@ public class Wine implements Serializable
 	/**
 	 * Returns a serialized string that can be parsed by the server.
 	 * <p>
-	 * The fields are separated by "<>".
 	 *
 	 * @return serialized parseable version of the wine
 	 **/

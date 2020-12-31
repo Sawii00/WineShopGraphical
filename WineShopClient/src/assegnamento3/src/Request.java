@@ -40,6 +40,8 @@ public class Request implements Serializable
 
 	/**
 	 * Adds a parameter to the list.
+	 * 
+	 * @param s parameter to be added
 	 **/
 	public void addParameter(String s)
 	{

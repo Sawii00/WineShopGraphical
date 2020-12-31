@@ -32,7 +32,7 @@ public class MainClient extends Application
 	}
 
 	/**
-	 * Starts the NetworkClient after prompring the user for a Port and populates
+	 * Starts the NetworkClient after prompting the user for a Port and populates
 	 * the Primary Stage of the software.
 	 **/
 	@Override
