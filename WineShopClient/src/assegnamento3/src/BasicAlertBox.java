@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 /**
  * The class {@code BasicAlertBox} displays a basic popup in which title and
  * message can be customized.
- * <p>
  **/
 public class BasicAlertBox
 {

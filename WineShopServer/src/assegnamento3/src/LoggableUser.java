@@ -126,7 +126,7 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 * @param email of the user.
 	 */
-	protected void setEmail(String email)
+	public void setEmail(String email)
 	{
 		this.email = email;
 	}
@@ -136,7 +136,7 @@ public class LoggableUser extends Person implements Serializable
 	 * 
 	 * @param id user's Id.
 	 */
-	protected void setID(int id)
+	public void setID(int id)
 	{
 		this.id = id;
 	}
@@ -147,7 +147,7 @@ public class LoggableUser extends Person implements Serializable
 	 * @param password of the user.
 	 */
 
-	protected void setPassword(String password)
+	public void setPassword(String password)
 	{
 		this.password = password;
 	}

@@ -29,15 +29,15 @@ public class MainServer extends Application
 	 * <p>
 	 * Executed on a separated thread.
 	 **/
-	NetworkServer server = null;
+	private NetworkServer server = null;
 	/**
 	 * Thread that handles the NetworkServer.
 	 **/
-	Thread mainServerThread = null;
+	private Thread mainServerThread = null;
 	/**
-	 * Creates the Database Manager that handles the persistency of the data.
+	 * Creates the Database Manager that handles the persistence of the data.
 	 **/
-	DatabaseManager db = null;
+	private DatabaseManager db = null;
 
 	/**
 	 * Starts the Primary Stage with the prompt for the server port.
