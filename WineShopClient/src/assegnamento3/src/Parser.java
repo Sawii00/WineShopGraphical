@@ -13,7 +13,6 @@ public class Parser
 	 *
 	 * @return Order object
 	 **/
-
 	public static Order parseOrder(String orders)
 	{
 		String vals[] = orders.split("<>");

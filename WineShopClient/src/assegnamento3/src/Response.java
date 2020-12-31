@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class Response implements Serializable
 {
 	private static final long serialVersionUID = -577767441985222421L;
-	StatusCode returnCode;
-	ArrayList<String> parameters = new ArrayList<String>();
+	private StatusCode returnCode;
+	private ArrayList<String> parameters = new ArrayList<String>();
 
 	/**
 	 * Class constructor.
@@ -75,5 +75,20 @@ public class Response implements Serializable
  **/
 enum StatusCode
 {
-	SUCCESS, INVALID_ARGUMENTS, NOT_AUTHORIZED, ERROR
+	/**
+	 * Represents a successful transaction. 
+	 **/
+	SUCCESS, 
+	/**
+	 * Invalid arguments were received.
+	 **/
+	INVALID_ARGUMENTS, 
+	/**
+	 * The user was not authorized to perform the request.
+	 **/
+	NOT_AUTHORIZED, 
+	/**
+	 * Represents a generic error.
+	 **/
+	ERROR
 }

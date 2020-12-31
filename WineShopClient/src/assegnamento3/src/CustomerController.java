@@ -35,34 +35,44 @@ import javafx.stage.Stage;
  */
 public class CustomerController
 {
+	/**
+	 * ArrayList containing the wines that are currently visible on the flowPane. <p>
+	 * Updated when a search is made. 
+	 **/
 	static ArrayList<Wine> viewedWines = new ArrayList<>();
+	
+	/**
+	 * Id of the customer that has logged in. <p>
+	 * Used to authenticate the requests made to the server. 
+	 **/
 	static int customerId;
 	@FXML
-	Button searchButton;
+	private Button searchButton;
 	@FXML
-	Button logoutButton;
+	private Button logoutButton;
 	@FXML
-	Button mexButton;
+	private Button mexButton;
 	@FXML
-	TextField searchTextField;
+	private TextField searchTextField;
 	@FXML
-	FlowPane flowPane;
+	private FlowPane flowPane;
 	@FXML
-	ScrollPane scrollPane;
+	private ScrollPane scrollPane;
 	@FXML
-	RadioButton nameRadioButton;
+	private RadioButton nameRadioButton;
 	@FXML
-	RadioButton yearRadioButton;
+	private RadioButton yearRadioButton;
 	@FXML
-	ChoiceBox<String> typeChoiceBox;
-	Pane singleWine;
-	ArrayList<Wine> wines = new ArrayList<>();
-	Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
-	Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
-	Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
-	Image mexImage = new Image(getClass().getResource("../res/message.png").toExternalForm());
-	Image mexNotificationImage = new Image(getClass().getResource("../res/not_message.png").toExternalForm());
-	Image images[] = { redImage, whiteImage, roseImage };
+	private ChoiceBox<String> typeChoiceBox;
+	private Pane singleWine;
+	
+	private ArrayList<Wine> wines = new ArrayList<>();
+	private Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
+	private Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
+	private Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
+	private Image mexImage = new Image(getClass().getResource("../res/message.png").toExternalForm());
+	private Image mexNotificationImage = new Image(getClass().getResource("../res/not_message.png").toExternalForm());
+	private Image images[] = { redImage, whiteImage, roseImage };
 
 	/**
 	 * Gives a graphical representation for the messages, creating a new MessageBox

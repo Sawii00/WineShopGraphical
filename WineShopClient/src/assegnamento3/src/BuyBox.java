@@ -19,14 +19,14 @@ import javafx.stage.Stage;
  */
 public class BuyBox
 {
-	Wine wine;
-	int customerId;
-	Button buyButton;
-	Button notifyButton;
-	Button hereButton;
-	Label label1;
-	TextField notificationTextField;
-	ChoiceBox amountChoiceBox;
+	private Wine wine;
+	private int customerId;
+	private Button buyButton;
+	private Button notifyButton;
+	private Button hereButton;
+	private Label label1;
+	private TextField notificationTextField;
+	private ChoiceBox amountChoiceBox;
 	private Stage window;
 
 	/**

@@ -26,28 +26,28 @@ import javafx.stage.Stage;
  **/
 public class SellerController
 {
-	ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
-	ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
+	private ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
+	private ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
 	@FXML
-	ChoiceBox<String> sellerChoiceBox;
+	private ChoiceBox<String> sellerChoiceBox;
 	@FXML
-	Button addButton;
+	private Button addButton;
 	@FXML
-	Button editButton;
+	private Button editButton;
 	@FXML
-	Button mexButton;
+	private Button mexButton;
 	@FXML
-	Button logoutButton;
+	private Button logoutButton;
 	@FXML
-	Button removeButton;
+	private Button removeButton;
 	@FXML
-	Button refreshButton;
+	private Button refreshButton;
 	@FXML
-	TableView<Wine> sellerWineTable;
+	private TableView<Wine> sellerWineTable;
 	@FXML
-	TableView<Order> sellerOrderTable;
+	private TableView<Order> sellerOrderTable;
 	@FXML
-	Button restockButton;
+	private Button restockButton;
 	private int sellerId;
 
 	/**

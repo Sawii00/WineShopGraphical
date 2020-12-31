@@ -24,10 +24,10 @@ import javafx.util.Duration;
 public class SingleWineController
 {
 	@FXML
-	ImageView imageView;
+	private ImageView imageView;
 	@FXML
-	AnchorPane anchorPane;
-	boolean selected = false;
+	private AnchorPane anchorPane;
+	private boolean selected = false;
 
 	/**
 	 * Hides the deatailed information of a wine by sliding back and fading in the

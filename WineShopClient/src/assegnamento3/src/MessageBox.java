@@ -29,7 +29,7 @@ public class MessageBox
 	private Button removeAll;
 	private TableView<Message> table;
 	private int customerID;
-	ObservableList<Message> messages = FXCollections.<Message>observableArrayList();
+	private ObservableList<Message> messages = FXCollections.<Message>observableArrayList();
 
 	/**
 	 * Class constructor.

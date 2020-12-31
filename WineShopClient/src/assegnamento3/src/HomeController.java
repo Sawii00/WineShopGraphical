@@ -38,44 +38,50 @@ import javafx.util.Duration;
 public class HomeController implements Initializable
 {
 	@FXML
-	Button searchButton;
+	private Button searchButton;
 	@FXML
-	Button loginRegisterButton;
+	private Button loginRegisterButton;
 	@FXML
-	TextField searchTextField;
+	private TextField searchTextField;
 	@FXML
-	FlowPane flowPane;
+	private FlowPane flowPane;
 	@FXML
-	ScrollPane scrollPane;
+	private ScrollPane scrollPane;
 	@FXML
-	RadioButton nameRadioButton;
+	private RadioButton nameRadioButton;
 	@FXML
-	RadioButton yearRadioButton;
+	private RadioButton yearRadioButton;
 	@FXML
-	Label centerLabel1;
+	private Label centerLabel1;
 	@FXML
-	AnchorPane layer1;
+	private AnchorPane layer1;
 	@FXML
-	ImageView labelWallpaper;
+	private ImageView labelWallpaper;
 	@FXML
-	VBox layer2;
+	private VBox layer2;
 	@FXML
-	Label centerLabel2;
+	private Label centerLabel2;
 	@FXML
-	Label topLabel;
+	private Label topLabel;
 	@FXML
-	Button enterButton;
+	private Button enterButton;
 	@FXML
-	Button swipeButton;
+	private Button swipeButton;
 	@FXML
-	ChoiceBox<String> typeChoiceBox;
-	Pane singleWine;
+	private ChoiceBox<String> typeChoiceBox;
+	private Pane singleWine;
+	
+	/**
+	 * ArrayList containing the wines that are currently visible on the flowPane. <p>
+	 * Updated when a search is made. 
+	 **/
 	ArrayList<Wine> viewedWines = new ArrayList<>();
-	ArrayList<Wine> wines = new ArrayList<>();
-	Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
-	Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
-	Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
-	Image images[] = { redImage, whiteImage, roseImage };
+	
+	private ArrayList<Wine> wines = new ArrayList<>();
+	private Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
+	private Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
+	private Image roseImage = new Image(getClass().getResource("../res/rose.jpg").toExternalForm());
+	private Image images[] = { redImage, whiteImage, roseImage };
 
 	/**
 	 * It initializes the choiceBox with the wine type and set attributes for the
@@ -303,9 +309,16 @@ public class HomeController implements Initializable
 };
 
 /**
- * The enum {@code SearchType} defines two research fees for the wines.
+ * The enum {@code SearchType} defines two research modes for the wines.
  */
 enum SearchType
 {
-	NAME, YEAR
+	/**
+	 * Represents a search made by Name 
+	 **/
+	NAME, 
+	/**
+	 * Represents a search made by Year 
+	 **/
+	YEAR
 }

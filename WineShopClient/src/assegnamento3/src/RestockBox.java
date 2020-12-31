@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 public class RestockBox
 {
 	private int val = 0;
-	Button confirmButton;
-	TextField amountTextField;
+	private Button confirmButton;
+	private TextField amountTextField;
 
 	/**
 	 * Class constructor.

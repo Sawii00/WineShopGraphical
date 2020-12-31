@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class Request implements Serializable
 {
 	private static final long serialVersionUID = -3573650597397447309L;
-	String method;
-	ArrayList<String> parameters = new ArrayList<String>();
+	private String method;
+	private ArrayList<String> parameters = new ArrayList<String>();
 
 	/**
 	 * Class constructor.
@@ -40,8 +40,6 @@ public class Request implements Serializable
 
 	/**
 	 * Adds a parameter to the list.
-	 * 
-	 * @param s parameter
 	 **/
 	public void addParameter(String s)
 	{

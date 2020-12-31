@@ -16,13 +16,22 @@ import javafx.stage.Stage;
  **/
 public class MainClient extends Application
 {
+	/**
+	 * Instance of NetworkClient that handles the connection with the server. 
+	 **/
 	static NetworkClient client;
 
+	/**
+	 * Launches the Software. 
+	 **/
 	public static void main(String[] args)
 	{
 		launch(args);
 	}
 
+	/**
+	 * Starts the NetworkClient after prompring the user for a Port and populates the Primary Stage of the software. 
+	 **/
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{

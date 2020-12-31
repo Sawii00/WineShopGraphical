@@ -13,6 +13,10 @@ import javafx.event.EventType;
 public class RefreshEvent extends Event
 {
 	private static final long serialVersionUID = 5970647945895438198L;
+	
+	/**
+	 * Represents the Refresh EventType to be invoked. 
+	 **/
 	public static final EventType<RefreshEvent> REFRESH = new EventType<>(Event.ANY, "Refresh");
 
 	/**

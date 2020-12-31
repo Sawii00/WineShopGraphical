@@ -363,5 +363,16 @@ public class Wine implements Serializable
  **/
 enum WineType
 {
-	RED, WHITE, ROSE
+	/**
+	 * Represents red wine. 
+	 **/
+	RED, 
+	/**
+	 * Represents white wine. 
+	 **/
+	WHITE,
+	/**
+	 * Represents rosé wine. 
+	 **/
+	ROSE
 }

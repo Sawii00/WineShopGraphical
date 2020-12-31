@@ -8,7 +8,13 @@ package assegnamento3.src;
  */
 public class Person
 {
+	/**
+	 * Name of the Person. 
+	 **/
 	protected String name;
+	/**
+	 * Surname of the Person. 
+	 **/
 	protected String surname;
 
 	/**
@@ -48,7 +54,7 @@ public class Person
 	 * 
 	 * @param name of the person.
 	 */
-	protected void setName(String name)
+	public void setName(String name)
 	{
 		this.name = name;
 	}
@@ -58,8 +64,7 @@ public class Person
 	 * 
 	 * @param surname of the person.
 	 */
-
-	protected void setSurname(String surname)
+	public void setSurname(String surname)
 	{
 		this.surname = surname;
 	}

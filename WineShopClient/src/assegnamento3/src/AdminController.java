@@ -28,29 +28,44 @@ import javafx.stage.Stage;
  */
 public class AdminController
 {
+	/**
+	 * Observable list containing the Customer objects to be displayed in the table. 
+	 **/
 	ObservableList<LoggableUser> customers = FXCollections.<LoggableUser>observableArrayList();
+	/**
+	 * Observable list containing the Seller objects to be displayed in the table. 
+	 **/
 	ObservableList<LoggableUser> sellers = FXCollections.<LoggableUser>observableArrayList();
+	/**
+	 * Observable list containing the Wines objects to be displayed in the table. 
+	 **/
 	ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
+	/**
+	 * Observable list containing the Orders objects to be displayed in the table. 
+	 **/
 	ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
-	boolean sellerTableOn = false;
+	/**
+	 * True if the seller table is the currently visible one.
+	 **/
+	private boolean sellerTableOn = false;
 	@FXML
-	ChoiceBox<String> adminChoiceBox;
+	private ChoiceBox<String> adminChoiceBox;
 	@FXML
-	Button addButton;
+	private Button addButton;
 	@FXML
-	Button editButton;
+	private Button editButton;
 	@FXML
-	Button logoutButton;
+	private Button logoutButton;
 	@FXML
-	Button removeButton;
+	private Button removeButton;
 	@FXML
-	Button refreshButton;
+	private Button refreshButton;
 	@FXML
-	TableView<LoggableUser> adminPersonTable;
+	private TableView<LoggableUser> adminPersonTable;
 	@FXML
-	TableView<Wine> adminWineTable;
+	private TableView<Wine> adminWineTable;
 	@FXML
-	TableView<Order> adminOrderTable;
+	private TableView<Order> adminOrderTable;
 
 	/**
 	 * Allows to add a new seller.

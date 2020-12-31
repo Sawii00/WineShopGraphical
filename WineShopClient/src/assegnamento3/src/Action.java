@@ -9,5 +9,8 @@ package assegnamento3.src;
 @FunctionalInterface
 public interface Action
 {
+	/**
+	 * Action to be performed.
+	 **/
 	void act();
 }

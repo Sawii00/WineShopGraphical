@@ -4,15 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The enum {@code StatusCode} encodes the possible return values of a server
- * request.
- **/
-enum StatusCode
-{
-	SUCCESS, INVALID_ARGUMENTS
-}
-
-/**
  * The class {@code Response} represents a serializable response of the server
  * to a client's request.
  * <p>
@@ -21,8 +12,8 @@ enum StatusCode
 public class Response implements Serializable
 {
 	private static final long serialVersionUID = -577767441985222421L;
-	StatusCode returnCode;
-	ArrayList<String> parameters = new ArrayList<String>();
+	private StatusCode returnCode;
+	private ArrayList<String> parameters = new ArrayList<String>();
 
 	/**
 	 * Class constructor.
@@ -32,16 +23,6 @@ public class Response implements Serializable
 	public Response(StatusCode code)
 	{
 		returnCode = code;
-	}
-
-	/**
-	 * Adds a parameter to the parameter list.
-	 *
-	 * @param r parameter
-	 **/
-	public void addParameter(String r)
-	{
-		parameters.add(r);
 	}
 
 	/**
@@ -58,13 +39,13 @@ public class Response implements Serializable
 	}
 
 	/**
-	 * Getter for the return code.
+	 * Adds a parameter to the parameter list.
 	 *
-	 * @return status code
+	 * @param r parameter
 	 **/
-	public StatusCode getReturnCode()
+	public void addParameter(String r)
 	{
-		return returnCode;
+		parameters.add(r);
 	}
 
 	/**
@@ -76,4 +57,38 @@ public class Response implements Serializable
 	{
 		return parameters;
 	}
+
+	/**
+	 * Getter for the return code.
+	 *
+	 * @return status code
+	 **/
+	public StatusCode getReturnCode()
+	{
+		return returnCode;
+	}
+}
+
+/**
+ * The enum {@code StatusCode} encodes the possible return values of a server
+ * request.
+ **/
+enum StatusCode
+{
+	/**
+	 * Represents a successful transaction. 
+	 **/
+	SUCCESS, 
+	/**
+	 * Invalid arguments were received.
+	 **/
+	INVALID_ARGUMENTS, 
+	/**
+	 * The user was not authorized to perform the request.
+	 **/
+	NOT_AUTHORIZED, 
+	/**
+	 * Represents a generic error.
+	 **/
+	ERROR
 }
