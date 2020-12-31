@@ -70,13 +70,12 @@ public class HomeController implements Initializable
 	@FXML
 	private ChoiceBox<String> typeChoiceBox;
 	private Pane singleWine;
-	
 	/**
-	 * ArrayList containing the wines that are currently visible on the flowPane. <p>
-	 * Updated when a search is made. 
+	 * ArrayList containing the wines that are currently visible on the flowPane.
+	 * <p>
+	 * Updated when a search is made.
 	 **/
 	ArrayList<Wine> viewedWines = new ArrayList<>();
-	
 	private ArrayList<Wine> wines = new ArrayList<>();
 	private Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
 	private Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());
@@ -314,11 +313,11 @@ public class HomeController implements Initializable
 enum SearchType
 {
 	/**
-	 * Represents a search made by Name 
+	 * Represents a search made by Name
 	 **/
-	NAME, 
+	NAME,
 	/**
-	 * Represents a search made by Year 
+	 * Represents a search made by Year
 	 **/
 	YEAR
 }

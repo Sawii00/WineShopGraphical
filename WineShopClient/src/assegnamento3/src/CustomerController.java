@@ -36,14 +36,15 @@ import javafx.stage.Stage;
 public class CustomerController
 {
 	/**
-	 * ArrayList containing the wines that are currently visible on the flowPane. <p>
-	 * Updated when a search is made. 
+	 * ArrayList containing the wines that are currently visible on the flowPane.
+	 * <p>
+	 * Updated when a search is made.
 	 **/
 	static ArrayList<Wine> viewedWines = new ArrayList<>();
-	
 	/**
-	 * Id of the customer that has logged in. <p>
-	 * Used to authenticate the requests made to the server. 
+	 * Id of the customer that has logged in.
+	 * <p>
+	 * Used to authenticate the requests made to the server.
 	 **/
 	static int customerId;
 	@FXML
@@ -65,7 +66,6 @@ public class CustomerController
 	@FXML
 	private ChoiceBox<String> typeChoiceBox;
 	private Pane singleWine;
-	
 	private ArrayList<Wine> wines = new ArrayList<>();
 	private Image redImage = new Image(getClass().getResource("../res/red.jpg").toExternalForm());
 	private Image whiteImage = new Image(getClass().getResource("../res/white.jpg").toExternalForm());

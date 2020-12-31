@@ -17,10 +17,10 @@ public class NetworkServer implements Runnable
 {
 	private ServerSocket mainSocket;
 	private boolean isRunning = true;
-	
 	/**
-	 * Store instance that handles the subsystem for Wines, Logins, Registrations. <p>
-	 * Static for easy access outside. 
+	 * Store instance that handles the subsystem for Wines, Logins, Registrations.
+	 * <p>
+	 * Static for easy access outside.
 	 **/
 	public static Store mainStore = new Store();
 

@@ -22,9 +22,8 @@ public class OrderBox
 	 * Contains the initial value of amount and will contain the new value as well
 	 **/
 	private String value = "";
-	
-	/** 
-	 * Contains whether the data in {@code value} is valid 
+	/**
+	 * Contains whether the data in {@code value} is valid
 	 **/
 	private boolean validData = false;
 

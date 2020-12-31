@@ -76,17 +76,17 @@ public class Response implements Serializable
 enum StatusCode
 {
 	/**
-	 * Represents a successful transaction. 
+	 * Represents a successful transaction.
 	 **/
-	SUCCESS, 
+	SUCCESS,
 	/**
 	 * Invalid arguments were received.
 	 **/
-	INVALID_ARGUMENTS, 
+	INVALID_ARGUMENTS,
 	/**
 	 * The user was not authorized to perform the request.
 	 **/
-	NOT_AUTHORIZED, 
+	NOT_AUTHORIZED,
 	/**
 	 * Represents a generic error.
 	 **/

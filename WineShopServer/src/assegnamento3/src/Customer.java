@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Customer extends LoggableUser implements Observer
 {
 	/**
-	 * Message list of the customer. 
+	 * Message list of the customer.
 	 **/
 	private ArrayList<String> messages = new ArrayList<String>();
 

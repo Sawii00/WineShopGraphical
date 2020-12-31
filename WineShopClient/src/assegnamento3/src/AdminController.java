@@ -29,19 +29,19 @@ import javafx.stage.Stage;
 public class AdminController
 {
 	/**
-	 * Observable list containing the Customer objects to be displayed in the table. 
+	 * Observable list containing the Customer objects to be displayed in the table.
 	 **/
 	ObservableList<LoggableUser> customers = FXCollections.<LoggableUser>observableArrayList();
 	/**
-	 * Observable list containing the Seller objects to be displayed in the table. 
+	 * Observable list containing the Seller objects to be displayed in the table.
 	 **/
 	ObservableList<LoggableUser> sellers = FXCollections.<LoggableUser>observableArrayList();
 	/**
-	 * Observable list containing the Wines objects to be displayed in the table. 
+	 * Observable list containing the Wines objects to be displayed in the table.
 	 **/
 	ObservableList<Wine> wines = FXCollections.<Wine>observableArrayList();
 	/**
-	 * Observable list containing the Orders objects to be displayed in the table. 
+	 * Observable list containing the Orders objects to be displayed in the table.
 	 **/
 	ObservableList<Order> orders = FXCollections.<Order>observableArrayList();
 	/**

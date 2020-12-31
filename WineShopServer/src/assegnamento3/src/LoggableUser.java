@@ -17,19 +17,18 @@ import java.util.Random;
 
 public class LoggableUser extends Person implements Serializable
 {
-	
 	private static final long serialVersionUID = 4878874717365268921L;
 	/**
 	 * Id of the user.
 	 */
 	protected int id;
 	/**
-	 * Email of the user. 
+	 * Email of the user.
 	 **/
 	protected String email;
 	/**
-	 * Password of the user. 
-	 **/	
+	 * Password of the user.
+	 **/
 	protected String password;
 
 	/**
@@ -88,7 +87,6 @@ public class LoggableUser extends Person implements Serializable
 		return id;
 	}
 
-	
 	/**
 	 * Getter for the user's password.
 	 * 
@@ -110,8 +108,11 @@ public class LoggableUser extends Person implements Serializable
 	}
 
 	/**
-	 * Returns a representation of the user as a String with fields divided by a separator. <p>
-	 * Allows for easy construction and deconstruction of users between Client / Server.
+	 * Returns a representation of the user as a String with fields divided by a
+	 * separator.
+	 * <p>
+	 * Allows for easy construction and deconstruction of users between Client /
+	 * Server.
 	 * 
 	 * @return String encoding of the user.
 	 */

@@ -13,15 +13,15 @@ import java.util.Map.Entry;
 enum SearchType
 {
 	/**
-	 * Search by Name. 
+	 * Search by Name.
 	 **/
 	NAME,
 	/**
-	 * Search by Year. 
+	 * Search by Year.
 	 **/
-	YEAR, 
+	YEAR,
 	/**
-	 * Search by Id. 
+	 * Search by Id.
 	 **/
 	ID;
 };

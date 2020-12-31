@@ -9,11 +9,11 @@ package assegnamento3.src;
 public class Person
 {
 	/**
-	 * Name of the Person. 
+	 * Name of the Person.
 	 **/
 	protected String name;
 	/**
-	 * Surname of the Person. 
+	 * Surname of the Person.
 	 **/
 	protected String surname;
 
