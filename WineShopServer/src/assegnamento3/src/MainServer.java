@@ -37,7 +37,7 @@ public class MainServer extends Application
 	/**
 	 * Creates the Database Manager that handles the persistence of the data.
 	 **/
-	private DatabaseManager db = null;
+	public static DatabaseManager db = null;
 
 	/**
 	 * Starts the Primary Stage with the prompt for the server port.
@@ -85,7 +85,7 @@ public class MainServer extends Application
 				db.open();
 
 				/* Loads the content of the database to the main lists */
-				loadAllLists();
+				//loadAllLists();
 			} catch (NumberFormatException | IOException e2)
 			{
 				new BasicAlertBox("Error", "Invalid Port", 200, 150);
@@ -127,12 +127,12 @@ public class MainServer extends Application
 	/**
 	 * Loads all the lists from the database to memory
 	 **/
-	private void loadAllLists()
+	public static void loadAllLists()
 	{
-		server.mainStore.setWineList(db.getWineList());
-		server.mainStore.setUserList(db.getUserList());
-		server.mainStore.setOrderList(db.getOrderList());
-		server.mainStore.setNotificationList(db.getNotificationList());
+		NetworkServer.mainStore.setWineList(db.getWineList());
+		NetworkServer.mainStore.setUserList(db.getUserList());
+		NetworkServer.mainStore.setOrderList(db.getOrderList());
+		NetworkServer.mainStore.setNotificationList(db.getNotificationList());
 	}
 
 	/**
@@ -140,10 +140,10 @@ public class MainServer extends Application
 	 **/
 	private void saveAllLists()
 	{
-		db.saveWineList(server.mainStore.getWineList());
-		db.saveUserList(server.mainStore.getUserList());
-		db.saveOrderList(server.mainStore.getOrderList());
-		db.saveNotificationList(server.mainStore.getNotificationList());
+		db.saveWineList(NetworkServer.mainStore.getWineList());
+		db.saveUserList(NetworkServer.mainStore.getUserList());
+		db.saveOrderList(NetworkServer.mainStore.getOrderList());
+		db.saveNotificationList(NetworkServer.mainStore.getNotificationList());
 	}
 
 	/**

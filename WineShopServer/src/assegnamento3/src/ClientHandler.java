@@ -77,6 +77,14 @@ public class ClientHandler implements Runnable
 		Response response;
 		switch (method)
 		{
+		case "initializeDatabase":
+		{
+			boolean initOk = MainServer.db.initDatabase();
+			if(initOk)
+				return new Response(StatusCode.SUCCESS);
+			else 
+				return new Response(StatusCode.ERROR);
+		}
 		case "close":
 		{
 			stop();
@@ -333,9 +341,12 @@ public class ClientHandler implements Runnable
 		{
 			if (request.getParameters().size() != 3)
 				return new Response(StatusCode.INVALID_ARGUMENTS);
-			NetworkServer.mainStore.requestWine(Integer.parseInt(request.getParameters().get(1)),
+			boolean notifResult = NetworkServer.mainStore.requestWine(Integer.parseInt(request.getParameters().get(1)),
 					Integer.parseInt(request.getParameters().get(0)), Integer.parseInt(request.getParameters().get(2)));
-			return new Response(StatusCode.SUCCESS);
+			if(notifResult)
+				return new Response(StatusCode.SUCCESS);
+			else
+				return new Response(StatusCode.INVALID_ARGUMENTS);
 		}
 		case "getMessages":
 		{

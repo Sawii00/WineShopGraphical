@@ -54,8 +54,17 @@ public class DatabaseManager
 		this.user = user;
 		this.password = password;
 
-		open();
+		//open();
+		
+	}
 
+	/**
+	 * Sets up the database structure by creating and populating tables if not already present.
+	 * 
+	 * @throws SQLException Invalid sql
+	 **/
+	private void setupTables() throws SQLException
+	{
 		String createTableWines = "create table if not exists wines (" + "id int primary key,"
 				+ "name varchar(50) not null," + "producer varchar(50) not null," + "year int not null,"
 				+ "technicalNotes varchar(500) not null," + "grapeType varchar(50) not null," + "amount int not null,"
@@ -129,8 +138,10 @@ public class DatabaseManager
 		String createTableMessages = "create table if not exists messages(" + "id int primary key auto_increment,"
 				+ "userId int not null," + "text varchar(100)" + ")";
 		st.executeUpdate(createTableMessages);
+		MainServer.loadAllLists();
 	}
-
+	
+	
 	/**
 	 * Returns whether the Connection is Open.
 	 * 
@@ -168,8 +179,39 @@ public class DatabaseManager
 	{
 		conn = DriverManager.getConnection(url + args, user, password);
 		st = conn.createStatement();
+		setupTables();
+
 	}
 
+	/**
+	 * Deletes all the tables and recreates them from scratch. 
+	 * 
+	 *  @return true if no errors occurred
+	 **/
+	public boolean initDatabase()
+	{
+	    try
+		{
+	    	String sql = "DROP table if exists wines";
+	    	st.executeUpdate(sql);
+	    	sql = "DROP table if exists users";
+	    	st.executeUpdate(sql);
+	    	sql = "DROP table if exists orders";
+	    	st.executeUpdate(sql);
+	    	sql = "DROP table if exists notifications";
+	    	st.executeUpdate(sql);
+	    	sql = "DROP table if exists messages";
+	    	st.executeUpdate(sql);
+			setupTables();
+			return true;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
 	/**
 	 * Saves the given wineList to the database.
 	 * 

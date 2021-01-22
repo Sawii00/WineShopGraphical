@@ -118,7 +118,7 @@ public class Store
 	 *
 	 * @return list of wines
 	 **/
-	ArrayList<Wine> getWineList()
+	public ArrayList<Wine> getWineList()
 	{
 		return wineList;
 	}
@@ -128,7 +128,7 @@ public class Store
 	 *
 	 * @return list of orders
 	 **/
-	ArrayList<Order> getOrderList()
+	public ArrayList<Order> getOrderList()
 	{
 		return orderList;
 	}
@@ -138,7 +138,7 @@ public class Store
 	 *
 	 * @return list of users
 	 **/
-	ArrayList<LoggableUser> getUserList()
+	public ArrayList<LoggableUser> getUserList()
 	{
 		return userList;
 	}
@@ -148,7 +148,7 @@ public class Store
 	 *
 	 * @return map of notifications
 	 **/
-	Map<Integer, Entry<Integer, Integer>> getNotificationList()
+	public Map<Integer, Entry<Integer, Integer>> getNotificationList()
 	{
 		return notifRequest;
 	}
@@ -439,7 +439,7 @@ public class Store
 	 * @param email    the user's email.
 	 * @param password the user's password.
 	 *
-	 * @return true if email and password are correct, false otherwise.
+	 * @return user if email and password are correct, null otherwise.
 	 */
 	public LoggableUser login(String email, String password)
 	{
@@ -498,6 +498,9 @@ public class Store
 	synchronized public boolean buy(int wineId, int customerId, int amount)
 	{
 		Wine w = getWineByID(wineId);
+		LoggableUser usr = getLoggableUserByID(customerId);
+		if(usr == null)return false;
+		if(amount <= 0)return false;
 		if (w != null)
 		{
 			if (w.getAmount() > amount)
@@ -536,15 +539,21 @@ public class Store
 	 * @param wineId     id of the wine
 	 * @param customerId id of the customer
 	 * @param amount     numbers of bottles requested
+	 * 
+	 * @return true if request was placed, false otherwise
 	 */
-	synchronized public void requestWine(int wineId, int customerId, int amount)
+	synchronized public boolean requestWine(int wineId, int customerId, int amount)
 	{
 		Customer c = getClientByID(customerId);
+		if (c == null) return false;
 		Wine w = getWineByID(wineId);
+		if (w == null)return false;
+		if(amount < 0)return false;
 		if (w.getAmount() >= amount)
 		{
 			// wine already available
 			((Observer) c).newMessage("Wine " + w.getName() + " is available.");
+			return false;
 		} else
 		{
 			// wine is not available, request is placed
@@ -555,6 +564,7 @@ public class Store
 					((Seller) s).newMessage("Customer: " + c.getName() + " " + c.getSurname() + " requested " + amount
 							+ " bottles of " + w.getName() + ".");
 			}
+			return true;
 		}
 	}
 
