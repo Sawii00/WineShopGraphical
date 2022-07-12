@@ -6,7 +6,9 @@ The goal was to write a Software Application in Java + JavaFX for the management
 
 # Features:
 - Allows the creation of users of different roles: admins (handle wine collection and other users), sellers (handle wine collection), and customers. 
-- Customers can view the wines, their characteristics, and purchase them if available (otherwise, they can receive automatic notification upon restocking if requested)
+- Customers can view the wines, their characteristics, and purchase them if available (otherwise, they can receive automatic notification upon restocking if requested).
+- Wines can be restocked and their information changed.
+- A Shopping cart is available to store several wines to be purchased.
 
 
 # Demo:
