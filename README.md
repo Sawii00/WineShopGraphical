@@ -12,5 +12,6 @@ The goal was to write a Software Application in Java + JavaFX for the management
 # Demo:
 In the demo folder, some pictures of the GUI are provided. 
 
-![alt text](https://github.com/Sawii00/WineShopGraphical/blob/master/demo/registration.png?raw=true)
-![alt text](https://github.com/Sawii00/WineShopGraphical/blob/master/demo/customer.png?raw=true)
+![alt text](https://github.com/Sawii00/WineShopGraphical/blob/master/demo/registration.PNG?raw=true)
+
+![alt text](https://github.com/Sawii00/WineShopGraphical/blob/master/demo/customer.PNG?raw=true)
